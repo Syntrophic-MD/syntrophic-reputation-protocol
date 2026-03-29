@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# Frontend local dependencies/build artifacts
+frontend/node_modules/
+frontend/.next/

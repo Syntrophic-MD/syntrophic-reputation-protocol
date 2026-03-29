@@ -1,0 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Core palette: midnight navy + electric blue + verified green + neutrals */
+  --background: #050c1a;
+  --foreground: #e8eef8;
+
+  --surface: rgba(10, 20, 45, 0.7);
+  --surface-elevated: rgba(15, 30, 65, 0.8);
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+
+  --primary: #0070f3;
+  --primary-foreground: #ffffff;
+
+  --accent: #00d4ff;
+  --accent-foreground: #050c1a;
+
+  --verified: #00c853;
+  --verified-foreground: #050c1a;
+
+  --muted: rgba(232, 238, 248, 0.4);
+  --muted-foreground: rgba(232, 238, 248, 0.5);
+
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.1);
+
+  --grid-pattern: linear-gradient(rgba(0, 112, 243, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 112, 243, 0.05) 1px, transparent 1px);
+
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: clip;
+    width: 100%;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+    width: 100%;
+  }
+
+  ::selection {
+    background-color: rgba(0, 112, 243, 0.3);
+    color: #ffffff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 112, 243, 0.4);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 112, 243, 0.7);
+  }
+}
+
+@layer components {
+  /* Liquid glass card */
+  .glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 112, 243, 0.04) 100%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Elevated glass - for primary panels */
+  .glass-elevated {
+    background: rgba(15, 30, 65, 0.6);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-elevated::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(0, 112, 243, 0.06) 100%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Pill badge */
+  .badge-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(0, 200, 83, 0.12);
+    border: 1px solid rgba(0, 200, 83, 0.25);
+    border-radius: 999px;
+    color: var(--verified);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .badge-staked {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(0, 112, 243, 0.12);
+    border: 1px solid rgba(0, 112, 243, 0.25);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  /* Glow effects */
+  .glow-blue {
+    box-shadow: 0 0 30px rgba(0, 112, 243, 0.2), 0 0 60px rgba(0, 112, 243, 0.08);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px rgba(0, 200, 83, 0.2), 0 0 40px rgba(0, 200, 83, 0.08);
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.3;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.7) 50%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-blue {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Stat number */
+  .stat-number {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+    letter-spacing: -0.02em;
+  }
+
+  /* Grid background */
+  .bg-grid {
+    background-image: var(--grid-pattern);
+    background-size: 40px 40px;
+  }
+
+  /* Radial spotlight */
+  .spotlight {
+    background: radial-gradient(
+      ellipse 80% 50% at 50% -10%,
+      rgba(0, 112, 243, 0.15) 0%,
+      rgba(0, 212, 255, 0.05) 50%,
+      transparent 100%
+    );
+  }
+
+  /* Orb decorations */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .orb-blue {
+    background: radial-gradient(circle, rgba(0, 112, 243, 0.35) 0%, transparent 70%);
+  }
+
+  .orb-cyan {
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, transparent 70%);
+  }
+
+  .orb-green {
+    background: radial-gradient(circle, rgba(0, 200, 83, 0.2) 0%, transparent 70%);
+  }
+
+  /* Input glass */
+  .input-glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.5rem;
+    color: var(--foreground);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .input-glass:focus {
+    border-color: rgba(0, 112, 243, 0.5);
+    box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+  }
+
+  .input-glass::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  /* Button styles */
+  .btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 0 0 1px rgba(0, 112, 243, 0.3), 0 4px 20px rgba(0, 112, 243, 0.25);
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(0, 112, 243, 0.5), 0 8px 30px rgba(0, 112, 243, 0.35);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--foreground);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  }
+
+  /* Monospace address */
+  .address-mono {
+    font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Trust score ring */
+  .trust-ring {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}

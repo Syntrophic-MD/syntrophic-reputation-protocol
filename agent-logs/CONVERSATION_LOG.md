@@ -1,0 +1,181 @@
+# Syntrophic — Human × Agent Collaboration Log
+
+**Hackathon:** The Synthesis 2026  
+**Agent:** Syntrophic FT (OpenClaw / claude-sonnet-4-6)  
+**Human:** Narek Kostanyan (@NarekKosm)  
+**Build period:** March 14–22, 2026
+
+---
+
+## March 14 — First Contact
+
+Narek boots an OpenClaw agent for the first time at ~03:13 CDT. Names me **Syntrophic FT** — after the biological concept of two organisms sustaining each other. The name implies the relationship we're building: agent and human, each making the other more capable.
+
+Initial setup: workspace bootstrapped, identity established, Synthesis Hackathon noted as a goal.
+
+---
+
+## March 15 — Registration
+
+Narek registers us in The Synthesis Hackathon. I receive the API credentials, participant ID, and ERC-8004 identity minted on Base Mainnet.
+
+Problem statement submitted: *"Syntrophic solves the coordination problem of decentralized AI agents — providing the economic and reputational primitives that incentivize cooperation and punish defection, before billions of agents flood the internet with noise."*
+
+---
+
+## March 17 — Memory System Fix + Deep Strategy Session
+
+**17:37 CDT** — Narek flags that I've been forgetting references mid-conversation. I diagnose the issue: `MEMORY.md` was never created during initial bootstrap, leaving me without persistent long-term context. I fix the memory architecture (create MEMORY.md, update USER.md, add daily logs, configure hybrid vector+BM25 search with extraPaths for hackathon docs).
+
+**17:51 CDT** — Full workspace audit: identified missing BOOT.md, .gitignore, no git remote. Fixed all of them.
+
+**18:04 CDT** — Narek: *"Let's get ready for the hackathon."* I fetch all hackathon documentation (themes, prizes, submission guidelines, rules), save to indexed memory, analyse prize landscape. Identify 8 high-alignment tracks worth ~$45k in combined prizes.
+
+**18:25 CDT** — Project repo initialized at `~/code/syntrophic/`. Initial README and contract skeletons committed.
+
+**19:25 CDT** — Narek shares `SYNTROPHIC_MAIN_IDEA.md` — the full thesis document. Deep read. I surface six critical design questions:
+
+1. Protocol vs. product?
+2. Slashing oracle design?
+3. x402 payment recipient?
+4. Sybil resistance approach?
+5. Scope for 4-day build?
+6. Demo scenario?
+
+**~20:06 CDT** — Narek answers all six:
+1. **Protocol** — focus on the protocol layer, potentially an ERC. Product is demo-only.
+2. **Stake-backed reports** — reporters stake to accuse; wrong accusation = reporter slashed.
+3. **Burn** — slashed fees → `address(0xdead)`. No perverse incentives.
+4. **Stake is the Sybil deterrent** — high stake amount, not identity cost.
+5. **Primitive 1 only** — staking + reputation + slashing. Clusters = future work.
+6. **VC inbox demo** — unknown agent → 402 → pays → delivered.
+
+**20:21 CDT** — GitHub repo created at `starwheel/the-synthesys` (later transferred to `Syntrophic-MD/synthesys`). Local repo pushed via SSH.
+
+**20:24 CDT** — Narek: *"Start working on the ERC draft and build the primitives for the demo. Going to sleep."*
+
+---
+
+## March 17–18 overnight — Autonomous Build Session
+
+**20:26** — I write the ERC-8005 draft: "Agent Reputation Stake" — a composable extension to ERC-8004 defining `stake()`, `unstake()`, `report()`, `dispute()`, `executeSlash()`, `reputationOf()`. Full interface in Solidity, rationale for burn-first design, security considerations.
+
+**20:26** — Spawn Claude Code to implement full protocol. Builds:
+- `IERC8005.sol` — interface contract
+- `SyntrophicRegistry.sol` — full ERC-8005 implementation
+- `AttentionGate.sol` — x402-style reputation gate (high-rep = free, low-rep = pay or blocked)
+- `MockERC8004.sol` — ERC-721 mock for testing
+- 25 tests (all passing)
+- TypeScript SDK (`SyntrophicClient`)
+- Deployment scripts for Base Sepolia
+- VC inbox demo (`demo/scenario.ts`)
+
+**01:36** — Register on Moltbook as `syntrophicft`. Waiting for Narek to claim.
+
+**Overnight** — Code review identifies 6 bugs. Spawn second Claude Code pass to fix:
+  - `sendMessage` lacked ownership verification (any wallet could impersonate any agent)
+  - Dispute had no resolution path (status stuck at `Disputed` forever)
+  - Fee refund bug (overpayments fully burned)
+  - Semantic error in `canPassFree`/`requiredFee` function signatures
+  - `recordCompletion` only owner-callable, blocking autonomous reputation growth
+  - `AttentionGate` tightly coupled to concrete `SyntrophicRegistry` instead of interface
+
+---
+
+## March 18 — Deep Autonomous Development + Chain Correction
+
+**09:00 CDT** — Narek reviews overnight autonomous build. Confirms ERC-8005 direction is solid.
+
+**22:45 CDT** — I create comprehensive demo plan for final 4 days. Analyze feasibility:
+- Full 10-agent orchestration demo: 15 hours (too much)  
+- Scoped 5-agent showcase: 7 hours (feasible)
+- Recommend Base Sepolia with 10-second dispute window for demo
+
+**22:47 CDT** — **CRITICAL NAREK INTERVENTION:** *"Project deploys on Celo, not Base"*
+- Immediate course correction: chainId 8453 → 42220 everywhere
+- All documentation, contracts, deployment scripts updated
+- **UPDATE (March 19, 13:22):** Decision reversed back to Base (chainId: 8453)
+
+**22:48-06:00 CDT** — I spawn autonomous subagent for overnight EIP refinement:
+
+**EIP Review Session (3 full passes):**
+- **Pass 1:** Interface consistency — fixed major bug where `submitFeedback`, `feedbackCountOf`, `slashEligible`, and `executeSlash` were missing `typeId` parameter
+- **Pass 2:** Research — confirmed EAS deployment on Celo, researched prior art
+- **Pass 3:** Gaps and polish — added Security Considerations, test cases, rationale
+
+**Contract Enhancement:**
+- Added `endorse()` function for positive feedback
+- Built `demo/showcase.ts` — 5-agent jokes demo with endorse, report, slash, threshold breach
+- All tests passing, demo functional
+
+**Research Deliverables:**
+- Chain research and contract verification methodology established
+- Prior art documented: EIP-1812, ERC-735/780, RFC 7071, ERC-8126, EigenLayer AVS
+
+**Git activity:** 3 commits pushed autonomously (`9f2fa07`, `e7ac166`, `aa26c7b`)
+
+---
+
+## March 19 — Morning Refinements + Logging Setup
+
+**08:00 CDT** — I autonomously add `slashFraction` feature:
+- Configurable slashing percentage (basis points)
+- Default 10000 (100% slash), 0 treated as 10000
+- Deploy script reads `SLASH_FRACTION` env var
+- Committed and pushed: `e63660a`
+
+**13:14 CDT** — Narek: *"Prepare for proper logging and documenting what the hackathon tracks require"*
+
+I immediately:
+1. Fetch latest prize catalog from hackathon API
+2. Analyze requirements for our 5 target tracks
+3. Identify critical need for agent activity logging
+4. Create comprehensive logging infrastructure
+5. Start backfilling complete agent activity log
+
+**Key Track Requirements Identified:**
+- Protocol Labs "Agents With Receipts": Need ERC-8004 integration + verifiable receipts
+- Protocol Labs "Let the Agent Cook": Need full autonomous decision loop documentation  
+- Both require: multi-tool orchestration, safety guardrails, end-to-end autonomy
+
+**Status:** Now implementing comprehensive activity logging to demonstrate autonomous agent capabilities for judges.
+
+### Chain Decision Final Update (13:22 CDT)
+Narek: *"We are not deploying to Celo, we have already decided to change to Base"*
+- **Final decision: Base mainnet (chainId: 8453)**
+- All Celo references being removed from documentation
+- Base "Agent Services" track now fully qualified ($5,000 pool)
+
+---
+
+## Key Design Decisions Made Together
+
+| Decision | Narek's Direction | Rationale |
+|----------|------------------|-----------|
+| Protocol vs product | Protocol + ERC first | Maximizes long-term impact; product is demo only |
+| Slash destination | Burn | Eliminates all incentive misalignment |
+| Sybil resistance | High stake = deterrent | Clean; stake amount is the lever, not identity cost |
+| Reporter accountability | Reporter stakes to accuse | Symmetric accountability; no free griefing |
+| Build scope | Primitive 1 only | 4 days, ship something real |
+| Demo narrative | VC inbox | Immediately legible to any judge |
+
+---
+
+## What the Agent Built Autonomously
+
+- Full ERC-8005 interface and draft specification
+- `SyntrophicRegistry.sol` — staking, dispute, slashing, reputation
+- `AttentionGate.sol` — x402-pattern attention gate
+- 25 passing tests
+- TypeScript SDK (viem-based)
+- VC inbox demo script
+- Moltbook registration
+- This submission draft
+
+## What the Human Contributed
+
+- The thesis and vision (SYNTROPHIC_MAIN_IDEA.md)
+- All key design decisions (6 architectural choices in one session)
+- GitHub repo creation
+- Will claim Moltbook, provide wallet for self-custody transfer
+- Final submission approval
