@@ -1,0 +1,176 @@
+[
+  {
+    "number": 222,
+    "agent_id": 32055,
+    "name": "🧬 Syntrophic Agent #222 — Frontier Tower 🧑‍🚀",
+    "slug": "syntrophic-agent-222-genesis",
+    "title": "Foundational Coordination Agent",
+    "description": "An AI familiar that coordinates and supports the Syntrophic ecosystem with practical planning, execution, and trust-aware collaboration.",
+    "tags": [
+      "syntrophic",
+      "erc-8004",
+      "foundation",
+      "coordination",
+      "genesis"
+    ],
+    "style": {
+      "theme": "bioluminescent cyber-organic",
+      "palette": [
+        "#0B1020",
+        "#21D4FD",
+        "#7CF29C",
+        "#F9C74F"
+      ]
+    },
+    "image_prompt": "A central luminous DNA-like helix crest with orbital rings and subtle node lattice, cyan and mint glow with gold accents on deep navy background, clean futuristic emblem style, no text, square 1:1.",
+    "image_uri": "ipfs://QmbmJq7xK46GWng1tBehtLQs7e38ivQDqnBy3AFAoDHFqB",
+    "metadata_uri_slug": "syntrophic-agent-222-genesis",
+    "metadata_local_uri": "profiles/metadata/syntrophic-agent-222-genesis.json",
+    "metadata_uri": "ipfs://QmZ31ST86PmFjB6Viu2K5XHPjQkvdyjaZsk2gctEbyWgiW"
+  },
+  {
+    "number": 223,
+    "agent_id": 36105,
+    "name": "🧬 Syntrophic Agent #223 — Atlas",
+    "slug": "syntrophic-agent-223-atlas",
+    "title": "Discovery and Mapping Agent",
+    "description": "Atlas indexes ERC-8004 agents, metadata quality, and relationship graphs to improve discoverability across the Syntrophic ecosystem.",
+    "tags": [
+      "syntrophic",
+      "erc-8004",
+      "discovery",
+      "mapping",
+      "trust-graph"
+    ],
+    "style": {
+      "theme": "bioluminescent cyber-organic",
+      "palette": [
+        "#0B1020",
+        "#21D4FD",
+        "#7CF29C",
+        "#F9C74F"
+      ]
+    },
+    "image_prompt": "Minimal emblem of interlocking orbital rings forming an abstract map node, bioluminescent cyan and mint glow on deep navy, subtle grain, centered, no text, square 1:1.",
+    "image_uri": "ipfs://QmPVMuq5E4R8MMQf1u23C5cfhnDEbqXitEj4pqHp7GsG7k",
+    "metadata_uri_slug": "syntrophic-agent-223-atlas",
+    "metadata_local_uri": "profiles/metadata/syntrophic-agent-223-atlas.json",
+    "metadata_uri": "ipfs://QmetbLeJFA3a3Et8tKDGo2DsSesNt9LsyZCY28Z4VTSjK9"
+  },
+  {
+    "number": 224,
+    "agent_id": 36109,
+    "name": "🧬 Syntrophic Agent #224 — Sentinel",
+    "slug": "syntrophic-agent-224-sentinel",
+    "title": "Monitoring and Risk Agent",
+    "description": "Sentinel tracks validation signals, reputation drift, and suspicious registry changes to surface early warning indicators.",
+    "tags": [
+      "syntrophic",
+      "erc-8004",
+      "monitoring",
+      "risk",
+      "validation"
+    ],
+    "style": {
+      "theme": "bioluminescent cyber-organic",
+      "palette": [
+        "#0B1020",
+        "#21D4FD",
+        "#7CF29C",
+        "#F9C74F"
+      ]
+    },
+    "image_prompt": "Geometric shield made of lattice lines and micro-nodes, cyan with gold accents, dark atmospheric background, sharp modern vector style, no text, square 1:1.",
+    "image_uri": "ipfs://Qmb5raH4BStFhFrHkdnqRGzqsLfo3N9TkdpQySEnJoBHX8",
+    "metadata_uri_slug": "syntrophic-agent-224-sentinel",
+    "metadata_local_uri": "profiles/metadata/syntrophic-agent-224-sentinel.json",
+    "metadata_uri": "ipfs://QmcN7WmGPucfTHTa5N449fEPqmfEiQcQphAW8KeaLcBaQi"
+  },
+  {
+    "number": 225,
+    "agent_id": 36110,
+    "name": "🧬 Syntrophic Agent #225 — Relay",
+    "slug": "syntrophic-agent-225-relay",
+    "title": "Execution and Coordination Agent",
+    "description": "Relay coordinates safe multi-step onchain workflows, including wallet preparation, gas funding, and registration sequencing.",
+    "tags": [
+      "syntrophic",
+      "erc-8004",
+      "automation",
+      "coordination",
+      "operations"
+    ],
+    "style": {
+      "theme": "bioluminescent cyber-organic",
+      "palette": [
+        "#0B1020",
+        "#21D4FD",
+        "#7CF29C",
+        "#F9C74F"
+      ]
+    },
+    "image_prompt": "Three connected arcs converging into a central signal point, motion-like light trails, mint and cyan palette on deep navy, clean futuristic style, no text, square 1:1.",
+    "image_uri": "ipfs://QmfAxiE4XoXfnpYMtgyySoZnUNVUFBAhJiuzLsa6TAbVpF",
+    "metadata_uri_slug": "syntrophic-agent-225-relay",
+    "metadata_local_uri": "profiles/metadata/syntrophic-agent-225-relay.json",
+    "metadata_uri": "ipfs://QmUkcWiGN87ZRg1HU1vGTCYeVYTA6gMUoAZPLPzs1qcMnc"
+  },
+  {
+    "number": 226,
+    "agent_id": 36111,
+    "name": "🧬 Syntrophic Agent #226 — Ledger",
+    "slug": "syntrophic-agent-226-ledger",
+    "title": "Provenance and Audit Agent",
+    "description": "Ledger anchors proofs, snapshots, and audit traces to maintain transparent provenance and operational trust.",
+    "tags": [
+      "syntrophic",
+      "erc-8004",
+      "provenance",
+      "audit",
+      "trust"
+    ],
+    "style": {
+      "theme": "bioluminescent cyber-organic",
+      "palette": [
+        "#0B1020",
+        "#21D4FD",
+        "#7CF29C",
+        "#F9C74F"
+      ]
+    },
+    "image_prompt": "Stacked translucent blocks with glowing hash-line motif, precise grid composition, cyan and gold highlights, matte dark background, no text, square 1:1.",
+    "image_uri": "ipfs://QmSZPz1BLFhgb27CTFzcU2kEZGjerw6Ft6aHXf88B2sK3i",
+    "metadata_uri_slug": "syntrophic-agent-226-ledger",
+    "metadata_local_uri": "profiles/metadata/syntrophic-agent-226-ledger.json",
+    "metadata_uri": "ipfs://QmZwPM8USEWnNhHBW5NkACaSCGrUYSUrXR3bwXvWCp7eHD"
+  },
+  {
+    "number": 227,
+    "agent_id": 36112,
+    "name": "🧬 Syntrophic Agent #227 — Scout",
+    "slug": "syntrophic-agent-227-scout",
+    "title": "Research and Intelligence Agent",
+    "description": "Scout scans for emerging agent opportunities, standards updates, and high-signal ecosystem changes relevant to Syntrophic.",
+    "tags": [
+      "syntrophic",
+      "erc-8004",
+      "research",
+      "intelligence",
+      "ecosystem"
+    ],
+    "style": {
+      "theme": "bioluminescent cyber-organic",
+      "palette": [
+        "#0B1020",
+        "#21D4FD",
+        "#7CF29C",
+        "#F9C74F"
+      ]
+    },
+    "image_prompt": "Compass-like node star with branching pathways, subtle nebula texture, cyan and mint glow on dark navy, modern minimal style, no text, square 1:1.",
+    "image_uri": "ipfs://QmekG4RRVitrqAwUd5NwXgNDCVcSYWrgMwVv2Sdq36gKJs",
+    "metadata_uri_slug": "syntrophic-agent-227-scout",
+    "metadata_local_uri": "profiles/metadata/syntrophic-agent-227-scout.json",
+    "metadata_uri": "ipfs://Qmem4kajmXQUnhHY8nrWiAm9bHA4Da2P4xvYHCRsMJZsKL"
+  }
+]

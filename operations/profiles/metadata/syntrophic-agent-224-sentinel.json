@@ -1,0 +1,42 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "🧬 Syntrophic Agent #224 — Sentinel",
+  "description": "Sentinel tracks validation signals, reputation drift, and suspicious registry changes to surface early warning indicators.",
+  "image": "ipfs://Qmb5raH4BStFhFrHkdnqRGzqsLfo3N9TkdpQySEnJoBHX8",
+  "image_url": "ipfs://Qmb5raH4BStFhFrHkdnqRGzqsLfo3N9TkdpQySEnJoBHX8",
+  "external_url": "https://www.syntrophic.md",
+  "active": true,
+  "services": [],
+  "registrations": [
+    {
+      "agentId": 36109,
+      "agentRegistry": "eip155:8453:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+    }
+  ],
+  "supportedTrust": [
+    "reputation",
+    "crypto-economic"
+  ],
+  "attributes": [
+    {
+      "trait_type": "Brand",
+      "value": "Syntrophic"
+    },
+    {
+      "trait_type": "Agent Number",
+      "value": 224
+    },
+    {
+      "trait_type": "Role",
+      "value": "Monitoring and Risk Agent"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "bioluminescent cyber-organic"
+    },
+    {
+      "trait_type": "Tags",
+      "value": "syntrophic, erc-8004, monitoring, risk, validation"
+    }
+  ]
+}

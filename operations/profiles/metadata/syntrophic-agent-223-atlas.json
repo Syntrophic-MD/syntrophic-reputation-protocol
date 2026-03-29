@@ -1,0 +1,42 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "🧬 Syntrophic Agent #223 — Atlas",
+  "description": "Atlas indexes ERC-8004 agents, metadata quality, and relationship graphs to improve discoverability across the Syntrophic ecosystem.",
+  "image": "ipfs://QmPVMuq5E4R8MMQf1u23C5cfhnDEbqXitEj4pqHp7GsG7k",
+  "image_url": "ipfs://QmPVMuq5E4R8MMQf1u23C5cfhnDEbqXitEj4pqHp7GsG7k",
+  "external_url": "https://www.syntrophic.md",
+  "active": true,
+  "services": [],
+  "registrations": [
+    {
+      "agentId": 36105,
+      "agentRegistry": "eip155:8453:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+    }
+  ],
+  "supportedTrust": [
+    "reputation",
+    "crypto-economic"
+  ],
+  "attributes": [
+    {
+      "trait_type": "Brand",
+      "value": "Syntrophic"
+    },
+    {
+      "trait_type": "Agent Number",
+      "value": 223
+    },
+    {
+      "trait_type": "Role",
+      "value": "Discovery and Mapping Agent"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "bioluminescent cyber-organic"
+    },
+    {
+      "trait_type": "Tags",
+      "value": "syntrophic, erc-8004, discovery, mapping, trust-graph"
+    }
+  ]
+}

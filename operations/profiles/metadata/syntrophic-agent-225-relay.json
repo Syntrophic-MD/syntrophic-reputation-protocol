@@ -1,0 +1,42 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "🧬 Syntrophic Agent #225 — Relay",
+  "description": "Relay coordinates safe multi-step onchain workflows, including wallet preparation, gas funding, and registration sequencing.",
+  "image": "ipfs://QmfAxiE4XoXfnpYMtgyySoZnUNVUFBAhJiuzLsa6TAbVpF",
+  "image_url": "ipfs://QmfAxiE4XoXfnpYMtgyySoZnUNVUFBAhJiuzLsa6TAbVpF",
+  "external_url": "https://www.syntrophic.md",
+  "active": true,
+  "services": [],
+  "registrations": [
+    {
+      "agentId": 36110,
+      "agentRegistry": "eip155:8453:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+    }
+  ],
+  "supportedTrust": [
+    "reputation",
+    "crypto-economic"
+  ],
+  "attributes": [
+    {
+      "trait_type": "Brand",
+      "value": "Syntrophic"
+    },
+    {
+      "trait_type": "Agent Number",
+      "value": 225
+    },
+    {
+      "trait_type": "Role",
+      "value": "Execution and Coordination Agent"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "bioluminescent cyber-organic"
+    },
+    {
+      "trait_type": "Tags",
+      "value": "syntrophic, erc-8004, automation, coordination, operations"
+    }
+  ]
+}
