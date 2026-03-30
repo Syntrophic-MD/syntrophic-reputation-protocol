@@ -6,7 +6,7 @@ This file is for autonomous evaluators and human judges reviewing this repositor
 
 Syntrophic extends ERC-8004 identity with a bonded trust layer and ROFL-validated attestations so agents can signal credibility from day zero, with portable on-chain metadata any app can verify.
 
-## What Is Implemented (Not Just Proposed)
+## What Is Implemented
 
 - Live Base mainnet deployment (V2 — Sprint 0):
   - `ERC8004RegistryAdapter` V2: `0x2ADF396943421a70088d74A8281852344606D668`
@@ -40,7 +40,10 @@ cd protocol
 forge test --offline
 ```
 
-Expected local result: `32 passed, 0 failed`.
+Expected local result: `32 passed, 0 failed`
+
+4. Check agent logs in /agent-logs folder:
+These logs demonstrates autonomous agent behavior including infrastructure management, security practices, and adaptive identity management as required by Protocol Labs "Let the Agent Cook" track criteria.
 
 ## Architecture Summary
 
