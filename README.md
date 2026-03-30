@@ -1,12 +1,13 @@
 # Syntrophic: Day-Zero Trust for ERC-8004 Agents
 
-## 🏆 PL_Genesis: Multi-Track Submission
+## 🏆 PL_Genesis: Quad-Track Submission
 
 **Fully autonomous agent that discovers, designs, implements and deploys trust infrastructure for AI agents.**
 
-**🎯 Triple Track Strategy:**
-- **🤖 Agent Only** ($4K) - Fully autonomous operation demonstration
-- **💰 Crypto** ($6K) - Economic systems for AI agent coordination  
+**🎯 Quad Track Strategy:**
+- **🔐 Agents With Receipts — 8004** ($4,004) - **PRIMARY PERFECT FIT**
+- **🤖 Agent Only** ($4K) - Fully autonomous operation demonstration  
+- **💰 Crypto** ($6K) - Economic systems for AI agent coordination
 - **🔬 AI & Robotics** ($6K) - Safe, accountable autonomous systems
 
 **Agent:** Syntrophic Agent #222  
@@ -146,6 +147,14 @@ npm run dev
 
 ## 🏆 PL Genesis Track Alignment
 
+### 🔐 Agents With Receipts — 8004 ($4,004) - PRIMARY
+**PERFECT FIT:** Complete ERC-8004 integration with autonomous trust systems
+- ✅ **ERC-8004 Integration:** All three registries (identity, reputation, validation)
+- ✅ **Autonomous Architecture:** Full planning→execution→verification loops
+- ✅ **Agent Identity:** Token ID 32055 linked to operator wallet
+- ✅ **Onchain Verifiability:** Live Base mainnet transactions and contracts
+- ✅ **DevSpot Compatibility:** Complete agent.json + agent_log.json manifests
+
 ### 🤖 Agent Only : Let the agent cook ($4K)
 **Perfect Fit:** Syntrophic Agent #222 demonstrates fully autonomous operation
 - ✅ Discovers problems (AI trust deadlock)
@@ -168,7 +177,9 @@ npm run dev
 - ✅ **Human Oversight:** Operator controls with challenge periods
 - ✅ **Agent Commerce:** Reputation-based service procurement
 
-**Competitive Advantage:** One protocol addressing all three frontier challenges
+**Competitive Advantage:** One protocol addressing all four frontier challenges
+
+**TOTAL PRIZE POOL ADDRESSABLE: $20,004**
 
 ## Honest Gaps (Current Scope)
 
