@@ -5,6 +5,7 @@ import {Test} from "forge-std/Test.sol";
 
 import {SBPVault} from "../src/SBPVault.sol";
 import {IERC8004Registry} from "../src/interfaces/IERC8004Registry.sol";
+import {ISBPRegistryAdapter} from "../src/interfaces/ISBPRegistryAdapter.sol";
 import {MockRegistryAdapter} from "../src/mocks/MockRegistryAdapter.sol";
 import {MockERC8004Registry} from "../src/mocks/MockERC8004Registry.sol";
 
@@ -190,6 +191,100 @@ contract SBPVaultTest is Test {
         vm.expectRevert(SBPVault.NotBondStaker.selector);
         vault.withdraw(AGENT_ID);
     }
+
+    // --- bondFor tests ---
+
+    function testBondFor() public {
+        address factory = makeAddr("factory");
+        vm.deal(factory, 1 ether);
+        identityRegistry.seedAgent(99, factory, factory, "https://agent.uri");
+
+        vm.prank(factory);
+        vault.bondFor{value: BOND_AMOUNT}(99, alice);
+
+        SBPVault.BondStatus memory status = vault.getBondStatus(99);
+        assertTrue(status.isBonded);
+        assertEq(status.staker, alice);
+        assertEq(status.score, 100);
+        assertEq(adapter.bondCalls(), 1);
+    }
+
+    function testBondForRevertsOnZeroBeneficiary() public {
+        vm.prank(alice);
+        vm.expectRevert(SBPVault.BeneficiaryIsZero.selector);
+        vault.bondFor{value: BOND_AMOUNT}(AGENT_ID, address(0));
+    }
+
+    function testBondForRevertsWhenCallerIsNotOwner() public {
+        vm.prank(bob);
+        vm.expectRevert(abi.encodeWithSelector(SBPVault.NotAgentOwner.selector, alice));
+        vault.bondFor{value: BOND_AMOUNT}(AGENT_ID, bob);
+    }
+
+    function testBondForBeneficiaryCanUnstakeAndWithdraw() public {
+        address factory = makeAddr("factory");
+        vm.deal(factory, 1 ether);
+        identityRegistry.seedAgent(99, factory, factory, "https://agent.uri");
+
+        vm.prank(factory);
+        vault.bondFor{value: BOND_AMOUNT}(99, alice);
+
+        // Transfer NFT to alice so owner matches staker
+        vm.prank(factory);
+        identityRegistry.transferFrom(factory, alice, 99);
+
+        // Update score to high-trust for instant unstake
+        SBPVault.ScoreAttestation memory att = SBPVault.ScoreAttestation({
+            agentId: 99,
+            score: 90,
+            reviewCount: 11,
+            nonce: 1,
+            deadline: uint64(block.timestamp + 1 hours)
+        });
+        bytes32 digest = vault.hashScoreAttestation(att);
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(ROFL_SIGNER_PK, digest);
+        vault.updateScore(att, abi.encodePacked(r, s, v));
+
+        vm.prank(alice);
+        vault.requestUnstake(99);
+
+        uint256 balBefore = alice.balance;
+        vm.prank(alice);
+        vault.withdraw(99);
+        assertEq(alice.balance, balBefore + BOND_AMOUNT);
+        assertFalse(vault.isBonded(99));
+    }
+
+    // --- bondStrict tests ---
+
+    function testBondStrict() public {
+        adapter.setCanWrite(AGENT_ID, true);
+        vm.prank(alice);
+        vault.bondStrict{value: BOND_AMOUNT}(AGENT_ID);
+
+        assertTrue(vault.isBonded(AGENT_ID));
+        assertEq(vault.getBondStatus(AGENT_ID).staker, alice);
+    }
+
+    function testBondStrictRevertsWhenAdapterNotSet() public {
+        SBPVault vaultNoAdapter = new SBPVault(
+            communityRewards, roflSigner,
+            IERC8004Registry(address(identityRegistry)),
+            ISBPRegistryAdapter(address(0))
+        );
+        vm.prank(alice);
+        vm.expectRevert(SBPVault.AdapterNotSet.selector);
+        vaultNoAdapter.bondStrict{value: BOND_AMOUNT}(AGENT_ID);
+    }
+
+    function testBondStrictRevertsWhenCannotWrite() public {
+        // canWrite defaults to false
+        vm.prank(alice);
+        vm.expectRevert(abi.encodeWithSelector(SBPVault.AdapterCannotWrite.selector, AGENT_ID));
+        vault.bondStrict{value: BOND_AMOUNT}(AGENT_ID);
+    }
+
+    // --- helpers ---
 
     function _bondAsAlice() internal {
         vm.prank(alice);

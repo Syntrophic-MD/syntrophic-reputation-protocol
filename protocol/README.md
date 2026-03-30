@@ -3,20 +3,32 @@
 Syntrophic Bond Protocol is a decentralized trust layer for ERC-8004 agents.
 Agents post a performance bond on Base and can be slashed via Oasis ROFL-backed attestations when behavior drops below trust thresholds.
 
-This repo contains a Foundry implementation of SBP v1 contract primitives:
+This repo contains a Foundry implementation of SBP contract primitives:
 - Bonding with fixed hackathon bond amount (`0.00001 ETH`)
 - Tiered challenge windows for unstake requests
 - EIP-712 score/slash attestations signed by a ROFL signer
 - Automatic slashing to a community rewards address
 - 30-day cooldown after slash
+- Atomic register+bond via `SyntrophicOnboarder` (Sprint 0)
+- Strict bonding mode that reverts on metadata sync failure
+- Metadata backfill via `syncBondMetadata`
 
 ## Contracts
 
-- `src/SBPVault.sol`: Core vault for bonding, score updates, unstake, withdraw, and slashing.
-- `src/interfaces/ISBPRegistryAdapter.sol`: Adapter interface for integrating ERC-8004 registry metadata updates.
+- `src/SBPVault.sol`: Core vault — `bond`, `bondFor`, `bondStrict`, score updates, unstake, withdraw, slashing.
+- `src/SyntrophicOnboarder.sol`: Factory for atomic ERC-8004 register + SBP bond in one transaction.
+- `src/adapters/ERC8004RegistryAdapter.sol`: Writes `syntrophic.*` metadata to ERC-8004, includes `syncBondMetadata` backfill.
+- `src/interfaces/ISBPRegistryAdapter.sol`: Adapter callback + `canWrite` interface.
+- `src/interfaces/ISBPVault.sol`: Minimal vault view interface for cross-contract reads.
 - `src/interfaces/IERC8004Registry.sol`: Typed ERC-8004 interface from the verified Base implementation ABI.
-- `src/adapters/ERC8004RegistryAdapter.sol`: Concrete adapter that writes Syntrophic metadata keys (`syntrophic.*`) into ERC-8004.
-- `src/mocks/MockRegistryAdapter.sol`: Mock adapter for tests.
+
+## Live Deployment (Base Mainnet)
+
+| Contract | V2 Address | V1 Address (legacy) |
+|----------|-----------|-------------------|
+| Adapter | `0x2ADF396943421a70088d74A8281852344606D668` | `0x63DCE10906BB3D3C8280A3fa578594D261C4b804` |
+| Vault | `0xFdB160B2B2f2e6189895398563D907fD8239d4e3` | `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248` |
+| Onboarder | `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4` | N/A |
 
 ## Test
 
@@ -38,7 +50,13 @@ export ROFL_SIGNER_ADDRESS=0xYourROFLSignerAddress
 
 You can copy `.env.example` to `.env` and fill it locally.
 
-One-shot mainnet deployment (adapter + vault + adapter-vault linking):
+Full stack deployment (adapter + vault + onboarder):
+
+```sh
+forge script script/DeployMainnetStackV2.s.sol:DeployMainnetStackV2 --rpc-url $BASE_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify
+```
+
+V1 one-shot deployment (adapter + vault only):
 
 ```sh
 forge script script/DeployMainnetStack.s.sol:DeployMainnetStack --rpc-url $BASE_RPC_URL --private-key $PRIVATE_KEY --broadcast

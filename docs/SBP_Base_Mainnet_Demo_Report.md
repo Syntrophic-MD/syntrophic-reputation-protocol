@@ -96,6 +96,52 @@ cast --to-dec 0x0000000000000000000000000000000000000000000000000000000069c0a6d7
 cast parse-bytes32-address 0x000000000000000000000000b3e75c11957a23f9a8df2a2eb59513832c8d1248
 ```
 
-## 6) Note on Agent Scaner UI
+## 6) Sprint 0 Deployment — V2 Stack (March 29, 2026)
+
+Deployed three new contracts alongside the original stack. Agent #222 (token 32055) remains bonded on the V1 vault for legacy scanner/website compatibility.
+
+### New Contracts
+
+- `ERC8004RegistryAdapter` V2 (adds `syncBondMetadata()` for metadata backfill)
+  - Address: `0x2ADF396943421a70088d74A8281852344606D668`
+  - BaseScan: https://basescan.org/address/0x2ADF396943421a70088d74A8281852344606D668
+
+- `SBPVault` V2 (adds `bondFor()`, `bondStrict()`)
+  - Address: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
+  - BaseScan: https://basescan.org/address/0xFdB160B2B2f2e6189895398563D907fD8239d4e3
+
+- `SyntrophicOnboarder` (atomic register+bond in one transaction)
+  - Address: `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4`
+  - BaseScan: https://basescan.org/address/0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4
+
+### What Changed
+
+| Feature | V1 | V2 |
+|---------|----|----|
+| `bond()` | Sets staker = msg.sender | Same (refactored to internal `_bond`) |
+| `bondFor(agentId, beneficiary)` | N/A | Sets staker = beneficiary (enables factory pattern) |
+| `bondStrict(agentId)` | N/A | Reverts if adapter can't write metadata |
+| `syncBondMetadata(agentId)` | N/A | Public backfill: reads vault state, writes metadata |
+| `SyntrophicOnboarder.onboard(uri)` | N/A | Atomic register + bond + transfer in one tx |
+
+### Contract Address Summary
+
+| Contract | V1 (legacy, agent #222) | V2 (new agents) |
+|----------|------------------------|-----------------|
+| Adapter | `0x63DCE10906BB3D3C8280A3fa578594D261C4b804` | `0x2ADF396943421a70088d74A8281852344606D668` |
+| Vault | `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248` | `0xFdB160B2B2f2e6189895398563D907fD8239d4e3` |
+| Onboarder | N/A | `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4` |
+
+### V2 CLI Verification
+
+```bash
+# Check vault V2 functions
+cast call 0xFdB160B2B2f2e6189895398563D907fD8239d4e3 "BOND_AMOUNT()(uint256)" --rpc-url https://mainnet.base.org
+
+# Onboard a new agent (register + bond atomically)
+# cast send 0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4 "onboard(string)(uint256)" "ipfs://QmYourAgentURI" --value 0.00001ether --rpc-url https://mainnet.base.org --private-key $PRIVATE_KEY
+```
+
+## 7) Note on Agent Scanner UI
 
 You may not immediately see `syntrophic.*` labels rendered in https://www.syntrophic.md/agents/base/32055 or in third-party UI pages (for example `https://www.8004scan.io/agents/base/32055`) due to indexer/UI parsing behavior. BaseScan read calls above are the source-of-truth for on-chain data.

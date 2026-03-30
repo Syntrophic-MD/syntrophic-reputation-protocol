@@ -3,27 +3,44 @@ pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
 
+import {SBPVault} from "../src/SBPVault.sol";
 import {ERC8004RegistryAdapter} from "../src/adapters/ERC8004RegistryAdapter.sol";
+import {IERC8004Registry} from "../src/interfaces/IERC8004Registry.sol";
+import {ISBPRegistryAdapter} from "../src/interfaces/ISBPRegistryAdapter.sol";
 import {MockERC8004Registry} from "../src/mocks/MockERC8004Registry.sol";
 
 contract ERC8004RegistryAdapterTest is Test {
     uint256 internal constant AGENT_ID = 32055;
+    uint256 internal constant ROFL_SIGNER_PK = 0xA11CE;
+    uint256 internal constant BOND_AMOUNT = 0.00001 ether;
 
+    SBPVault internal realVault;
     address internal vault;
     address internal alice;
+    address internal roflSigner;
+    address internal communityRewards;
 
     MockERC8004Registry internal registry;
     ERC8004RegistryAdapter internal adapter;
 
     function setUp() public {
-        vault = makeAddr("vault");
+        roflSigner = vm.addr(ROFL_SIGNER_PK);
+        communityRewards = makeAddr("communityRewards");
         alice = makeAddr("alice");
 
         registry = new MockERC8004Registry();
         adapter = new ERC8004RegistryAdapter(registry);
-        adapter.setVault(vault);
+
+        realVault = new SBPVault(
+            communityRewards, roflSigner,
+            IERC8004Registry(address(registry)),
+            ISBPRegistryAdapter(address(adapter))
+        );
+        adapter.setVault(address(realVault));
+        vault = address(realVault);
 
         registry.seedAgent(AGENT_ID, alice, alice, "https://syntrophic.md/agents/jaune");
+        vm.deal(alice, 1 ether);
     }
 
     function testOnlyVaultCanCallSyncHooks() public {
@@ -89,5 +106,32 @@ contract ERC8004RegistryAdapterTest is Test {
         assertEq(string(withdrawnStatus), "WITHDRAWN");
         assertEq(abi.decode(score, (uint8)), 0);
         assertEq(abi.decode(reviews, (uint32)), 0);
+    }
+
+    // --- syncBondMetadata tests ---
+
+    function testSyncBondMetadata() public {
+        registry.setAuthorization(AGENT_ID, true);
+
+        // Bond via the real vault
+        vm.prank(alice);
+        realVault.bond{value: BOND_AMOUNT}(AGENT_ID);
+
+        // Clear metadata to simulate a missed sync
+        // (The bond already synced via onBond, so we verify syncBondMetadata rewrites correctly)
+        adapter.syncBondMetadata(AGENT_ID);
+
+        bytes memory status = registry.readMetadata(AGENT_ID, adapter.KEY_STATUS());
+        bytes memory score = registry.readMetadata(AGENT_ID, adapter.KEY_SCORE());
+        bytes memory reviews = registry.readMetadata(AGENT_ID, adapter.KEY_REVIEW_COUNT());
+
+        assertEq(string(status), "BONDED");
+        assertEq(abi.decode(score, (uint8)), 100);
+        assertEq(abi.decode(reviews, (uint32)), 0);
+    }
+
+    function testSyncBondMetadataRevertsWhenNotBonded() public {
+        vm.expectRevert(abi.encodeWithSelector(ERC8004RegistryAdapter.AgentNotBonded.selector, AGENT_ID));
+        adapter.syncBondMetadata(AGENT_ID);
     }
 }

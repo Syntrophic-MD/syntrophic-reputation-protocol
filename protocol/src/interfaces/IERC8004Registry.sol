@@ -12,6 +12,7 @@ interface IERC8004Registry {
     function register(string calldata agentURI, MetadataEntry[] calldata metadata) external returns (uint256 agentId);
 
     function ownerOf(uint256 agentId) external view returns (address owner);
+    function transferFrom(address from, address to, uint256 tokenId) external;
     function tokenURI(uint256 agentId) external view returns (string memory uri);
     function getAgentWallet(uint256 agentId) external view returns (address wallet);
     function isAuthorizedOrOwner(address spender, uint256 agentId) external view returns (bool);

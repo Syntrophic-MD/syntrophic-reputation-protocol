@@ -46,6 +46,9 @@ contract SBPVault {
     error TransferFailed();
     error Reentrancy();
     error NotAgentOwner(address agentOwner);
+    error AdapterNotSet();
+    error AdapterCannotWrite(uint256 agentId);
+    error BeneficiaryIsZero();
 
     struct BondInfo {
         address staker;
@@ -153,6 +156,27 @@ contract SBPVault {
     }
 
     function bond(uint256 agentId) external payable nonReentrant {
+        _bond(agentId, msg.sender);
+    }
+
+    function bondFor(uint256 agentId, address beneficiary) external payable nonReentrant {
+        if (beneficiary == address(0)) {
+            revert BeneficiaryIsZero();
+        }
+        _bond(agentId, beneficiary);
+    }
+
+    function bondStrict(uint256 agentId) external payable nonReentrant {
+        if (address(registryAdapter) == address(0)) {
+            revert AdapterNotSet();
+        }
+        if (!registryAdapter.canWrite(agentId)) {
+            revert AdapterCannotWrite(agentId);
+        }
+        _bond(agentId, msg.sender);
+    }
+
+    function _bond(uint256 agentId, address staker) internal {
         if (msg.value != BOND_AMOUNT) {
             revert InvalidBondAmount();
         }
@@ -174,7 +198,7 @@ contract SBPVault {
 
         uint64 stakeId = ++_nextStakeId;
         _bonds[agentId] = BondInfo({
-            staker: msg.sender,
+            staker: staker,
             amount: uint96(msg.value),
             bondedAt: uint64(block.timestamp),
             unlockBlock: 0,
@@ -189,7 +213,7 @@ contract SBPVault {
             registryAdapter.onBond(agentId, MAX_SCORE, 0, block.timestamp);
         }
 
-        emit AgentBonded(agentId, stakeId, msg.sender, msg.value, block.timestamp);
+        emit AgentBonded(agentId, stakeId, staker, msg.value, block.timestamp);
     }
 
     function updateScore(ScoreAttestation calldata attestation, bytes calldata signature) external {

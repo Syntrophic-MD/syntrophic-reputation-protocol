@@ -5,4 +5,5 @@ interface ISBPRegistryAdapter {
     function onBond(uint256 agentId, uint8 score, uint32 reviewCount, uint256 bondedAt) external;
     function onSlash(uint256 agentId, uint8 score, uint32 reviewCount, uint256 slashedAt) external;
     function onWithdraw(uint256 agentId, uint256 withdrawnAt) external;
+    function canWrite(uint256 agentId) external view returns (bool);
 }

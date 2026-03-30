@@ -13,6 +13,16 @@ contract MockRegistryAdapter is ISBPRegistryAdapter {
     uint32 public lastReviewCount;
     uint256 public lastTimestamp;
 
+    mapping(uint256 => bool) public canWriteResult;
+
+    function setCanWrite(uint256 agentId, bool result) external {
+        canWriteResult[agentId] = result;
+    }
+
+    function canWrite(uint256 agentId) external view returns (bool) {
+        return canWriteResult[agentId];
+    }
+
     function onBond(uint256 agentId, uint8 score, uint32 reviewCount, uint256 bondedAt) external {
         bondCalls += 1;
         lastAgentId = agentId;

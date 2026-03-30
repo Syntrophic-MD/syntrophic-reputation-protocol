@@ -78,6 +78,13 @@ contract MockERC8004Registry is IERC8004Registry {
         metadataValue = _metadata[agentId][keccak256(bytes(metadataKey))];
     }
 
+    function transferFrom(address from, address to, uint256 tokenId) external {
+        if (owners[tokenId] != from) {
+            revert Unauthorized();
+        }
+        owners[tokenId] = to;
+    }
+
     function setMetadata(uint256 agentId, string calldata metadataKey, bytes calldata metadataValue) external {
         if (!writableByAdapter[agentId]) {
             revert Unauthorized();

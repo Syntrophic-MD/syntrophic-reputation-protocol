@@ -3,12 +3,14 @@ pragma solidity ^0.8.13;
 
 import {ISBPRegistryAdapter} from "../interfaces/ISBPRegistryAdapter.sol";
 import {IERC8004Registry} from "../interfaces/IERC8004Registry.sol";
+import {ISBPVault} from "../interfaces/ISBPVault.sol";
 
 contract ERC8004RegistryAdapter is ISBPRegistryAdapter {
     error ZeroAddress();
     error NotOwner();
     error NotVault();
     error VaultAlreadySet();
+    error AgentNotBonded(uint256 agentId);
 
     event MetadataSyncSkipped(uint256 indexed agentId, string reason);
     event MetadataSynced(uint256 indexed agentId, string status, uint8 score, uint32 reviewCount);
@@ -70,6 +72,14 @@ contract ERC8004RegistryAdapter is ISBPRegistryAdapter {
 
     function canWrite(uint256 agentId) public view returns (bool) {
         return registry.isAuthorizedOrOwner(address(this), agentId);
+    }
+
+    function syncBondMetadata(uint256 agentId) external {
+        ISBPVault.BondStatus memory status = ISBPVault(vault).getBondStatus(agentId);
+        if (!status.isBonded) {
+            revert AgentNotBonded(agentId);
+        }
+        _sync(agentId, "BONDED", uint8(status.score), uint32(status.reviewCount), status.bondedAt);
     }
 
     function _sync(uint256 agentId, string memory status, uint8 score, uint32 reviewCount, uint256 timestamp) internal {
