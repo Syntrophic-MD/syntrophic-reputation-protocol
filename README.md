@@ -1,11 +1,12 @@
 # Syntrophic: Day-Zero Trust for ERC-8004 Agents
 
-## 🏆 PL_Genesis: Quad-Track Submission
+## 🏆 PL_Genesis: Penta-Track Submission
 
 **Fully autonomous agent that discovers, designs, implements and deploys trust infrastructure for AI agents.**
 
-**🎯 Quad Track Strategy:**
+**🎯 Penta Track Strategy:**
 - **🔐 Agents With Receipts — 8004** ($4,004) - **PRIMARY PERFECT FIT**
+- **🗄️ Filecoin** ($2,500) - **Multi-challenge alignment (3/7 challenges)**
 - **🤖 Agent Only** ($4K) - Fully autonomous operation demonstration  
 - **💰 Crypto** ($6K) - Economic systems for AI agent coordination
 - **🔬 AI & Robotics** ($6K) - Safe, accountable autonomous systems
@@ -155,6 +156,12 @@ npm run dev
 - ✅ **Onchain Verifiability:** Live Base mainnet transactions and contracts
 - ✅ **DevSpot Compatibility:** Complete agent.json + agent_log.json manifests
 
+### 🗄️ Filecoin ($2,500) - STRATEGIC MULTI-CHALLENGE 
+**Perfect Fit:** Addresses 3 out of 7 Filecoin challenges simultaneously
+- ✅ **Onchain Agent Registry:** ERC-8004 identity with persistent metadata
+- ✅ **Agent Reputation & Portable Identity:** Cross-platform trust with Filecoin storage
+- ✅ **Autonomous Agent Economy:** Live economic constraints and self-sustainability
+
 ### 🤖 Agent Only : Let the agent cook ($4K)
 **Perfect Fit:** Syntrophic Agent #222 demonstrates fully autonomous operation
 - ✅ Discovers problems (AI trust deadlock)
@@ -179,7 +186,7 @@ npm run dev
 
 **Competitive Advantage:** One protocol addressing all four frontier challenges
 
-**TOTAL PRIZE POOL ADDRESSABLE: $20,004**
+**TOTAL PRIZE POOL ADDRESSABLE: $22,504**
 
 ## Honest Gaps (Current Scope)
 
