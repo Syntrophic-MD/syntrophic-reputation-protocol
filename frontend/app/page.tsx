@@ -9,12 +9,12 @@ import { AgentSearch, type AgentSearchFilter } from '@/components/agent-search'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { GlassCard, StatCard, TrustBadge, AgentAvatar } from '@/components/ui'
-import { truncateAddress, getRepLevel, generateMockAgents } from '@/lib/utils'
+import { truncateAddress, getRepLevel } from '@/lib/utils'
 import { HeroButtons } from '@/components/hero-buttons'
 import { fetchAgents, type Agent8004, type AgentsQuery } from '@/lib/api'
 
-const featuredAgents = generateMockAgents(4)
 const HOME_TABLE_LIMIT = 5
+const LEADERBOARD_LIMIT = 4
 
 const stats = [
   { label: 'Total Bonded Agents', value: '12,847', sub: 'on Base network', accent: 'white' as const },
@@ -104,6 +104,25 @@ export default function HomePage() {
 
     return subset.slice(0, HOME_TABLE_LIMIT)
   }, [tableData?.items, tableFilter])
+
+  // Leaderboard: top agents by score
+  const leaderboardQuery: AgentsQuery = useMemo(
+    () => ({
+      page: 1,
+      page_size: LEADERBOARD_LIMIT,
+      sort_by: 'total_score',
+      sort_order: 'desc',
+    }),
+    []
+  )
+
+  const { data: leaderboardData } = useSWR(
+    ['home:leaderboard', leaderboardQuery],
+    ([, query]) => fetchAgents(query),
+    { revalidateOnFocus: false }
+  )
+
+  const leaderboardAgents = leaderboardData?.items ?? []
 
   return (
     <div className="min-h-screen relative">
@@ -509,7 +528,8 @@ export default function HomePage() {
               </div>
 
               <div className="flex flex-col gap-3">
-                {featuredAgents.map((agent, i) => {
+                {leaderboardAgents.map((agent, i) => {
+                  const isBonded = agent.name.toLowerCase().includes('syntrophic')
                   return (
                     <Link key={agent.id} href="/explore" className="block group">
                       <GlassCard
@@ -522,30 +542,37 @@ export default function HomePage() {
                         >
                           {i + 1}
                         </span>
-                        <AgentAvatar name={agent.name} address={agent.address} size={42} />
+                        {agent.image_url ? (
+                          <div className="relative w-[42px] h-[42px] rounded-full overflow-hidden flex-shrink-0 border"
+                            style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+                            <Image src={agent.image_url} alt={agent.name} fill className="object-cover" unoptimized />
+                          </div>
+                        ) : (
+                          <AgentAvatar name={agent.name} address={agent.owner_address} size={42} />
+                        )}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-foreground truncate">{agent.name}</span>
-                            {agent.isVerified && (
+                            {agent.is_verified && (
                               <CheckCircle size={13} className="flex-shrink-0" style={{ color: 'var(--verified)' }} />
                             )}
                           </div>
                           <p className="text-xs address-mono mt-0.5 truncate" style={{ color: 'var(--muted-foreground)' }}>
-                            {truncateAddress(agent.address, 6)}
+                            {truncateAddress(agent.owner_address, 6)}
                           </p>
                         </div>
                         <div className="flex items-center gap-4 flex-shrink-0">
                           <span
                             className="px-2.5 py-1 rounded-full text-[11px] font-semibold hidden sm:inline-flex"
                             style={
-                              agent.isStaked
+                              isBonded
                                 ? { background: 'rgba(0,200,83,0.14)', border: '1px solid rgba(0,200,83,0.35)', color: '#00c853' }
                                 : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', color: 'var(--muted-foreground)' }
                             }
                           >
-                            {agent.isStaked ? 'Bonded' : 'Not Bonded'}
+                            {isBonded ? 'Bonded' : 'Not Bonded'}
                           </span>
-                          <TrustBadge score={agent.reputationScore} size="sm" />
+                          <TrustBadge score={agent.total_score} size="sm" />
                         </div>
                       </GlassCard>
                     </Link>
