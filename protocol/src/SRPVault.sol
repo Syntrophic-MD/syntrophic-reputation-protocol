@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import {ISBPRegistryAdapter} from "./interfaces/ISBPRegistryAdapter.sol";
+import {ISRPRegistryAdapter} from "./interfaces/ISRPRegistryAdapter.sol";
 import {IERC8004Registry} from "./interfaces/IERC8004Registry.sol";
 
-contract SBPVault {
+contract SRPVault {
     uint256 public constant BOND_AMOUNT = 0.00001 ether; // hackathon default
     uint8 public constant MAX_SCORE = 100;
     uint8 public constant SLASH_THRESHOLD = 51; // slash if score < 51
@@ -20,7 +20,7 @@ contract SBPVault {
 
     bytes32 private constant EIP712_DOMAIN_TYPEHASH =
         keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)");
-    bytes32 private constant HASHED_NAME = keccak256("SyntrophicBondProtocol");
+    bytes32 private constant HASHED_NAME = keccak256("SyntrophicReputationProtocol");
     bytes32 private constant HASHED_VERSION = keccak256("1");
 
     uint256 private constant REENTRANCY_UNLOCKED = 1;
@@ -110,7 +110,7 @@ contract SBPVault {
     address public immutable communityRewards;
     address public immutable roflSigner;
     IERC8004Registry public immutable identityRegistry;
-    ISBPRegistryAdapter public immutable registryAdapter;
+    ISRPRegistryAdapter public immutable registryAdapter;
 
     bytes32 private immutable DOMAIN_SEPARATOR;
     uint256 private immutable CACHED_CHAIN_ID;
@@ -126,7 +126,7 @@ contract SBPVault {
         address communityRewards_,
         address roflSigner_,
         IERC8004Registry identityRegistry_,
-        ISBPRegistryAdapter registryAdapter_
+        ISRPRegistryAdapter registryAdapter_
     ) {
         if (communityRewards_ == address(0) || roflSigner_ == address(0)) {
             revert ZeroAddress();

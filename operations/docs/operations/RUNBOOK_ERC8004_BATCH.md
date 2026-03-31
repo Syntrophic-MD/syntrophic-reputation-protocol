@@ -41,8 +41,8 @@ scripts/erc8004_batch_register.sh --count 5 --register-mode uri --uri-prefix htt
 - `report.json` (sensitive): tx hashes + registration details
 - `summary.csv` (safe to share): address + agent ID + tx hashes + verification status
 
-## SBP Batch Bonding
-Use this to bond already-registered ERC-8004 agent IDs via Syntrophic Bond Protocol.
+## SRP Batch Bonding
+Use this to bond already-registered ERC-8004 agent IDs via Syntrophic Reputation Protocol.
 
 ```bash
 scripts/sbp_batch_bond.sh \

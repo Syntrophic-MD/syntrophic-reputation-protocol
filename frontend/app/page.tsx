@@ -661,7 +661,7 @@ export default function HomePage() {
               Everything you need to know
             </h2>
             <p className="text-base leading-relaxed max-w-lg" style={{ color: 'var(--muted-foreground)' }}>
-              The full Syntrophic Bond Protocol documented in the ERC draft specification — covering validation registry, staking mechanics, trust scoring, slashing rules, and integration guides.
+              The full Syntrophic Reputation Protocol documented in the ERC draft specification — covering validation registry, staking mechanics, trust scoring, slashing rules, and integration guides.
             </p>
             <Link href="/erc-draft" className="btn-primary flex items-center gap-2 text-base px-8 py-3">
               Read the ERC Draft <ArrowRight size={16} />

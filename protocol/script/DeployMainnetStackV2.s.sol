@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import {Script} from "forge-std/Script.sol";
 import {console2} from "forge-std/console2.sol";
 
-import {SBPVault} from "../src/SBPVault.sol";
+import {SRPVault} from "../src/SRPVault.sol";
 import {IERC8004Registry} from "../src/interfaces/IERC8004Registry.sol";
 import {ERC8004RegistryAdapter} from "../src/adapters/ERC8004RegistryAdapter.sol";
 import {SyntrophicOnboarder} from "../src/SyntrophicOnboarder.sol";
@@ -16,7 +16,7 @@ contract DeployMainnetStackV2 is Script {
 
     function run()
         external
-        returns (ERC8004RegistryAdapter adapter, SBPVault vault, SyntrophicOnboarder onboarder)
+        returns (ERC8004RegistryAdapter adapter, SRPVault vault, SyntrophicOnboarder onboarder)
     {
         if (block.chainid != 8453) {
             revert WrongChain(block.chainid);
@@ -33,7 +33,7 @@ contract DeployMainnetStackV2 is Script {
         adapter = new ERC8004RegistryAdapter(IERC8004Registry(registry));
 
         // 2. Deploy vault with adapter
-        vault = new SBPVault(communityRewards, roflSigner, IERC8004Registry(registry), adapter);
+        vault = new SRPVault(communityRewards, roflSigner, IERC8004Registry(registry), adapter);
 
         // 3. Wire adapter to vault (one-time)
         adapter.setVault(address(vault));

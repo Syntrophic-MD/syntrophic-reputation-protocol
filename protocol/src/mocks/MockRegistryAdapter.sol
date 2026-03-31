@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import {ISBPRegistryAdapter} from "../interfaces/ISBPRegistryAdapter.sol";
+import {ISRPRegistryAdapter} from "../interfaces/ISRPRegistryAdapter.sol";
 
-contract MockRegistryAdapter is ISBPRegistryAdapter {
+contract MockRegistryAdapter is ISRPRegistryAdapter {
     uint256 public bondCalls;
     uint256 public slashCalls;
     uint256 public withdrawCalls;

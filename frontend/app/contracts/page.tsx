@@ -5,7 +5,7 @@ import { GlassCard } from '@/components/ui'
 export const metadata = {
   title: 'Contracts — Syntrophic.md',
   description:
-    'Syntrophic Bond Protocol contracts and Base mainnet deployment report: addresses, transactions, and verification steps.',
+    'Syntrophic Reputation Protocol contracts and Base mainnet deployment report: addresses, transactions, and verification steps.',
 }
 
 function AddressLink({ href, label }: { href: string; label: string }) {

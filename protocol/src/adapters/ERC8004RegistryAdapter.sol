@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
 
-import {ISBPRegistryAdapter} from "../interfaces/ISBPRegistryAdapter.sol";
+import {ISRPRegistryAdapter} from "../interfaces/ISRPRegistryAdapter.sol";
 import {IERC8004Registry} from "../interfaces/IERC8004Registry.sol";
-import {ISBPVault} from "../interfaces/ISBPVault.sol";
+import {ISRPVault} from "../interfaces/ISRPVault.sol";
 
-contract ERC8004RegistryAdapter is ISBPRegistryAdapter {
+contract ERC8004RegistryAdapter is ISRPRegistryAdapter {
     error ZeroAddress();
     error NotOwner();
     error NotVault();
@@ -75,7 +75,7 @@ contract ERC8004RegistryAdapter is ISBPRegistryAdapter {
     }
 
     function syncBondMetadata(uint256 agentId) external {
-        ISBPVault.BondStatus memory status = ISBPVault(vault).getBondStatus(agentId);
+        ISRPVault.BondStatus memory status = ISRPVault(vault).getBondStatus(agentId);
         if (!status.isBonded) {
             revert AgentNotBonded(agentId);
         }

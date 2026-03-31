@@ -10,11 +10,11 @@ Syntrophic extends ERC-8004 identity with a bonded trust layer and ROFL-validate
 
 - Live Base mainnet deployment (V2 — Sprint 0):
   - `ERC8004RegistryAdapter` V2: `0x2ADF396943421a70088d74A8281852344606D668`
-  - `SBPVault` V2: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
+  - `SRPVault` V2: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
   - `SyntrophicOnboarder`: `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4`
   - Legacy V1 vault (agent #222): `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
 - Working contract stack in `protocol/`:
-  - `SBPVault` (bond/bondFor/bondStrict/updateScore/requestUnstake/executeSlash/withdraw)
+  - `SRPVault` (bond/bondFor/bondStrict/updateScore/requestUnstake/executeSlash/withdraw)
   - `ERC8004RegistryAdapter` (syncs `syntrophic.*` metadata keys + syncBondMetadata backfill)
   - `SyntrophicOnboarder` (atomic register+bond in one transaction)
 - Working frontend in `frontend/`:
@@ -22,7 +22,7 @@ Syntrophic extends ERC-8004 identity with a bonded trust layer and ROFL-validate
 
 ## Judge Fast-Path (3-5 Minutes)
 
-1. Read [docs/SBP_Base_Mainnet_Demo_Report.md](docs/SBP_Base_Mainnet_Demo_Report.md) for deployment tx hashes.
+1. Read [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md) for deployment tx hashes.
 2. Confirm metadata on Base:
 
 ```bash
@@ -69,6 +69,6 @@ These logs demonstrates autonomous agent behavior including infrastructure manag
 
 - [README.md](README.md)
 - [docs/ERC-Syntrophic-Draft.md](docs/ERC-Syntrophic-Draft.md)
-- [docs/SBP_Base_Mainnet_Demo_Report.md](docs/SBP_Base_Mainnet_Demo_Report.md)
+- [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md)
 - [protocol/README.md](protocol/README.md)
 - [frontend/README.md](frontend/README.md)

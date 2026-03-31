@@ -3,7 +3,7 @@ pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
 
-import {SBPVault} from "../src/SBPVault.sol";
+import {SRPVault} from "../src/SRPVault.sol";
 import {SyntrophicOnboarder} from "../src/SyntrophicOnboarder.sol";
 import {IERC8004Registry} from "../src/interfaces/IERC8004Registry.sol";
 import {MockRegistryAdapter} from "../src/mocks/MockRegistryAdapter.sol";
@@ -13,7 +13,7 @@ contract SyntrophicOnboarderTest is Test {
     uint256 internal constant ROFL_SIGNER_PK = 0xA11CE;
     uint256 internal constant BOND_AMOUNT = 0.00001 ether;
 
-    SBPVault internal vault;
+    SRPVault internal vault;
     MockRegistryAdapter internal adapter;
     MockERC8004Registry internal registry;
     SyntrophicOnboarder internal onboarder;
@@ -29,7 +29,7 @@ contract SyntrophicOnboarderTest is Test {
 
         adapter = new MockRegistryAdapter();
         registry = new MockERC8004Registry();
-        vault = new SBPVault(communityRewards, roflSigner, IERC8004Registry(address(registry)), adapter);
+        vault = new SRPVault(communityRewards, roflSigner, IERC8004Registry(address(registry)), adapter);
         onboarder = new SyntrophicOnboarder(vault, IERC8004Registry(address(registry)));
 
         vm.deal(alice, 1 ether);
@@ -67,7 +67,7 @@ contract SyntrophicOnboarderTest is Test {
         uint256 agentId = onboarder.onboard{value: BOND_AMOUNT}("https://agent.uri");
 
         // Update score to high-trust for instant unstake
-        SBPVault.ScoreAttestation memory att = SBPVault.ScoreAttestation({
+        SRPVault.ScoreAttestation memory att = SRPVault.ScoreAttestation({
             agentId: agentId,
             score: 90,
             reviewCount: 11,
@@ -91,7 +91,7 @@ contract SyntrophicOnboarderTest is Test {
 
     function testOnboardRevertsOnZeroAddressVault() public {
         vm.expectRevert(SyntrophicOnboarder.ZeroAddress.selector);
-        new SyntrophicOnboarder(SBPVault(address(0)), IERC8004Registry(address(registry)));
+        new SyntrophicOnboarder(SRPVault(address(0)), IERC8004Registry(address(registry)));
     }
 
     function testOnboardRevertsOnZeroAddressRegistry() public {

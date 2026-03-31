@@ -320,11 +320,11 @@ export default async function AgentPage({ params }: { params: Promise<{ slug: st
             })}
           </div>
 
-          {/* ── Syntrophic Bond Status ── */}
+          {/* ── Syntrophic Reputation Status ── */}
           {hasSyntrophic && (
             <GlassCard className="p-6 flex flex-col gap-5">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                <SectionHeader label="Live Mainnet Deployment" title="Syntrophic Bonding Status" icon={Shield} />
+                <SectionHeader label="Live Mainnet Deployment" title="Syntrophic Reputation Status" icon={Shield} />
                 {syntrophic.status && (
                   <span
                     className="px-3 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 w-fit"

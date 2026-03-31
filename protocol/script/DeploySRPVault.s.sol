@@ -3,14 +3,14 @@ pragma solidity ^0.8.13;
 
 import {Script} from "forge-std/Script.sol";
 
-import {SBPVault} from "../src/SBPVault.sol";
-import {ISBPRegistryAdapter} from "../src/interfaces/ISBPRegistryAdapter.sol";
+import {SRPVault} from "../src/SRPVault.sol";
+import {ISRPRegistryAdapter} from "../src/interfaces/ISRPRegistryAdapter.sol";
 import {IERC8004Registry} from "../src/interfaces/IERC8004Registry.sol";
 
-contract DeploySBPVault is Script {
+contract DeploySRPVault is Script {
     error WrongChain(uint256 chainId);
 
-    function run() external returns (SBPVault vault) {
+    function run() external returns (SRPVault vault) {
         if (block.chainid != 8453) {
             revert WrongChain(block.chainid);
         }
@@ -21,8 +21,8 @@ contract DeploySBPVault is Script {
         address registryAdapter = vm.envOr("REGISTRY_ADAPTER_ADDRESS", address(0));
 
         vm.startBroadcast();
-        vault = new SBPVault(
-            communityRewards, roflSigner, IERC8004Registry(registry), ISBPRegistryAdapter(registryAdapter)
+        vault = new SRPVault(
+            communityRewards, roflSigner, IERC8004Registry(registry), ISRPRegistryAdapter(registryAdapter)
         );
         vm.stopBroadcast();
     }

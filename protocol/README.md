@@ -1,9 +1,9 @@
-# Syntrophic Bond Protocol (SBP)
+# Syntrophic Reputation Protocol (SRP)
 
-Syntrophic Bond Protocol is a decentralized trust layer for ERC-8004 agents.
+Syntrophic Reputation Protocol is a decentralized trust layer for ERC-8004 agents.
 Agents post a performance bond on Base and can be slashed via Oasis ROFL-backed attestations when behavior drops below trust thresholds.
 
-This repo contains a Foundry implementation of SBP contract primitives:
+This repo contains a Foundry implementation of SRP contract primitives:
 - Bonding with fixed hackathon bond amount (`0.00001 ETH`)
 - Tiered challenge windows for unstake requests
 - EIP-712 score/slash attestations signed by a ROFL signer
@@ -15,11 +15,11 @@ This repo contains a Foundry implementation of SBP contract primitives:
 
 ## Contracts
 
-- `src/SBPVault.sol`: Core vault — `bond`, `bondFor`, `bondStrict`, score updates, unstake, withdraw, slashing.
-- `src/SyntrophicOnboarder.sol`: Factory for atomic ERC-8004 register + SBP bond in one transaction.
+- `src/SRPVault.sol`: Core vault — `bond`, `bondFor`, `bondStrict`, score updates, unstake, withdraw, slashing.
+- `src/SyntrophicOnboarder.sol`: Factory for atomic ERC-8004 register + SRP bond in one transaction.
 - `src/adapters/ERC8004RegistryAdapter.sol`: Writes `syntrophic.*` metadata to ERC-8004, includes `syncBondMetadata` backfill.
-- `src/interfaces/ISBPRegistryAdapter.sol`: Adapter callback + `canWrite` interface.
-- `src/interfaces/ISBPVault.sol`: Minimal vault view interface for cross-contract reads.
+- `src/interfaces/ISRPRegistryAdapter.sol`: Adapter callback + `canWrite` interface.
+- `src/interfaces/ISRPVault.sol`: Minimal vault view interface for cross-contract reads.
 - `src/interfaces/IERC8004Registry.sol`: Typed ERC-8004 interface from the verified Base implementation ABI.
 
 ## Live Deployment (Base Mainnet)
@@ -70,12 +70,12 @@ forge script script/DeployERC8004RegistryAdapter.s.sol:DeployERC8004RegistryAdap
 
 ```sh
 # Copy deployed adapter address into REGISTRY_ADAPTER_ADDRESS first
-forge script script/DeploySBPVault.s.sol:DeploySBPVault --rpc-url $BASE_RPC_URL --private-key $PRIVATE_KEY --broadcast
+forge script script/DeploySRPVault.s.sol:DeploySRPVault --rpc-url $BASE_RPC_URL --private-key $PRIVATE_KEY --broadcast
 ```
 
 ```sh
 # Set adapter -> vault link once (adapter owner only)
-export SBP_VAULT_ADDRESS=0xYourDeployedVault
+export SRP_VAULT_ADDRESS=0xYourDeployedVault
 export REGISTRY_ADAPTER_ADDRESS=0xYourDeployedAdapter
 forge script script/SetAdapterVault.s.sol:SetAdapterVault --rpc-url $BASE_RPC_URL --private-key $PRIVATE_KEY --broadcast
 ```
@@ -83,7 +83,7 @@ forge script script/SetAdapterVault.s.sol:SetAdapterVault --rpc-url $BASE_RPC_UR
 Verify on BaseScan:
 
 ```sh
-forge verify-contract --chain-id 8453 --etherscan-api-key $BASESCAN_API_KEY <DEPLOYED_VAULT_ADDRESS> src/SBPVault.sol:SBPVault
+forge verify-contract --chain-id 8453 --etherscan-api-key $BASESCAN_API_KEY <DEPLOYED_VAULT_ADDRESS> src/SRPVault.sol:SRPVault
 ```
 
 ## Syntrophic Agent #224: Register + Fetch `agentId`

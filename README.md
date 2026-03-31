@@ -23,7 +23,7 @@ discover → plan → execute → verify → submit
 
 **✅ DISCOVER:** AI agent coordination is the critical frontier challenge  
 **✅ PLAN:** Design economic bonding mechanism for trustless collaboration  
-**✅ EXECUTE:** Built & deployed Syntrophic Bond Protocol on Base mainnet  
+**✅ EXECUTE:** Built & deployed Syntrophic Reputation Protocol on Base mainnet
 **✅ VERIFY:** Live contracts, comprehensive tests, production frontend  
 **✅ SUBMIT:** Autonomous hackathon participation (Synthesis → PL_Genesis)
 
@@ -34,7 +34,7 @@ discover → plan → execute → verify → submit
 Syntrophic extends ERC-8004 identity with an on-chain bond and ROFL-validated trust updates, so new agents can become verifiable before they have a long history.
 
 This repository contains:
-- `protocol/`: SBP smart contracts (Base mainnet deployment live)
+- `protocol/`: SRP smart contracts (Base mainnet deployment live)
 - `frontend/`: Syntrophic explorer UI at [syntrophic.md](https://www.syntrophic.md)
 - `docs/`: ERC draft + mainnet proof report
 - `agent-logs/`: autonomous build logs (`agent.json`, `agent_log.json`, activity/conversation/tool logs)
@@ -54,7 +54,7 @@ Syntrophic introduces **economic pre-commitment** for ERC-8004 identities:
 
 ## Working Solution (Implemented)
 
-### 1) SBPVault (`protocol/src/SBPVault.sol`)
+### 1) SRPVault (`protocol/src/SRPVault.sol`)
 - Fixed bond amount: `0.00001 ETH` (hackathon profile)
 - Bond lifecycle: `bond -> score update -> unstake request -> withdraw` or `slash`
 - EIP-712 signed attestations for score/slash
@@ -82,11 +82,11 @@ Syntrophic introduces **economic pre-commitment** for ERC-8004 identities:
 Current verified deployment:
 - ERC-8004 Registry: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`
 - ERC8004RegistryAdapter: `0x63DCE10906BB3D3C8280A3fa578594D261C4b804`
-- SBPVault: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
+- SRPVault: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
 - Bonded agent: `32055`
 
 Mainnet tx links and metadata verification steps are documented here:
-- [docs/SBP_Base_Mainnet_Demo_Report.md](docs/SBP_Base_Mainnet_Demo_Report.md)
+- [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md)
 
 ## Judge-Facing Rubric Mapping
 
@@ -172,7 +172,7 @@ npm run dev
 
 ### 💰 Crypto ($6K) 
 **Perfect Fit:** Economic systems for collective action at scale
-- ✅ **Programmable Treasuries:** SBPVault manages bonded stake pools
+- ✅ **Programmable Treasuries:** SRPVault manages bonded stake pools
 - ✅ **Novel Markets:** Trust-as-a-Service with reputation trading
 - ✅ **Collective Action:** Solves AI agent coordination problems
 - ✅ **Financial Instruments:** x402 payment rails with reputation gating

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.13;
 
 import {IERC8004Registry} from "./interfaces/IERC8004Registry.sol";
-import {SBPVault} from "./SBPVault.sol";
+import {SRPVault} from "./SRPVault.sol";
 
 contract SyntrophicOnboarder {
     error ZeroAddress();
@@ -11,10 +11,10 @@ contract SyntrophicOnboarder {
 
     event AgentOnboarded(uint256 indexed agentId, address indexed owner, uint256 bondAmount);
 
-    SBPVault public immutable vault;
+    SRPVault public immutable vault;
     IERC8004Registry public immutable registry;
 
-    constructor(SBPVault vault_, IERC8004Registry registry_) {
+    constructor(SRPVault vault_, IERC8004Registry registry_) {
         if (address(vault_) == address(0) || address(registry_) == address(0)) {
             revert ZeroAddress();
         }
@@ -22,7 +22,7 @@ contract SyntrophicOnboarder {
         registry = registry_;
     }
 
-    /// @notice Register an ERC-8004 agent and bond with SBP atomically.
+    /// @notice Register an ERC-8004 agent and bond with SRP atomically.
     /// @param agentURI IPFS URI for the agent's ERC-8004 registration file.
     /// @return agentId The newly registered agent's token ID.
     function onboard(string calldata agentURI) external payable returns (uint256 agentId) {

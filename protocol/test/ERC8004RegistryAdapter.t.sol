@@ -3,10 +3,10 @@ pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
 
-import {SBPVault} from "../src/SBPVault.sol";
+import {SRPVault} from "../src/SRPVault.sol";
 import {ERC8004RegistryAdapter} from "../src/adapters/ERC8004RegistryAdapter.sol";
 import {IERC8004Registry} from "../src/interfaces/IERC8004Registry.sol";
-import {ISBPRegistryAdapter} from "../src/interfaces/ISBPRegistryAdapter.sol";
+import {ISRPRegistryAdapter} from "../src/interfaces/ISRPRegistryAdapter.sol";
 import {MockERC8004Registry} from "../src/mocks/MockERC8004Registry.sol";
 
 contract ERC8004RegistryAdapterTest is Test {
@@ -14,7 +14,7 @@ contract ERC8004RegistryAdapterTest is Test {
     uint256 internal constant ROFL_SIGNER_PK = 0xA11CE;
     uint256 internal constant BOND_AMOUNT = 0.00001 ether;
 
-    SBPVault internal realVault;
+    SRPVault internal realVault;
     address internal vault;
     address internal alice;
     address internal roflSigner;
@@ -31,10 +31,10 @@ contract ERC8004RegistryAdapterTest is Test {
         registry = new MockERC8004Registry();
         adapter = new ERC8004RegistryAdapter(registry);
 
-        realVault = new SBPVault(
+        realVault = new SRPVault(
             communityRewards, roflSigner,
             IERC8004Registry(address(registry)),
-            ISBPRegistryAdapter(address(adapter))
+            ISRPRegistryAdapter(address(adapter))
         );
         adapter.setVault(address(realVault));
         vault = address(realVault);

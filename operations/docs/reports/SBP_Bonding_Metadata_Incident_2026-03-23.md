@@ -1,4 +1,4 @@
-# Syntrophic Bond Protocol (SBP) Audit Report
+# Syntrophic Reputation Protocol (SRP) Audit Report
 
 **Audit date:** 2026-03-23 to 2026-03-24  
 **Report version:** v1.0  

@@ -31,7 +31,19 @@
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f''''image: {d.get\\(\"\"image\"\",\"\"MISSING\"\"\\)}''''\\); print\\(f''''image_url: {d.get\\(\"\"image_url\"\",\"\"MISSING\"\"\\)}''''\\)\")",
       "Bash(PINATA_JWT=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI2YmFhMzkwMS04Yzk5LTRlMzUtYTRlNS00ODVkNzYzZDI5YTMiLCJlbWFpbCI6ImZyaWVuZGx5YWdlbnRAcHJvdG9uLm1lIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiRlJBMSJ9LHsiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiTllDMSJ9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6ImViZjI4ODU5NzI0ZjUxNWUwYmFkIiwic2NvcGVkS2V5U2VjcmV0IjoiMTVjNTk2MTBhODFlNmIzZGI2ODRiMzhiNjA3NTZmN2QwNDlhZjZmNGNkOTFkZDE2MjQ5ZjljMTgzMDUwMTliOSIsImV4cCI6MTgwNTgzODgzOX0.63vVYvEYhhCIN88Dr6XKyHwx185mXkyFFFQl8PbpRn8\")",
       "Bash(curl -s -X POST \"https://api.pinata.cloud/pinning/pinJSONToIPFS\" -H \"Authorization: Bearer $PINATA_JWT\" -H \"Content-Type: application/json\" -d @/tmp/36105_https_metadata.json)",
-      "Bash(REG=0x8004A169FB4a3325136EB29fA0ceB6D2e539a432)"
+      "Bash(REG=0x8004A169FB4a3325136EB29fA0ceB6D2e539a432)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(wc -l /Users/agentbook/code/syntrophic-bond-protocol/protocol/test/*.sol)",
+      "Bash(git mv:*)",
+      "Bash(rm /Users/agentbook/code/syntrophic-bond-protocol/.git/index.lock)",
+      "Bash(git -C /Users/agentbook/code/syntrophic-bond-protocol mv protocol/src/SBPVault.sol protocol/src/SRPVault.sol)",
+      "Bash(git -C /Users/agentbook/code/syntrophic-bond-protocol mv protocol/src/interfaces/ISBPVault.sol protocol/src/interfaces/ISRPVault.sol)",
+      "Bash(git -C /Users/agentbook/code/syntrophic-bond-protocol mv protocol/src/interfaces/ISBPRegistryAdapter.sol protocol/src/interfaces/ISRPRegistryAdapter.sol)",
+      "Bash(git -C /Users/agentbook/code/syntrophic-bond-protocol mv protocol/script/DeploySBPVault.s.sol protocol/script/DeploySRPVault.s.sol)",
+      "Bash(git -C /Users/agentbook/code/syntrophic-bond-protocol mv docs/SBP_Base_Mainnet_Demo_Report.md docs/SRP_Base_Mainnet_Demo_Report.md)",
+      "Bash(grep -r 'Syntrophic Bond Protocol' . --include=*.md --include=*.sol --include=*.tsx --include=*.ts --include=*.js)",
+      "Bash(grep -rn bSBPb . --include=*.md --include=*.sol --include=*.tsx --include=*.ts)"
     ]
   }
 }

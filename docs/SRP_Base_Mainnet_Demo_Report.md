@@ -1,4 +1,4 @@
-# Syntrophic Bond Protocol - Base Mainnet Demo Report
+# Syntrophic Reputation Protocol - Base Mainnet Demo Report
 
 Date: March 22-23, 2026 (CDT/UTC)
 Network: Base Mainnet (Chain ID 8453)
@@ -6,13 +6,13 @@ Agent ID: `32055`
 
 ## 1) What We Built and Deployed
 
-We deployed and verified two contracts for Syntrophic bonding of ERC-8004 agents:
+We deployed and verified two contracts for Syntrophic Reputation staking of ERC-8004 agents:
 
 - `ERC8004RegistryAdapter` (writes `syntrophic.*` metadata to ERC-8004 registry)
   - Address: `0x63DCE10906BB3D3C8280A3fa578594D261C4b804`
   - BaseScan: https://basescan.org/address/0x63DCE10906BB3D3C8280A3fa578594D261C4b804
 
-- `SBPVault` (bonding/staking logic)
+- `SRPVault` (bonding/staking logic)
   - Address: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
   - BaseScan: https://basescan.org/address/0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248
 
@@ -106,7 +106,7 @@ Deployed three new contracts alongside the original stack. Agent #222 (token 320
   - Address: `0x2ADF396943421a70088d74A8281852344606D668`
   - BaseScan: https://basescan.org/address/0x2ADF396943421a70088d74A8281852344606D668
 
-- `SBPVault` V2 (adds `bondFor()`, `bondStrict()`)
+- `SRPVault` V2 (adds `bondFor()`, `bondStrict()`)
   - Address: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
   - BaseScan: https://basescan.org/address/0xFdB160B2B2f2e6189895398563D907fD8239d4e3
 

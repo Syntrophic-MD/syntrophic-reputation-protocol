@@ -93,7 +93,7 @@ That is your differentiation.
 2. Guided ERC-8004 profile creation with smart defaults
 3. One-click onchain registration with sponsored gas
 4. Immediate post-registration checks and explorer links
-5. Optional next-step: Syntrophic bond flow
+5. Optional next-step: Syntrophic reputation staking flow
 
 ### Scope v2
 
@@ -266,7 +266,7 @@ Primary:
 - % users needing manual support
 
 Secondary:
-- % of new registrants who complete Syntrophic bond
+- % of new registrants who complete Syntrophic reputation staking
 - Metadata completeness score
 - Gas sponsorship cost per successful registration
 

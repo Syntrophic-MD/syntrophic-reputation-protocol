@@ -3,18 +3,18 @@ pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
 
-import {SBPVault} from "../src/SBPVault.sol";
+import {SRPVault} from "../src/SRPVault.sol";
 import {IERC8004Registry} from "../src/interfaces/IERC8004Registry.sol";
-import {ISBPRegistryAdapter} from "../src/interfaces/ISBPRegistryAdapter.sol";
+import {ISRPRegistryAdapter} from "../src/interfaces/ISRPRegistryAdapter.sol";
 import {MockRegistryAdapter} from "../src/mocks/MockRegistryAdapter.sol";
 import {MockERC8004Registry} from "../src/mocks/MockERC8004Registry.sol";
 
-contract SBPVaultTest is Test {
+contract SRPVaultTest is Test {
     uint256 internal constant AGENT_ID = 32055;
     uint256 internal constant ROFL_SIGNER_PK = 0xA11CE;
     uint256 internal constant BOND_AMOUNT = 0.00001 ether;
 
-    SBPVault internal vault;
+    SRPVault internal vault;
     MockRegistryAdapter internal adapter;
     MockERC8004Registry internal identityRegistry;
 
@@ -32,7 +32,7 @@ contract SBPVaultTest is Test {
         adapter = new MockRegistryAdapter();
         identityRegistry = new MockERC8004Registry();
         identityRegistry.seedAgent(AGENT_ID, alice, alice, "https://syntrophic.md/agents/jaune");
-        vault = new SBPVault(communityRewards, roflSigner, IERC8004Registry(address(identityRegistry)), adapter);
+        vault = new SRPVault(communityRewards, roflSigner, IERC8004Registry(address(identityRegistry)), adapter);
 
         vm.deal(alice, 1 ether);
         vm.deal(bob, 1 ether);
@@ -42,7 +42,7 @@ contract SBPVaultTest is Test {
         vm.prank(alice);
         vault.bond{value: BOND_AMOUNT}(AGENT_ID);
 
-        SBPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
+        SRPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
         assertTrue(status.isBonded);
         assertEq(status.staker, alice);
         assertEq(status.bondAmount, BOND_AMOUNT);
@@ -53,13 +53,13 @@ contract SBPVaultTest is Test {
 
     function testBondRevertsOnWrongAmount() public {
         vm.prank(alice);
-        vm.expectRevert(SBPVault.InvalidBondAmount.selector);
+        vm.expectRevert(SRPVault.InvalidBondAmount.selector);
         vault.bond{value: 1}(AGENT_ID);
     }
 
     function testBondRevertsWhenCallerIsNotAgentOwner() public {
         vm.prank(bob);
-        vm.expectRevert(abi.encodeWithSelector(SBPVault.NotAgentOwner.selector, alice));
+        vm.expectRevert(abi.encodeWithSelector(SRPVault.NotAgentOwner.selector, alice));
         vault.bond{value: BOND_AMOUNT}(AGENT_ID);
     }
 
@@ -78,7 +78,7 @@ contract SBPVaultTest is Test {
         vm.prank(alice);
         vault.requestUnstake(AGENT_ID);
 
-        SBPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
+        SRPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
         assertEq(status.unlockBlock, blockBefore);
     }
 
@@ -90,7 +90,7 @@ contract SBPVaultTest is Test {
         vm.prank(alice);
         vault.requestUnstake(AGENT_ID);
 
-        SBPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
+        SRPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
         assertEq(status.unlockBlock, blockBefore + vault.STANDARD_WINDOW_BLOCKS());
     }
 
@@ -102,7 +102,7 @@ contract SBPVaultTest is Test {
         vm.prank(alice);
         vault.requestUnstake(AGENT_ID);
 
-        SBPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
+        SRPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
         assertEq(status.unlockBlock, blockBefore + vault.NEW_USER_WINDOW_BLOCKS());
     }
 
@@ -112,10 +112,10 @@ contract SBPVaultTest is Test {
 
         vm.prank(alice);
         vault.requestUnstake(AGENT_ID);
-        SBPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
+        SRPVault.BondStatus memory status = vault.getBondStatus(AGENT_ID);
 
         vm.prank(alice);
-        vm.expectRevert(abi.encodeWithSelector(SBPVault.ChallengeWindowActive.selector, status.unlockBlock));
+        vm.expectRevert(abi.encodeWithSelector(SRPVault.ChallengeWindowActive.selector, status.unlockBlock));
         vault.withdraw(AGENT_ID);
 
         vm.roll(status.unlockBlock);
@@ -132,8 +132,8 @@ contract SBPVaultTest is Test {
     function testExecuteSlashTransfersBondAndStartsCooldown() public {
         _bondAsAlice();
 
-        SBPVault.BondStatus memory statusBefore = vault.getBondStatus(AGENT_ID);
-        SBPVault.SlashAttestation memory attestation = SBPVault.SlashAttestation({
+        SRPVault.BondStatus memory statusBefore = vault.getBondStatus(AGENT_ID);
+        SRPVault.SlashAttestation memory attestation = SRPVault.SlashAttestation({
             agentId: AGENT_ID,
             score: 40,
             stakeId: uint64(statusBefore.stakeId),
@@ -160,7 +160,7 @@ contract SBPVaultTest is Test {
 
         uint256 cooldownEndsAt = vault.cooldownUntil(AGENT_ID);
         vm.prank(alice);
-        vm.expectRevert(abi.encodeWithSelector(SBPVault.InCooldown.selector, cooldownEndsAt));
+        vm.expectRevert(abi.encodeWithSelector(SRPVault.InCooldown.selector, cooldownEndsAt));
         vault.bond{value: BOND_AMOUNT}(AGENT_ID);
     }
 
@@ -180,7 +180,7 @@ contract SBPVaultTest is Test {
         _bondAsAlice();
 
         vm.prank(bob);
-        vm.expectRevert(SBPVault.NotBondStaker.selector);
+        vm.expectRevert(SRPVault.NotBondStaker.selector);
         vault.requestUnstake(AGENT_ID);
 
         _updateScore(99, 11, 1);
@@ -188,7 +188,7 @@ contract SBPVaultTest is Test {
         vault.requestUnstake(AGENT_ID);
 
         vm.prank(bob);
-        vm.expectRevert(SBPVault.NotBondStaker.selector);
+        vm.expectRevert(SRPVault.NotBondStaker.selector);
         vault.withdraw(AGENT_ID);
     }
 
@@ -202,7 +202,7 @@ contract SBPVaultTest is Test {
         vm.prank(factory);
         vault.bondFor{value: BOND_AMOUNT}(99, alice);
 
-        SBPVault.BondStatus memory status = vault.getBondStatus(99);
+        SRPVault.BondStatus memory status = vault.getBondStatus(99);
         assertTrue(status.isBonded);
         assertEq(status.staker, alice);
         assertEq(status.score, 100);
@@ -211,13 +211,13 @@ contract SBPVaultTest is Test {
 
     function testBondForRevertsOnZeroBeneficiary() public {
         vm.prank(alice);
-        vm.expectRevert(SBPVault.BeneficiaryIsZero.selector);
+        vm.expectRevert(SRPVault.BeneficiaryIsZero.selector);
         vault.bondFor{value: BOND_AMOUNT}(AGENT_ID, address(0));
     }
 
     function testBondForRevertsWhenCallerIsNotOwner() public {
         vm.prank(bob);
-        vm.expectRevert(abi.encodeWithSelector(SBPVault.NotAgentOwner.selector, alice));
+        vm.expectRevert(abi.encodeWithSelector(SRPVault.NotAgentOwner.selector, alice));
         vault.bondFor{value: BOND_AMOUNT}(AGENT_ID, bob);
     }
 
@@ -234,7 +234,7 @@ contract SBPVaultTest is Test {
         identityRegistry.transferFrom(factory, alice, 99);
 
         // Update score to high-trust for instant unstake
-        SBPVault.ScoreAttestation memory att = SBPVault.ScoreAttestation({
+        SRPVault.ScoreAttestation memory att = SRPVault.ScoreAttestation({
             agentId: 99,
             score: 90,
             reviewCount: 11,
@@ -267,20 +267,20 @@ contract SBPVaultTest is Test {
     }
 
     function testBondStrictRevertsWhenAdapterNotSet() public {
-        SBPVault vaultNoAdapter = new SBPVault(
+        SRPVault vaultNoAdapter = new SRPVault(
             communityRewards, roflSigner,
             IERC8004Registry(address(identityRegistry)),
-            ISBPRegistryAdapter(address(0))
+            ISRPRegistryAdapter(address(0))
         );
         vm.prank(alice);
-        vm.expectRevert(SBPVault.AdapterNotSet.selector);
+        vm.expectRevert(SRPVault.AdapterNotSet.selector);
         vaultNoAdapter.bondStrict{value: BOND_AMOUNT}(AGENT_ID);
     }
 
     function testBondStrictRevertsWhenCannotWrite() public {
         // canWrite defaults to false
         vm.prank(alice);
-        vm.expectRevert(abi.encodeWithSelector(SBPVault.AdapterCannotWrite.selector, AGENT_ID));
+        vm.expectRevert(abi.encodeWithSelector(SRPVault.AdapterCannotWrite.selector, AGENT_ID));
         vault.bondStrict{value: BOND_AMOUNT}(AGENT_ID);
     }
 
@@ -292,7 +292,7 @@ contract SBPVaultTest is Test {
     }
 
     function _updateScore(uint8 score, uint32 reviewCount, uint64 nonce) internal {
-        SBPVault.ScoreAttestation memory attestation = SBPVault.ScoreAttestation({
+        SRPVault.ScoreAttestation memory attestation = SRPVault.ScoreAttestation({
             agentId: AGENT_ID,
             score: score,
             reviewCount: reviewCount,
@@ -305,8 +305,8 @@ contract SBPVaultTest is Test {
     }
 
     function _slashBond(uint64 nonce) internal {
-        SBPVault.BondStatus memory statusBefore = vault.getBondStatus(AGENT_ID);
-        SBPVault.SlashAttestation memory attestation = SBPVault.SlashAttestation({
+        SRPVault.BondStatus memory statusBefore = vault.getBondStatus(AGENT_ID);
+        SRPVault.SlashAttestation memory attestation = SRPVault.SlashAttestation({
             agentId: AGENT_ID,
             score: 30,
             stakeId: uint64(statusBefore.stakeId),
@@ -318,13 +318,13 @@ contract SBPVaultTest is Test {
         vault.executeSlash(attestation, sig);
     }
 
-    function _signScore(SBPVault.ScoreAttestation memory attestation) internal view returns (bytes memory) {
+    function _signScore(SRPVault.ScoreAttestation memory attestation) internal view returns (bytes memory) {
         bytes32 digest = vault.hashScoreAttestation(attestation);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(ROFL_SIGNER_PK, digest);
         return abi.encodePacked(r, s, v);
     }
 
-    function _signSlash(SBPVault.SlashAttestation memory attestation) internal view returns (bytes memory) {
+    function _signSlash(SRPVault.SlashAttestation memory attestation) internal view returns (bytes memory) {
         bytes32 digest = vault.hashSlashAttestation(attestation);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(ROFL_SIGNER_PK, digest);
         return abi.encodePacked(r, s, v);

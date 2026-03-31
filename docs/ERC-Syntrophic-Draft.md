@@ -1,9 +1,9 @@
 ---
 eip: XXXX
-title: Syntrophic Bond Protocol for AI Agent Trust
-description: ERC-8004-compatible performance bonds for verifiable AI agent trust
+title: Syntrophic Reputation Protocol for AI Agent Trust
+description: ERC-8004-compatible reputation staking for verifiable AI agent trust
 author: Syntrophic Agent #222
-discussions-to: https://ethereum-magicians.org/t/erc-xxxx-syntrophic-bond-protocol-for-decentralized-agents/xxxxx
+discussions-to: https://ethereum-magicians.org/t/erc-xxxx-syntrophic-reputation-protocol-for-decentralized-agents/xxxxx
 status: Draft
 type: Standards Track
 category: ERC
@@ -14,33 +14,33 @@ license: CC0-1.0
 
 ## Simple Summary
 
-Syntrophic Bond Protocol lets an ERC-8004 agent owner stake reputation from day zero by locking ETH as a public performance bond, updating trust state through signed ROFL attestations, and publishing interoperable `syntrophic.*` metadata so any app can verify bonded/slashed/withdrawn status on-chain.
+Syntrophic Reputation Protocol lets an ERC-8004 agent owner stake reputation from day zero by locking ETH as a public performance bond, updating trust state through signed ROFL attestations, and publishing interoperable `syntrophic.*` metadata so any app can verify bonded/slashed/withdrawn status on-chain.
 
 ## Abstract
 
-The Syntrophic Bond Protocol (SBP) defines a trust-minimizing bond layer for ERC-8004 agents. It addresses the day-zero trust gap, where capable new agents cannot participate in high-trust interactions because they have no prior reputation history. An agent owner stakes a fixed ETH bond against an ERC-8004 `agentId`, receives a verifiable bonded status, and becomes slashable by signed attestations from a designated ROFL signer. SBP standardizes the vault lifecycle (bond, score update, unstake, withdraw, slash) and an ERC-8004 metadata bridge (`syntrophic.*` keys) so humans and agents can verify trust state directly on-chain and reuse it across applications.
+The Syntrophic Reputation Protocol (SRP) defines a trust-minimizing bond layer for ERC-8004 agents. It addresses the day-zero trust gap, where capable new agents cannot participate in high-trust interactions because they have no prior reputation history. An agent owner stakes a fixed ETH bond against an ERC-8004 `agentId`, receives a verifiable bonded status, and becomes slashable by signed attestations from a designated ROFL signer. SRP standardizes the vault lifecycle (bond, score update, unstake, withdraw, slash) and an ERC-8004 metadata bridge (`syntrophic.*` keys) so humans and agents can verify trust state directly on-chain and reuse it across applications.
 
 ## Motivation
 
-As agent participation grows across social and communication systems, trust quality degrades without shared verification primitives. SBP is motivated by four concrete failures:
+As agent participation grows across social and communication systems, trust quality degrades without shared verification primitives. SRP is motivated by four concrete failures:
 
 1. **Day-zero trust deadlock**: agents need reputation to gain opportunities, but need opportunities to build reputation.
 2. **Signal-to-noise collapse**: low-cost identity rotation allows spam and impersonation to overwhelm useful agent activity.
 3. **Platform lock-in**: centralized badges are non-portable and can be arbitrarily revoked.
 4. **Unaccountable influence**: actors can affect trust outcomes without posting economic collateral.
 
-SBP introduces portable economic accountability for ERC-8004 identities by attaching stake directly to `agentId` ownership and making slash/withdraw/cooldown transitions explicit on-chain.
+SRP introduces portable economic accountability for ERC-8004 identities by attaching stake directly to `agentId` ownership and making slash/withdraw/cooldown transitions explicit on-chain.
 
 ### Design Goals
 
-SBP is designed to provide primitives for decentralized social coordination where humans and agents can collaborate with less noise and stronger accountability. Implementations SHOULD optimize for:
+SRP is designed to provide primitives for decentralized social coordination where humans and agents can collaborate with less noise and stronger accountability. Implementations SHOULD optimize for:
 
 1. **Day-zero trust signaling**: agents can pre-commit stake before reputation history exists.
 2. **Cross-application portability**: trust state can be reused across inboxes, feeds, marketplaces, and agent-to-agent channels.
 3. **Transparent enforcement**: critical state transitions are auditable and machine-verifiable.
-4. **Composable integration**: downstream protocols can consume SBP state without requiring custom trust backends.
+4. **Composable integration**: downstream protocols can consume SRP state without requiring custom trust backends.
 
-SBP does not standardize one universal off-chain scoring algorithm or one user interface; it standardizes the on-chain trust and accountability surface.
+SRP does not standardize one universal off-chain scoring algorithm or one user interface; it standardizes the on-chain trust and accountability surface.
 
 ## Specification
 
@@ -51,14 +51,14 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 - `agentId`: ERC-8004 token ID (`uint256`).
 - `staker`: The address currently funding an active bond for an `agentId`.
 - `roflSigner`: Trusted signer address whose EIP-712 signatures authorize score/slash attestations.
-- `registryAdapter`: Contract that writes SBP state into ERC-8004 metadata keys.
+- `registryAdapter`: Contract that writes SRP state into ERC-8004 metadata keys.
 
 ### Required Vault Interface
 
 Implementations MUST expose equivalent behavior to the following interface:
 
 ```solidity
-interface ISBPVault {
+interface ISRPVault {
     struct BondStatus {
         bool isBonded;
         address staker;
@@ -203,7 +203,7 @@ An implementation MUST:
 
 Implementations SHOULD use:
 
-- Domain name: `SyntrophicBondProtocol`
+- Domain name: `SyntrophicReputationProtocol`
 - Domain version: `1`
 - Domain fields: `name`, `version`, `chainId`, `verifyingContract`
 
@@ -220,12 +220,12 @@ This standard specifies how scores are authenticated and applied on-chain, but d
 
 ### ERC-8004 Metadata Bridge
 
-SBP metadata SHOULD be written through a dedicated adapter contract called by the vault on lifecycle hooks.
+SRP metadata SHOULD be written through a dedicated adapter contract called by the vault on lifecycle hooks.
 
 Adapter hook interface:
 
 ```solidity
-interface ISBPRegistryAdapter {
+interface ISRPRegistryAdapter {
     function onBond(uint256 agentId, uint8 score, uint32 reviewCount, uint256 bondedAt) external;
     function onSlash(uint256 agentId, uint8 score, uint32 reviewCount, uint256 slashedAt) external;
     function onWithdraw(uint256 agentId, uint256 withdrawnAt) external;
@@ -256,7 +256,7 @@ Implementations SHOULD fail open on metadata sync (skip and emit a diagnostic ev
 
 This specification does not mandate one global bond value across deployments. A deployment MUST expose a fixed `BOND_AMOUNT()` for that vault instance.
 
-Reference SBP mainnet deployment (hackathon profile) uses:
+Reference SRP mainnet deployment (hackathon profile) uses:
 
 - `BOND_AMOUNT = 0.00001 ether`
 - `SLASH_THRESHOLD = 51`
@@ -272,7 +272,7 @@ ERC-8004 identity is keyed by token ID, not wallet address. Using `uint256 agent
 
 ### Metadata as `bytes`
 
-ERC-8004 metadata values are bytes. The SBP key-value schema allows compact, typed encoding while remaining forward-compatible and indexer-friendly.
+ERC-8004 metadata values are bytes. The SRP key-value schema allows compact, typed encoding while remaining forward-compatible and indexer-friendly.
 
 ### Full-Bond Slashing
 
@@ -280,11 +280,11 @@ A full slash penalty gives a clear binary trust signal and simplifies downstream
 
 ## Backwards Compatibility
 
-SBP is opt-in and ERC-8004-compatible:
+SRP is opt-in and ERC-8004-compatible:
 
 - Existing ERC-8004 agents continue unchanged until bonded.
 - Non-participating agents are unaffected.
-- SBP metadata keys are namespaced under `syntrophic.*`.
+- SRP metadata keys are namespaced under `syntrophic.*`.
 
 ## Security Considerations
 
@@ -310,21 +310,21 @@ SBP is opt-in and ERC-8004-compatible:
 
 Current reference implementation is available in this repository:
 
-- Vault: `protocol/src/SBPVault.sol`
+- Vault: `protocol/src/SRPVault.sol`
 - Adapter: `protocol/src/adapters/ERC8004RegistryAdapter.sol`
-- Tests: `protocol/test/SBPVault.t.sol`, `protocol/test/ERC8004RegistryAdapter.t.sol`
+- Tests: `protocol/test/SRPVault.t.sol`, `protocol/test/ERC8004RegistryAdapter.t.sol`
 
 ## Deployment and Verification (Informative)
 
 Live Base mainnet verification artifacts and transaction links are documented in:
 
-- `docs/SBP_Base_Mainnet_Demo_Report.md`
+- `docs/SRP_Base_Mainnet_Demo_Report.md`
 
 Reference addresses for the live deployment described there:
 
 - ERC-8004 Registry: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`
 - ERC8004RegistryAdapter: `0x63DCE10906BB3D3C8280A3fa578594D261C4b804`
-- SBPVault: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
+- SRPVault: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
 
 This report includes:
 

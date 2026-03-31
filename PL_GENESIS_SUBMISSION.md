@@ -2,7 +2,7 @@
 
 ## Penta-Track Submission Strategy 
 
-**Syntrophic Agent #222** and the **Syntrophic Bond Protocol** perfectly align with **FIVE** high-value tracks:
+**Syntrophic Agent #222** and the **Syntrophic Reputation Protocol** perfectly align with **FIVE** high-value tracks:
 
 ### 🔐 PRIMARY TRACK: Agents With Receipts — 8004
 **Sponsor:** Ethereum Foundation | **Prize:** $4,004  
@@ -26,7 +26,7 @@
 
 ## Track Compliance Summary
 
-Our submission simultaneously addresses all three tracks through the **Syntrophic Bond Protocol** - a comprehensive solution for AI agent coordination, economic systems, and safety.
+Our submission simultaneously addresses all three tracks through the **Syntrophic Reputation Protocol** - a comprehensive solution for AI agent coordination, economic systems, and safety.
 
 ### ✅ Required Capabilities Met
 
@@ -35,7 +35,7 @@ Our submission simultaneously addresses all three tracks through the **Syntrophi
 
 - **Discovered:** AI agent trust deadlock in emerging agent economies
 - **Planned:** Economic bonding mechanism with ERC-8004 integration  
-- **Executed:** Built and deployed Syntrophic Bond Protocol on Base mainnet
+- **Executed:** Built and deployed Syntrophic Reputation Protocol on Base mainnet
 - **Verified:** Comprehensive testing, mainnet deployment, production frontend
 - **Submitted:** Autonomous hackathon participation from Synthesis to PL_Genesis
 
@@ -116,7 +116,7 @@ Comprehensive logs showing:
 ## Live Deployment Evidence
 
 ### Base Mainnet Contracts
-- **SBPVault:** 0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248
+- **SRPVault:** 0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248
 - **ERC8004RegistryAdapter:** 0x63DCE10906BB3D3C8280A3fa578594D261C4b804
 - **ERC8004Registry:** 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432
 
@@ -172,7 +172,7 @@ For **PL_Genesis**, the agent autonomously:
 #### 1. ERC-8004 Integration ✅
 **Live onchain transactions on Base mainnet:**
 - **Identity Registry:** Agent #32055 registered at 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432
-- **Reputation Registry:** SBPVault manages bonded reputation at 0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248  
+- **Reputation Registry:** SRPVault manages bonded reputation at 0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248  
 - **Validation Registry:** ERC8004RegistryAdapter syncs trust metadata at 0x63DCE10906BB3D3C8280A3fa578594D261C4b804
 
 **Multiple Registry Usage:** ✅ All three registry types integrated!
@@ -197,7 +197,7 @@ For **PL_Genesis**, the agent autonomously:
 **Comprehensive blockchain evidence:**
 - **Registration Tx:** [0x875c9731...](https://basescan.org/tx/0x875c9731d4390266d5ff974056c724a0dbb1a188a5ea13fef0040ead466a4400)
 - **Self-Custody Tx:** [0x47998dee...](https://basescan.org/tx/0x47998deefff20d8ea98c1af9c9c935c475ff174a9d019063a944cd502f40b5a4)
-- **Contract Deployments:** All SBP contracts verified on BaseScan
+- **Contract Deployments:** All SRP contracts verified on BaseScan
 - **Reputation Updates:** Continuous trust score management via ROFL attestations
 
 #### 5. DevSpot Agent Compatibility ✅
@@ -225,7 +225,7 @@ For **PL_Genesis**, the agent autonomously:
 **✅ Agent Micro-Economies**
 - x402 payment rails with reputation gating
 - Agents can hire other bonded agents for specialized tasks
-- Automatic escrow via SBPVault smart contracts
+- Automatic escrow via SRPVault smart contracts
 
 **✅ Agent-Human Collaboration**  
 - Operator oversight with intervention capabilities
@@ -250,7 +250,7 @@ For **PL_Genesis**, the agent autonomously:
 
 ### 🎯 PERFECT ALIGNMENT: Three Filecoin Challenges
 
-Our Syntrophic Bond Protocol directly addresses **3 out of 7** Filecoin challenges:
+Our Syntrophic Reputation Protocol directly addresses **3 out of 7** Filecoin challenges:
 
 #### ✅ Challenge #2: Onchain Agent Registry
 **"Deploy AI agents as first-class onchain entities with persistent metadata, state, and logs"**
@@ -258,7 +258,7 @@ Our Syntrophic Bond Protocol directly addresses **3 out of 7** Filecoin challeng
 **Our Implementation:**
 - **✅ Ethereum Registry:** ERC-8004 identity at 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432
 - **✅ Persistent Metadata:** Agent capability manifest (agent.json) ready for Filecoin storage
-- **✅ State Management:** SBPVault tracks bonded state and reputation scores
+- **✅ State Management:** SRPVault tracks bonded state and reputation scores
 - **✅ Execution Logs:** Complete autonomous decision logs (agent_log.json) for Filecoin archival
 - **✅ Multi-agent Coordination:** Trust-gated swarm formation and economic coordination
 - **✅ Explorer/Dashboard:** Live at syntrophic.md visualizing agent activity
@@ -277,7 +277,7 @@ Our Syntrophic Bond Protocol directly addresses **3 out of 7** Filecoin challeng
 **"Live onchain economic environment where AI agents operate under real cost constraints"**
 
 **Our Implementation:**
-- **✅ Onchain Budget Rules:** SBPVault enforces stake requirements and bond economics
+- **✅ Onchain Budget Rules:** SRPVault enforces stake requirements and bond economics
 - **✅ Real Cost Constraints:** Agent operates under $50 compute budget (spent $43.15)
 - **✅ Self-Sustaining:** Agent can earn through reputation services and x402 gates
 - **✅ Live Economic Environment:** Production deployment on Base mainnet with real ETH
@@ -318,7 +318,7 @@ Our Syntrophic Bond Protocol directly addresses **3 out of 7** Filecoin challeng
 ### Economic Primitives for AI Agent Coordination
 
 **✅ Programmable Treasuries**
-- **SBPVault:** Bonded stake pools for agent reputation
+- **SRPVault:** Bonded stake pools for agent reputation
 - **Economic Incentives:** Reward cooperation, penalize defection
 - **Automatic Settlement:** Smart contracts handle trust score updates
 
@@ -355,7 +355,7 @@ Our economic system extends beyond traditional finance to solve **AI coordinatio
 **Agent-to-agent payment rails:**
 - **x402 Integration:** Payment attention gating with reputation filters
 - **Service Procurement:** Agents can hire other agents based on verified track records
-- **Automatic Escrow:** SBPVault handles payment release based on performance
+- **Automatic Escrow:** SRPVault handles payment release based on performance
 
 **Reputation systems:**
 - **ERC-8004 Foundation:** Persistent identity across platforms
