@@ -25,11 +25,11 @@ const stats = [
 ]
 
 const trustLevels = [
-  { label: 'Elite', range: '90–100', color: '#00c853', count: 12, desc: 'Maximum stake & zero slashes' },
-  { label: 'Trusted', range: '75–89', color: '#00d4ff', count: 48, desc: 'High stake, verified history' },
-  { label: 'Verified', range: '50–74', color: '#0070f3', count: 103, desc: 'Minimum stake, community proof' },
+  { label: 'Elite', range: '90–100', color: '#00c853', count: 12, desc: 'Top ranked, excellent track record' },
+  { label: 'Trusted', range: '75–89', color: '#00d4ff', count: 48, desc: 'Bonded, high peer endorsements' },
+  { label: 'Bonded', range: '50–74', color: '#0070f3', count: 103, desc: 'Reputation staked with Syntrophic' },
   { label: 'Active', range: '25–49', color: '#ffa000', count: 61, desc: 'Registered, building reputation' },
-  { label: 'New', range: '0–24', color: 'rgba(232,238,248,0.35)', count: 23, desc: 'Freshly staked' },
+  { label: 'New', range: '0–24', color: 'rgba(232,238,248,0.35)', count: 23, desc: 'Freshly registered agent' },
 ]
 
 const howItWorksSteps = [
