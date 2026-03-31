@@ -1,6 +1,7 @@
  'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import useSWR from 'swr'
 import { ArrowRight, CheckCircle, AlertTriangle, ShieldCheck, Layers, GitBranch } from 'lucide-react'
@@ -393,7 +394,14 @@ export default function HomePage() {
                         <td className="px-5 py-4 text-xs" style={{ color: 'var(--muted-foreground)', opacity: 0.4 }}>{i + 1}</td>
                         <td className="px-5 py-4">
                           <Link href="/explore" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                            <AgentAvatar name={agent.name} address={agent.owner_address} size={34} />
+                            {agent.image_url ? (
+                              <div className="relative w-[34px] h-[34px] rounded-full overflow-hidden flex-shrink-0 border"
+                                style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+                                <Image src={agent.image_url} alt={agent.name} fill className="object-cover" unoptimized />
+                              </div>
+                            ) : (
+                              <AgentAvatar name={agent.name} address={agent.owner_address} size={34} />
+                            )}
                             <div>
                               <div className="flex items-center gap-1.5">
                                 <span className="font-semibold text-foreground">{agent.name}</span>
