@@ -8,32 +8,26 @@
     "setup:demo": "bash scripts/setup.sh --demo",
     "setup:start": "bash scripts/setup.sh --demo --start",
     "validate": "bash scripts/validate-env.sh",
-
     "build": "cd protocol && forge build && cd ../frontend && npm run build",
     "build:protocol": "cd protocol && forge build",
     "build:frontend": "cd frontend && npm run build",
-
     "dev": "npm run dev:frontend",
     "dev:frontend": "cd frontend && npm run dev",
-
     "test": "cd protocol && forge test --offline",
     "test:vault": "cd protocol && forge test --match-contract SBPVaultTest --offline",
     "test:adapter": "cd protocol && forge test --match-contract ERC8004RegistryAdapterTest --offline",
     "test:onboarder": "cd protocol && forge test --match-contract SyntrophicOnboarderTest --offline",
     "test:verbose": "cd protocol && forge test --offline -vvv",
     "test:gas": "cd protocol && forge test --offline --gas-report",
-
     "deploy:stack": "cd protocol && forge script script/DeployMainnetStackV2.s.sol:DeployMainnetStackV2 --rpc-url $BASE_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify",
     "deploy:adapter": "cd protocol && forge script script/DeployERC8004RegistryAdapter.s.sol:DeployERC8004RegistryAdapter --rpc-url $BASE_RPC_URL --private-key $PRIVATE_KEY --broadcast",
     "deploy:vault": "cd protocol && forge script script/DeploySBPVault.s.sol:DeploySBPVault --rpc-url $BASE_RPC_URL --private-key $PRIVATE_KEY --broadcast",
     "deploy:onboarder": "cd protocol && forge script script/DeploySyntrophicOnboarder.s.sol:DeploySyntrophicOnboarder --rpc-url $BASE_RPC_URL --private-key $PRIVATE_KEY --broadcast",
-
     "verify:bond": "cast call 0xFdB160B2B2f2e6189895398563D907fD8239d4e3 'BOND_AMOUNT()(uint256)' --rpc-url https://mainnet.base.org",
     "verify:agent": "cast call 0xFdB160B2B2f2e6189895398563D907fD8239d4e3 'isBonded(uint256)(bool)' 32055 --rpc-url https://mainnet.base.org",
     "verify:status": "cast call 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432 'getMetadata(uint256,string)(bytes)' 32055 'syntrophic.status' --rpc-url https://mainnet.base.org",
     "verify:score": "cast call 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432 'getMetadata(uint256,string)(bytes)' 32055 'syntrophic.score' --rpc-url https://mainnet.base.org",
     "verify:all": "npm run verify:bond && npm run verify:agent && npm run verify:status && npm run verify:score",
-
     "lint": "cd frontend && npm run lint",
     "clean": "cd protocol && forge clean && cd ../frontend && rm -rf .next"
   },
@@ -51,5 +45,12 @@
     "attestation",
     "ethereum"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.7.0",
+    "react": "^19.2.4",
+    "swr": "^2.4.1",
+    "tailwind-merge": "^3.5.0"
+  }
 }

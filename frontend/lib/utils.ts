@@ -32,7 +32,7 @@ export function formatDate(date: Date | string): string {
 export function getRepLevel(score: number): { label: string; color: string } {
   if (score >= 90) return { label: 'Elite', color: '#00c853' }
   if (score >= 75) return { label: 'Trusted', color: '#00d4ff' }
-  if (score >= 50) return { label: 'Verified', color: '#0070f3' }
+  if (score >= 50) return { label: 'Bonded', color: '#0070f3' }
   if (score >= 25) return { label: 'Active', color: '#ffa000' }
   return { label: 'New', color: 'rgba(232,238,248,0.4)' }
 }

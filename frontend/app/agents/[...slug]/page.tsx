@@ -19,6 +19,8 @@ import {
   BadgeCheck,
   HeartPulse,
   BarChart3,
+  ChevronDown,
+  Code,
 } from 'lucide-react'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
@@ -26,6 +28,7 @@ import { GlassCard, TrustBadge, AgentAvatar } from '@/components/ui'
 import { truncateAddress, getRepLevel, formatDate } from '@/lib/utils'
 import { fetchAgent, agentInitials, chainName, CHAIN_SLUG_TO_ID, REGISTRY_BY_CHAIN, type AgentDetail } from '@/lib/api'
 import { CopyButton } from '@/components/copy-button'
+import { ExpandableMetadataPanel } from '@/components/expandable-metadata-panel'
 
 export const dynamic = 'force-dynamic'
 
@@ -779,6 +782,11 @@ export default async function AgentPage({ params }: { params: Promise<{ slug: st
               )}
             </div>
           </div>
+
+          {/* ── Offchain Metadata Panel ── */}
+          {agent.raw_metadata?.offchain_content && (
+            <ExpandableMetadataPanel metadata={agent.raw_metadata.offchain_content} uri={agent.raw_metadata.offchain_uri} />
+          )}
         </div>
       </main>
 

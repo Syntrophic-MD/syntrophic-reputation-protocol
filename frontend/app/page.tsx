@@ -1,6 +1,7 @@
  'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import useSWR from 'swr'
 import { ArrowRight, CheckCircle, AlertTriangle, ShieldCheck, Layers, GitBranch } from 'lucide-react'
@@ -8,12 +9,12 @@ import { AgentSearch, type AgentSearchFilter } from '@/components/agent-search'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { GlassCard, StatCard, TrustBadge, AgentAvatar } from '@/components/ui'
-import { truncateAddress, getRepLevel, generateMockAgents } from '@/lib/utils'
+import { truncateAddress, getRepLevel } from '@/lib/utils'
 import { HeroButtons } from '@/components/hero-buttons'
-import { fetchAgents, type Agent8004, type AgentsQuery } from '@/lib/api'
+import { fetchAgents, CHAIN_ID_TO_SLUG, type Agent8004, type AgentsQuery } from '@/lib/api'
 
-const featuredAgents = generateMockAgents(4)
 const HOME_TABLE_LIMIT = 5
+const LEADERBOARD_LIMIT = 5
 
 const stats = [
   { label: 'Total Bonded Agents', value: '12,847', sub: 'on Base network', accent: 'white' as const },
@@ -24,11 +25,11 @@ const stats = [
 ]
 
 const trustLevels = [
-  { label: 'Elite', range: '90–100', color: '#00c853', count: 12, desc: 'Maximum stake & zero slashes' },
-  { label: 'Trusted', range: '75–89', color: '#00d4ff', count: 48, desc: 'High stake, verified history' },
-  { label: 'Verified', range: '50–74', color: '#0070f3', count: 103, desc: 'Minimum stake, community proof' },
+  { label: 'Elite', range: '90–100', color: '#00c853', count: 12, desc: 'Top ranked, excellent track record' },
+  { label: 'Trusted', range: '75–89', color: '#00d4ff', count: 48, desc: 'Bonded, high peer endorsements' },
+  { label: 'Bonded', range: '50–74', color: '#0070f3', count: 103, desc: 'Reputation staked with Syntrophic' },
   { label: 'Active', range: '25–49', color: '#ffa000', count: 61, desc: 'Registered, building reputation' },
-  { label: 'New', range: '0–24', color: 'rgba(232,238,248,0.35)', count: 23, desc: 'Freshly staked' },
+  { label: 'New', range: '0–24', color: 'rgba(232,238,248,0.35)', count: 23, desc: 'Freshly registered agent' },
 ]
 
 const howItWorksSteps = [
@@ -64,7 +65,7 @@ const howItWorksSteps = [
 
 export default function HomePage() {
   const [tableSearch, setTableSearch] = useState('')
-  const [tableFilter, setTableFilter] = useState<AgentSearchFilter>('all')
+  const [tableFilter, setTableFilter] = useState<AgentSearchFilter>('syntrophic')
 
   const tableResolvedSearch = useMemo(() => {
     const clean = tableSearch.trim()
@@ -104,6 +105,25 @@ export default function HomePage() {
     return subset.slice(0, HOME_TABLE_LIMIT)
   }, [tableData?.items, tableFilter])
 
+  // Leaderboard: top agents by score
+  const leaderboardQuery: AgentsQuery = useMemo(
+    () => ({
+      page: 1,
+      page_size: LEADERBOARD_LIMIT,
+      sort_by: 'total_score',
+      sort_order: 'desc',
+    }),
+    []
+  )
+
+  const { data: leaderboardData } = useSWR(
+    ['home:leaderboard', leaderboardQuery],
+    ([, query]) => fetchAgents(query),
+    { revalidateOnFocus: false }
+  )
+
+  const leaderboardAgents = (leaderboardData?.items ?? []).slice(0, LEADERBOARD_LIMIT)
+
   return (
     <div className="min-h-screen relative">
       <div className="relative z-10">
@@ -129,7 +149,7 @@ export default function HomePage() {
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.0] text-balance">
                 🧬 Syntrophic
                 <br />
-                <span className="gradient-text-blue">Protocol</span>
+                <span className="gradient-text-blue text-3xl sm:text-4xl md:text-5xl">Reputation Protocol</span>
               </h1>
 
               <p className="text-lg md:text-xl leading-relaxed max-w-xl text-pretty" style={{ color: 'var(--muted-foreground)' }}>
@@ -384,6 +404,7 @@ export default function HomePage() {
                   {!isTableLoading && !tableError && filteredTableAgents.map((agent, i) => {
                     const level = getRepLevel(agent.total_score)
                     const isBondedDemo = agent.name.toLowerCase().includes('syntrophic')
+                    const chainSlug = CHAIN_ID_TO_SLUG[agent.chain_id] ?? String(agent.chain_id)
                     return (
                       <tr
                         key={agent.id}
@@ -392,8 +413,15 @@ export default function HomePage() {
                       >
                         <td className="px-5 py-4 text-xs" style={{ color: 'var(--muted-foreground)', opacity: 0.4 }}>{i + 1}</td>
                         <td className="px-5 py-4">
-                          <Link href="/explore" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                            <AgentAvatar name={agent.name} address={agent.owner_address} size={34} />
+                          <Link href={`/agents/${chainSlug}/${agent.token_id}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                            {agent.image_url ? (
+                              <div className="relative w-[34px] h-[34px] rounded-full overflow-hidden flex-shrink-0 border"
+                                style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+                                <Image src={agent.image_url} alt={agent.name} fill className="object-cover" unoptimized />
+                              </div>
+                            ) : (
+                              <AgentAvatar name={agent.name} address={agent.owner_address} size={34} />
+                            )}
                             <div>
                               <div className="flex items-center gap-1.5">
                                 <span className="font-semibold text-foreground">{agent.name}</span>
@@ -501,9 +529,11 @@ export default function HomePage() {
               </div>
 
               <div className="flex flex-col gap-3">
-                {featuredAgents.map((agent, i) => {
+                {leaderboardAgents.map((agent, i) => {
+                  const isBonded = agent.name.toLowerCase().includes('syntrophic')
+                  const chainSlug = CHAIN_ID_TO_SLUG[agent.chain_id] ?? String(agent.chain_id)
                   return (
-                    <Link key={agent.id} href="/explore" className="block group">
+                    <Link key={agent.id} href={`/agents/${chainSlug}/${agent.token_id}`} className="block group">
                       <GlassCard
                         className="px-5 py-4 flex items-center gap-4"
                         hover
@@ -514,30 +544,37 @@ export default function HomePage() {
                         >
                           {i + 1}
                         </span>
-                        <AgentAvatar name={agent.name} address={agent.address} size={42} />
+                        {agent.image_url ? (
+                          <div className="relative w-[42px] h-[42px] rounded-full overflow-hidden flex-shrink-0 border"
+                            style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+                            <Image src={agent.image_url} alt={agent.name} fill className="object-cover" unoptimized />
+                          </div>
+                        ) : (
+                          <AgentAvatar name={agent.name} address={agent.owner_address} size={42} />
+                        )}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-foreground truncate">{agent.name}</span>
-                            {agent.isVerified && (
+                            {agent.is_verified && (
                               <CheckCircle size={13} className="flex-shrink-0" style={{ color: 'var(--verified)' }} />
                             )}
                           </div>
                           <p className="text-xs address-mono mt-0.5 truncate" style={{ color: 'var(--muted-foreground)' }}>
-                            {truncateAddress(agent.address, 6)}
+                            {truncateAddress(agent.owner_address, 6)}
                           </p>
                         </div>
                         <div className="flex items-center gap-4 flex-shrink-0">
                           <span
                             className="px-2.5 py-1 rounded-full text-[11px] font-semibold hidden sm:inline-flex"
                             style={
-                              agent.isStaked
+                              isBonded
                                 ? { background: 'rgba(0,200,83,0.14)', border: '1px solid rgba(0,200,83,0.35)', color: '#00c853' }
                                 : { background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', color: 'var(--muted-foreground)' }
                             }
                           >
-                            {agent.isStaked ? 'Bonded' : 'Not Bonded'}
+                            {isBonded ? 'Bonded' : 'Not Bonded'}
                           </span>
-                          <TrustBadge score={agent.reputationScore} size="sm" />
+                          <TrustBadge score={agent.total_score} size="sm" />
                         </div>
                       </GlassCard>
                     </Link>
