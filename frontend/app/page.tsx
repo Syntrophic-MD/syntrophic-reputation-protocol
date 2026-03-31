@@ -14,7 +14,7 @@ import { HeroButtons } from '@/components/hero-buttons'
 import { fetchAgents, type Agent8004, type AgentsQuery } from '@/lib/api'
 
 const HOME_TABLE_LIMIT = 5
-const LEADERBOARD_LIMIT = 4
+const LEADERBOARD_LIMIT = 5
 
 const stats = [
   { label: 'Total Bonded Agents', value: '12,847', sub: 'on Base network', accent: 'white' as const },
