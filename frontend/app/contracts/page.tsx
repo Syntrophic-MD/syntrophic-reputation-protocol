@@ -53,7 +53,7 @@ export default function ContractsPage() {
                   </div>
                 </li>
                 <li>
-                  SBPVault (bonding/staking logic)
+                  SRPVault (bonding/staking logic)
                   <div>
                     Address: <code className="text-xs">0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248</code>
                   </div>
@@ -238,7 +238,7 @@ export default function ContractsPage() {
                   Optional vault checks:{' '}
                   <AddressLink
                     href="https://basescan.org/address/0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248#readContract"
-                    label="SBPVault Read Contract"
+                    label="SRPVault Read Contract"
                   />
                   {' '}and call <code className="text-xs">isBonded(32055)</code> and <code className="text-xs">getBondStatus(32055)</code>.
                 </li>
