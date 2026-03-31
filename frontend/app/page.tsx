@@ -129,7 +129,7 @@ export default function HomePage() {
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.0] text-balance">
                 🧬 Syntrophic
                 <br />
-                <span className="gradient-text-blue">Reputation Protocol</span>
+                <span className="gradient-text-blue text-3xl sm:text-4xl md:text-5xl">Reputation Protocol</span>
               </h1>
 
               <p className="text-lg md:text-xl leading-relaxed max-w-xl text-pretty" style={{ color: 'var(--muted-foreground)' }}>
