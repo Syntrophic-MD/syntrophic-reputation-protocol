@@ -64,7 +64,7 @@ const howItWorksSteps = [
 
 export default function HomePage() {
   const [tableSearch, setTableSearch] = useState('')
-  const [tableFilter, setTableFilter] = useState<AgentSearchFilter>('all')
+  const [tableFilter, setTableFilter] = useState<AgentSearchFilter>('syntrophic')
 
   const tableResolvedSearch = useMemo(() => {
     const clean = tableSearch.trim()
@@ -129,7 +129,7 @@ export default function HomePage() {
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.0] text-balance">
                 🧬 Syntrophic
                 <br />
-                <span className="gradient-text-blue">Protocol</span>
+                <span className="gradient-text-blue">Reputation Protocol</span>
               </h1>
 
               <p className="text-lg md:text-xl leading-relaxed max-w-xl text-pretty" style={{ color: 'var(--muted-foreground)' }}>
