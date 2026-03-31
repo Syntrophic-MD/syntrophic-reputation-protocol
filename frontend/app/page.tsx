@@ -11,7 +11,7 @@ import { Footer } from '@/components/footer'
 import { GlassCard, StatCard, TrustBadge, AgentAvatar } from '@/components/ui'
 import { truncateAddress, getRepLevel } from '@/lib/utils'
 import { HeroButtons } from '@/components/hero-buttons'
-import { fetchAgents, type Agent8004, type AgentsQuery } from '@/lib/api'
+import { fetchAgents, CHAIN_ID_TO_SLUG, type Agent8004, type AgentsQuery } from '@/lib/api'
 
 const HOME_TABLE_LIMIT = 5
 const LEADERBOARD_LIMIT = 5
@@ -404,6 +404,7 @@ export default function HomePage() {
                   {!isTableLoading && !tableError && filteredTableAgents.map((agent, i) => {
                     const level = getRepLevel(agent.total_score)
                     const isBondedDemo = agent.name.toLowerCase().includes('syntrophic')
+                    const chainSlug = CHAIN_ID_TO_SLUG[agent.chain_id] ?? String(agent.chain_id)
                     return (
                       <tr
                         key={agent.id}
@@ -412,7 +413,7 @@ export default function HomePage() {
                       >
                         <td className="px-5 py-4 text-xs" style={{ color: 'var(--muted-foreground)', opacity: 0.4 }}>{i + 1}</td>
                         <td className="px-5 py-4">
-                          <Link href="/explore" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                          <Link href={`/agents/${chainSlug}/${agent.token_id}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                             {agent.image_url ? (
                               <div className="relative w-[34px] h-[34px] rounded-full overflow-hidden flex-shrink-0 border"
                                 style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
@@ -530,8 +531,9 @@ export default function HomePage() {
               <div className="flex flex-col gap-3">
                 {leaderboardAgents.map((agent, i) => {
                   const isBonded = agent.name.toLowerCase().includes('syntrophic')
+                  const chainSlug = CHAIN_ID_TO_SLUG[agent.chain_id] ?? String(agent.chain_id)
                   return (
-                    <Link key={agent.id} href="/explore" className="block group">
+                    <Link key={agent.id} href={`/agents/${chainSlug}/${agent.token_id}`} className="block group">
                       <GlassCard
                         className="px-5 py-4 flex items-center gap-4"
                         hover
