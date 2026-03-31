@@ -71,10 +71,10 @@ export function ExpandableMetadataPanel({ metadata, uri }: ExpandableMetadataPan
               <CopyButton text={formattedJson} />
             </div>
             <pre
-              className="p-4 pr-12 overflow-auto text-xs leading-relaxed font-mono"
-              style={{ color: 'var(--muted-foreground)', maxHeight: '500px' }}
+              className="p-4 pr-12 overflow-auto text-xs leading-relaxed font-mono whitespace-pre-wrap break-words"
+              style={{ color: 'var(--muted-foreground)', maxHeight: '500px', wordBreak: 'break-word' }}
             >
-              <code>{formattedJson}</code>
+              <code className="whitespace-pre-wrap break-words">{formattedJson}</code>
             </pre>
           </div>
         </div>
