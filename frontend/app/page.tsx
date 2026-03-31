@@ -122,7 +122,7 @@ export default function HomePage() {
     { revalidateOnFocus: false }
   )
 
-  const leaderboardAgents = leaderboardData?.items ?? []
+  const leaderboardAgents = (leaderboardData?.items ?? []).slice(0, LEADERBOARD_LIMIT)
 
   return (
     <div className="min-h-screen relative">
