@@ -298,29 +298,60 @@ export default async function AgentPage({ params }: { params: Promise<{ slug: st
 
           {/* ── Stats row ── */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {([
-              { icon: BarChart3, label: 'Rep. Score', value: `${Math.round(agent.total_score)}`, unit: '/100', color: level.color },
-              { icon: HeartPulse, label: 'Health', value: agent.health_score != null ? `${Math.round(agent.health_score)}` : '—', unit: agent.health_score != null ? '/100' : '', color: agent.health_score != null && agent.health_score > 60 ? 'var(--verified)' : '#ffa000' },
-              { icon: MessageSquare, label: 'Feedbacks', value: agent.total_feedbacks.toLocaleString(), unit: '', color: 'var(--accent)' },
-              { icon: Star, label: 'Avg. Score', value: agent.average_score > 0 ? `${Math.round(agent.average_score)}` : '—', unit: agent.average_score > 0 ? '/100' : '', color: 'var(--accent)' },
-              { icon: Activity, label: 'Stars', value: agent.star_count.toLocaleString(), unit: '', color: '#ffa000' },
-              { icon: Globe, label: 'Network', value: chainName(agent.chain_id), unit: '', color: 'var(--foreground)' },
-            ] as const).map((stat) => {
-              const Icon = stat.icon
-              return (
-                <GlassCard key={stat.label} className="p-4 flex flex-col gap-2" hover>
-                  <div className="flex items-center gap-1.5">
-                    <Icon size={13} style={{ color: stat.color, opacity: 0.8 }} />
-                    <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)', opacity: 0.55 }}>
-                      {stat.label}
-                    </span>
-                  </div>
-                  <p className="stat-number text-lg font-bold leading-none" style={{ color: stat.color }}>
-                    {stat.value}<span className="text-xs font-normal opacity-60">{stat.unit}</span>
-                  </p>
-                </GlassCard>
-              )
-            })}
+            <GlassCard className="p-4 flex flex-col gap-2" hover>
+              <div className="flex items-center gap-1.5">
+                <BarChart3 size={13} style={{ color: level.color, opacity: 0.8 }} />
+                <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)', opacity: 0.55 }}>Rep. Score</span>
+              </div>
+              <p className="stat-number text-lg font-bold leading-none" style={{ color: level.color }}>
+                {Math.round(agent.total_score)}<span className="text-xs font-normal opacity-60">/100</span>
+              </p>
+            </GlassCard>
+            <GlassCard className="p-4 flex flex-col gap-2" hover>
+              <div className="flex items-center gap-1.5">
+                <HeartPulse size={13} style={{ color: agent.health_score != null && agent.health_score > 60 ? 'var(--verified)' : '#ffa000', opacity: 0.8 }} />
+                <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)', opacity: 0.55 }}>Health</span>
+              </div>
+              <p className="stat-number text-lg font-bold leading-none" style={{ color: agent.health_score != null && agent.health_score > 60 ? 'var(--verified)' : '#ffa000' }}>
+                {agent.health_score != null ? Math.round(agent.health_score) : '—'}<span className="text-xs font-normal opacity-60">{agent.health_score != null ? '/100' : ''}</span>
+              </p>
+            </GlassCard>
+            <GlassCard className="p-4 flex flex-col gap-2" hover>
+              <div className="flex items-center gap-1.5">
+                <MessageSquare size={13} style={{ color: 'var(--accent)', opacity: 0.8 }} />
+                <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)', opacity: 0.55 }}>Feedbacks</span>
+              </div>
+              <p className="stat-number text-lg font-bold leading-none" style={{ color: 'var(--accent)' }}>
+                {agent.total_feedbacks.toLocaleString()}
+              </p>
+            </GlassCard>
+            <GlassCard className="p-4 flex flex-col gap-2" hover>
+              <div className="flex items-center gap-1.5">
+                <Star size={13} style={{ color: 'var(--accent)', opacity: 0.8 }} />
+                <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)', opacity: 0.55 }}>Avg. Score</span>
+              </div>
+              <p className="stat-number text-lg font-bold leading-none" style={{ color: 'var(--accent)' }}>
+                {agent.average_score > 0 ? Math.round(agent.average_score) : '—'}<span className="text-xs font-normal opacity-60">{agent.average_score > 0 ? '/100' : ''}</span>
+              </p>
+            </GlassCard>
+            <GlassCard className="p-4 flex flex-col gap-2" hover>
+              <div className="flex items-center gap-1.5">
+                <Activity size={13} style={{ color: '#ffa000', opacity: 0.8 }} />
+                <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)', opacity: 0.55 }}>Stars</span>
+              </div>
+              <p className="stat-number text-lg font-bold leading-none" style={{ color: '#ffa000' }}>
+                {agent.star_count.toLocaleString()}
+              </p>
+            </GlassCard>
+            <GlassCard className="p-4 flex flex-col gap-2" hover>
+              <div className="flex items-center gap-1.5">
+                <Globe size={13} style={{ color: 'var(--foreground)', opacity: 0.8 }} />
+                <span className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: 'var(--muted-foreground)', opacity: 0.55 }}>Network</span>
+              </div>
+              <p className="stat-number text-lg font-bold leading-none" style={{ color: 'var(--foreground)' }}>
+                {chainName(agent.chain_id)}
+              </p>
+            </GlassCard>
           </div>
 
           {/* ── Syntrophic Reputation Status ── */}
