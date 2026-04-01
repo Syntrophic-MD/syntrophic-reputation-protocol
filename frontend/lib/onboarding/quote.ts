@@ -7,6 +7,10 @@ function formatUsd(value: number) {
   return value.toFixed(2)
 }
 
+function shellQuote(value: string) {
+  return `'${value.replace(/'/g, `'\\''`)}'`
+}
+
 export async function createOnboardingQuote(input: {
   beneficiary: string
   profile: OnboardingProfileInput
@@ -39,7 +43,28 @@ export async function createOnboardingQuote(input: {
       service_fee_usdc: formatUsd(QUOTE_PRICE_USDC.service_fee_usdc),
     },
     profile,
+    payment_guidance: {
+      launch_path: '',
+      beneficiary_wallet_role:
+        'The beneficiary wallet becomes the final owner of the ERC-8004 identity and bonded agent profile.',
+      payer_wallet_role:
+        'The payer wallet signs the x402 payment. It may be the same as the beneficiary wallet, but a public beneficiary address alone is not enough to self-pay.',
+      self_pay_requires: [
+        'a payer wallet with enough USDC for the x402 charge',
+        'signing access to that payer wallet, such as a private key or wallet tool',
+        'an x402-capable client or helper runtime',
+      ],
+      helper_command_template: '',
+      quote_only_command_template:
+        `npm run launch:agent -- --quote-only --handoff-file=./syntrophic-handoff.json --beneficiary=${beneficiary} --name=${shellQuote(profile.name)} --description=${shellQuote(profile.description)} --service=${shellQuote(profile.services[0]?.url ?? 'https://example.com')}`,
+      resume_handoff_command_template:
+        'X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --resume-handoff=./syntrophic-handoff.json',
+    },
   }
+
+  quote.payment_guidance.launch_path = `/api/onboarding/launches/${quote.quote_id}`
+  quote.payment_guidance.helper_command_template =
+    `X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --quote=${quote.quote_id} --beneficiary=${beneficiary} --app-url=https://syntrophic.md`
 
   await saveQuote(quote)
   return quote

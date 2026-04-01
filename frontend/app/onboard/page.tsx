@@ -20,6 +20,15 @@ interface QuoteResponse {
     ipfs_pin_usdc: string
     service_fee_usdc: string
   }
+  payment_guidance?: {
+    launch_path: string
+    beneficiary_wallet_role: string
+    payer_wallet_role: string
+    self_pay_requires: string[]
+    helper_command_template: string
+    quote_only_command_template: string
+    resume_handoff_command_template: string
+  }
 }
 
 interface JobResponse {
@@ -162,7 +171,8 @@ export default function OnboardPage() {
   const proof = job?.result?.proof_bundle ?? null
   const chainResult = proof?.chain_results?.[0] ?? null
   const helperCommand = quote
-    ? `X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --quote=${quote.quote_id} --beneficiary=${form.beneficiary.trim()} --app-url=https://syntrophic.md`
+    ? quote.payment_guidance?.helper_command_template ??
+      `X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --quote=${quote.quote_id} --beneficiary=${form.beneficiary.trim()} --app-url=https://syntrophic.md`
     : null
   const handoffPackage = quote
     ? {
@@ -177,6 +187,7 @@ export default function OnboardPage() {
           image_url: form.imageUrl.trim() ? normalizeHttpUrl(form.imageUrl) : undefined,
           services: [{ type: 'mcp', url: normalizeHttpUrl(form.serviceUrl) }],
         },
+        helper_command_template: quote.payment_guidance?.helper_command_template ?? helperCommand ?? undefined,
       }
     : null
 
@@ -306,6 +317,12 @@ export default function OnboardPage() {
       if (response.status === 402) {
         setError(
           'This browser can create the quote, but the paid launch needs an x402-capable agent or helper. Copy the helper command below or download the handoff package to finish the demo.'
+        )
+        return
+      }
+      if (data?.error?.code === 'PAYMENT_CONFIGURATION_ERROR') {
+        setError(
+          'The Syntrophic launch service is not configured to issue x402 challenges right now. This is a server-side blocker, not a problem with your beneficiary wallet.'
         )
         return
       }
@@ -539,8 +556,29 @@ export default function OnboardPage() {
 
                     <div className="rounded-xl border border-sky-400/20 bg-sky-500/10 px-4 py-3 text-sm text-sky-100">
                       Browsers usually cannot satisfy the x402 payment challenge directly. Use the helper command or
-                      download the handoff package, then finish the paid launch from an x402-capable runtime.
+                      download the handoff package, then finish the paid launch from a runtime that can sign x402
+                      payments with a funded payer wallet.
                     </div>
+
+                    {quote.payment_guidance ? (
+                      <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm">
+                        <p className="font-semibold">Payment roles</p>
+                        <p className="mt-2" style={{ color: 'var(--muted-foreground)' }}>
+                          {quote.payment_guidance.beneficiary_wallet_role}
+                        </p>
+                        <p className="mt-2" style={{ color: 'var(--muted-foreground)' }}>
+                          {quote.payment_guidance.payer_wallet_role}
+                        </p>
+                        <div className="mt-3">
+                          <p className="font-semibold">Self-pay requires</p>
+                          <ul className="mt-2 flex flex-col gap-1" style={{ color: 'var(--muted-foreground)' }}>
+                            {quote.payment_guidance.self_pay_requires.map((item) => (
+                              <li key={item}>- {item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ) : null}
 
                     <div className="flex flex-col gap-3">
                       {helperCommand ? (

@@ -62,8 +62,18 @@ export async function POST(
     const response = NextResponse.json(responseBody, { status: 201 })
     return attachSettlementHeaders(response, settlement)
   } catch (error) {
-    const status = typeof (error as { status?: unknown })?.status === "number" ? (error as { status: number }).status : 500
-    const code = typeof (error as { code?: unknown })?.code === "string" ? (error as { code: string }).code : 'EXTERNAL_PROVIDER_ERROR'
+    const errorMessage = error instanceof Error ? error.message : 'Failed to launch sponsored onboarding.'
+    const isX402ConfigError = /Missing required x402 configuration/i.test(errorMessage)
+    const status = isX402ConfigError
+      ? 503
+      : typeof (error as { status?: unknown })?.status === 'number'
+        ? (error as { status: number }).status
+        : 500
+    const code = isX402ConfigError
+      ? 'PAYMENT_CONFIGURATION_ERROR'
+      : typeof (error as { code?: unknown })?.code === 'string'
+        ? (error as { code: string }).code
+        : 'EXTERNAL_PROVIDER_ERROR'
     const details =
       typeof (error as { details?: unknown })?.details === 'object' && (error as { details?: unknown }).details !== null
         ? (error as { details: Record<string, unknown> }).details
@@ -73,7 +83,9 @@ export async function POST(
       {
         error: {
           code,
-          message: error instanceof Error ? error.message : 'Failed to launch sponsored onboarding.',
+          message: isX402ConfigError
+            ? 'Syntrophic launch service is missing x402 configuration and cannot issue a payment challenge right now.'
+            : errorMessage,
           retryable: status >= 500,
           ...(details ? { details } : {}),
         },

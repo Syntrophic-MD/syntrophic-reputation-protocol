@@ -34,6 +34,16 @@ export interface OnboardingQuoteLineItems {
   service_fee_usdc: string
 }
 
+export interface OnboardingPaymentGuidance {
+  launch_path: string
+  beneficiary_wallet_role: string
+  payer_wallet_role: string
+  self_pay_requires: string[]
+  helper_command_template: string
+  quote_only_command_template: string
+  resume_handoff_command_template: string
+}
+
 export interface OnboardingQuoteRecord {
   quote_id: string
   created_at: string
@@ -44,6 +54,7 @@ export interface OnboardingQuoteRecord {
   total_usdc: string
   line_items: OnboardingQuoteLineItems
   profile: NormalizedOnboardingProfile
+  payment_guidance: OnboardingPaymentGuidance
 }
 
 export interface OnboardingChainResult {

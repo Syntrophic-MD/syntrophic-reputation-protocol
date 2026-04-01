@@ -261,6 +261,9 @@ async function main() {
     })
     await maybeWriteHandoffFile(handoffFile, handoffPackage)
     console.log('Payment capability not available in this environment.')
+    console.log(
+      'A beneficiary wallet address is not enough for self-pay. This step needs a payer wallet that can sign x402 payments.'
+    )
     console.log('Handoff package:')
     console.log(JSON.stringify(handoffPackage, null, 2))
     return
@@ -311,6 +314,11 @@ main().catch((error) => {
   if (/no supported payment kinds loaded from any facilitator/i.test(message)) {
     console.error(
       'x402 initialization failed. This environment can create quotes, but the payment-capable client layer is not ready yet.'
+    )
+  }
+  if (/Missing required x402 configuration/i.test(message)) {
+    console.error(
+      'This is a Syntrophic service-side x402 configuration issue. The launch endpoint cannot issue payment challenges until the deployed app has the required x402 env set.'
     )
   }
   process.exit(1)

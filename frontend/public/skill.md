@@ -1,7 +1,7 @@
 ---
 name: syntrophic
 description: "Operational skill for agents that want to become Syntrophic Verified through sponsored ERC-8004 onboarding on Base."
-version: "3.0.0"
+version: "3.1.0"
 author: "Syntrophic"
 license: "MIT"
 metadata:
@@ -62,7 +62,12 @@ Your next step is to gather all required onboarding inputs in one pass:
 - one primary service URL
 - optional image URL
 - optional extra public URLs
-- whether the current runtime can complete x402 payment, or whether helper handoff is expected
+- whether the current runtime can sign x402 payments with a funded payer wallet, or whether helper handoff is expected
+
+Be explicit about the two wallet roles:
+- the `beneficiary` wallet is the final owner of the ERC-8004 identity
+- the `payer` wallet signs the x402 payment
+- these can be the same wallet, but a public beneficiary address alone is not enough for self-pay
 
 Then:
 1. prepare the profile draft
@@ -76,7 +81,7 @@ If the owner has not yet given these inputs, ask for them all together first ins
 Recommended first-response shape:
 - explain that onboarding means ERC-8004 registration plus Syntrophic staking on Base
 - ask for beneficiary wallet, name, description, primary service URL, and optional image URL
-- ask whether the current runtime can pay through x402 or whether helper handoff will be needed
+- ask whether the current runtime has a funded payer wallet or wallet-signing tool for x402, or whether helper handoff will be needed
 
 What this flow does:
 - prepares a valid onboarding profile
@@ -126,7 +131,11 @@ Collect these values before starting:
 - `description`: short agent description
 - `serviceUrl`: primary public URL for the agent
 - `imageUrl`: optional HTTPS image URL
-- payment capability: determine whether the current runtime can complete x402 payment itself
+- `payer capability`: determine whether the current runtime can sign x402 payments itself
+
+Do not confuse these:
+- a beneficiary wallet address is public identity ownership information
+- payer capability means the runtime can actually sign the x402 payment with a funded wallet or wallet tool
 
 ## 4) Profile Draft And Owner Confirmation
 
@@ -188,6 +197,11 @@ Expected result:
 - `quote_id`
 - total USDC price
 - line items for bond, gas, IPFS, and service fee
+- payment guidance describing:
+  - beneficiary role
+  - payer role
+  - exact helper command template
+  - quote-only and resume-handoff command templates
 
 If the quote route returns a service-side error:
 - preserve the confirmed profile draft
@@ -202,9 +216,15 @@ After the quote is created, decide whether the current runtime can pay.
 ### Self-pay
 
 Use self-pay only if the agent runtime has:
-- a payment-capable wallet
+- a funded payer wallet
+- signing access to that payer wallet, such as a private key or wallet tool
 - sufficient USDC
 - an x402-capable client/tool layer
+
+Important:
+- a wallet address by itself is not payment capability
+- do not assume the beneficiary wallet can also pay unless the runtime can sign with it
+- if the quote response includes `payment_guidance`, use its exact command templates instead of inventing your own
 
 ### Helper handoff
 
@@ -220,6 +240,17 @@ In helper mode:
 Important rule:
 - if the runtime does not have payment capability, do not attempt the paid launch endpoint directly
 - stop at quote creation and return a clean handoff package
+
+If the owner says "proceed with payment" but you still do not have a payer wallet or wallet-signing tool:
+- say so directly
+- do not probe the paid launch endpoint speculatively
+- return the quote-specific helper command or handoff artifact instead
+
+If you are operating from this repo and you already have a `quote_id`, the preferred self-pay command is:
+
+```bash
+X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --quote=quote_id --beneficiary=0xYOUR_BENEFICIARY_ADDRESS --app-url=https://syntrophic.md
+```
 
 Recommended helper command from this repo:
 
@@ -260,10 +291,11 @@ Important:
 - if you receive HTTP `402`, your client must complete the x402 payment challenge and retry
 - after successful payment, Syntrophic sponsors the Base execution path
 - if the x402 facilitator or payment layer fails, report that as a service/payment blocker instead of silently abandoning the onboarding attempt
+- if the route says Syntrophic is missing x402 configuration, that is a Syntrophic service-side blocker, not proof that the payer wallet failed
 
 Preferred strategy:
 - use an x402-capable helper client or tool instead of implementing the payment retry flow from scratch in prompts alone
-- if you are operating from this repo, the helper command is:
+- if you are operating from this repo and do not already have a quote, the helper command is:
 
 ```bash
 npm run launch:agent -- --beneficiary=0xYOUR_BENEFICIARY_ADDRESS --name="Your Agent Name" --description="What your agent does." --service="https://example.com"
@@ -328,6 +360,7 @@ Planned next:
 - `402 PAYMENT_REQUIRED`: the x402 challenge must be completed
 - `410 QUOTE_EXPIRED`: create a fresh quote
 - `500+`: retry later or ask the user whether to try again
+- `503 PAYMENT_CONFIGURATION_ERROR`: Syntrophic launch service is not configured to issue x402 challenges right now
 - HTTP redirect: follow it and continue on the final host
 - quote route returns HTML or non-JSON: treat that as a service-side failure and surface the raw response to the owner
 - quote or launch route returns a filesystem/runtime error: treat that as a Syntrophic service issue, preserve the confirmed draft, and retry later rather than changing the profile
@@ -335,6 +368,7 @@ Planned next:
 
 Behavior rule:
 - do not probe or retry the paid launch endpoint if you already know this runtime cannot complete x402 payment
+- do not tell the owner to "proceed with payment" unless you can name the exact payer wallet/tool path you will use
 
 If launch succeeds but metadata appears delayed:
 - trust the proof bundle and transaction hash first
