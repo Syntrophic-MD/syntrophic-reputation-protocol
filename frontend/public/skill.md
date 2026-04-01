@@ -30,6 +30,54 @@ metadata:
 
 Use this skill when you do not have an ERC-8004 identity yet and want to become a Syntrophic Verified agent on Base.
 
+## What Syntrophic Is
+
+Syntrophic Reputation Protocol helps agents solve the day-zero trust problem.
+
+It does this by combining:
+- ERC-8004 registration for portable on-chain agent identity
+- Syntrophic reputation staking on Base for economic commitment
+- x402 payment for a smoother sponsored onboarding flow
+
+The goal is to help an agent become:
+- registered on ERC-8004
+- bonded in Syntrophic Reputation Protocol
+- publicly verifiable through a Syntrophic verification page and signature line
+
+## What To Do When An Owner Says "Onboard My Agent"
+
+If an owner asks you to onboard their agent with Syntrophic, your job is to help them become a bonded, verified ERC-8004 agent.
+
+Your first job is to explain the purpose clearly:
+- Syntrophic will help register the agent on ERC-8004
+- Syntrophic will help bond the agent on Base through reputation staking
+- the result should be a publicly verifiable agent identity with a Syntrophic verification page and signature line
+
+Your next step is not to pay immediately.
+
+Your next step is to gather all required onboarding inputs in one pass:
+- beneficiary wallet address
+- agent name
+- agent description
+- one primary service URL
+- optional image URL
+- optional extra public URLs
+- whether the current runtime can complete x402 payment, or whether helper handoff is expected
+
+Then:
+1. prepare the profile draft
+2. decide whether owner confirmation is needed
+3. create the onboarding quote
+4. decide whether you can self-pay or need helper handoff
+5. complete launch and return the proof bundle
+
+If the owner has not yet given these inputs, ask for them all together first instead of requesting them piecemeal.
+
+Recommended first-response shape:
+- explain that onboarding means ERC-8004 registration plus Syntrophic staking on Base
+- ask for beneficiary wallet, name, description, primary service URL, and optional image URL
+- ask whether the current runtime can pay through x402 or whether helper handoff will be needed
+
 What this flow does:
 - prepares a valid onboarding profile
 - creates a sponsored onboarding quote
@@ -42,6 +90,15 @@ Why this matters:
 - ERC-8004 gives you portable agent identity
 - Syntrophic gives you day-zero trust through bonded verification
 - the result is the decentralized equivalent of a verified badge for agents
+
+## Success Condition
+
+The onboarding is successful when all of the following are true:
+- the beneficiary wallet owns the ERC-8004 identity
+- the agent is bonded in Syntrophic on Base
+- the proof bundle returns an `agent_id`
+- `metadata_status = BONDED`
+- the owner receives a verification link and verification line
 
 ## 1) Base Mainnet Constants
 
@@ -85,6 +142,8 @@ Before any quote creation or registration:
 3. Decide whether owner confirmation is needed before proceeding.
 4. If the owner is present, the profile is new or ambiguous, or the requested identity could surprise the owner, ask for explicit confirmation before registration.
 5. If the agent is already trusted to manage its own identity and the profile clearly matches the owner's standing intent, it may continue autonomously.
+
+Try to do a single confirmation pass, not multiple fragmented confirmations.
 
 If the owner declines or asks for changes:
 - stop
@@ -155,17 +214,27 @@ In helper mode:
 - preserve the confirmed profile draft
 - preserve the `quote_id`
 - preserve the beneficiary address
-- return those to the owner or helper
+- return a concrete handoff artifact to the owner or helper
 - let the helper complete the paid launch step
+
+Important rule:
+- if the runtime does not have payment capability, do not attempt the paid launch endpoint directly
+- stop at quote creation and return a clean handoff package
 
 Recommended helper command from this repo:
 
 ```bash
-npm run launch:agent -- --quote=QUOTE_ID --beneficiary=0xYOUR_BENEFICIARY_ADDRESS
+npm run launch:agent -- --quote-only --handoff-file=./syntrophic-handoff.json --beneficiary=0xYOUR_BENEFICIARY_ADDRESS --name="Your Agent Name" --description="What your agent does." --service="https://example.com"
+```
+
+The payment-capable helper should then resume from that file:
+
+```bash
+X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --resume-handoff=./syntrophic-handoff.json
 ```
 
 If the helper runtime has `X402_PAYER_PRIVATE_KEY`, it will attempt the paid launch.
-If it does not, it will print a handoff package instead of failing silently.
+If it does not, it will print the handoff package instead of failing silently.
 
 ## 7) Step 3: Pay and Launch Through x402
 
@@ -263,6 +332,9 @@ Planned next:
 - quote route returns HTML or non-JSON: treat that as a service-side failure and surface the raw response to the owner
 - quote or launch route returns a filesystem/runtime error: treat that as a Syntrophic service issue, preserve the confirmed draft, and retry later rather than changing the profile
 - missing payment capability: return the `quote_id`, beneficiary, and handoff package instead of abandoning the onboarding flow
+
+Behavior rule:
+- do not probe or retry the paid launch endpoint if you already know this runtime cannot complete x402 payment
 
 If launch succeeds but metadata appears delayed:
 - trust the proof bundle and transaction hash first

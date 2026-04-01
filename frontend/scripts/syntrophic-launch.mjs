@@ -28,6 +28,7 @@ Options:
   --quote=quote_id            Reuse an existing quote instead of creating a new one
   --quote-only                Only create and print the quote
   --handoff-file=path.json    Write a handoff package for a payment-capable helper
+  --resume-handoff=path.json  Resume from a previously written handoff package
   --json                      Print raw JSON responses in addition to the summary
   --app-url=https://...       Override APP_URL
   --rpc-url=https://...       Override BASE_RPC_URL
@@ -52,6 +53,12 @@ function getArg(name, fallback = null) {
 
 async function loadProfileFromFile(file) {
   if (!file) return {}
+  const raw = await fs.readFile(file, 'utf8')
+  return JSON.parse(raw)
+}
+
+async function loadHandoffFile(file) {
+  if (!file) return null
   const raw = await fs.readFile(file, 'utf8')
   return JSON.parse(raw)
 }
@@ -105,7 +112,7 @@ function buildHandoffPackage({ baseUrl, rpcUrl, beneficiary, quote, profile }) {
     next_step:
       'A payment-capable helper should run the launch step with X402_PAYER_PRIVATE_KEY and the quote_id above.',
     helper_command:
-      `X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --quote=${quote.quote_id} --beneficiary=${beneficiary} --app-url=${baseUrl} --rpc-url=${rpcUrl}`,
+      `X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --resume-handoff=./syntrophic-handoff.json`,
   }
 }
 
@@ -204,45 +211,71 @@ async function main() {
   const jsonMode = process.argv.includes('--json')
   const profileFile = getArg('profile-file')
   const handoffFile = getArg('handoff-file', process.env.ONBOARDING_HANDOFF_FILE)
-  const profileFromFile = await loadProfileFromFile(profileFile)
+  const resumeHandoff = getArg('resume-handoff')
+  const handoff = await loadHandoffFile(resumeHandoff)
+  const profileFromFile = handoff?.profile ?? (await loadProfileFromFile(profileFile))
   const profile = buildProfile(profileFromFile)
 
-  assertRequired(beneficiary, 'Missing beneficiary address. Set --beneficiary or ONBOARDING_BENEFICIARY_ADDRESS.')
+  const resolvedBeneficiary = handoff?.beneficiary ?? beneficiary
+  const resolvedBaseUrl = handoff?.app_url ?? baseUrl
+  const resolvedRpcUrl = handoff?.rpc_url ?? rpcUrl
+  const resolvedQuoteId = handoff?.quote_id ?? quoteId
 
-  const quote = quoteId ? { quote_id: quoteId } : await createQuote({ baseUrl, beneficiary, profile })
+  assertRequired(
+    resolvedBeneficiary,
+    'Missing beneficiary address. Set --beneficiary, ONBOARDING_BENEFICIARY_ADDRESS, or use --resume-handoff.'
+  )
+
+  const quote = resolvedQuoteId
+    ? { quote_id: resolvedQuoteId }
+    : await createQuote({ baseUrl: resolvedBaseUrl, beneficiary: resolvedBeneficiary, profile })
 
   console.log(`Quote: ${quote.quote_id}`)
-  console.log(`Beneficiary: ${beneficiary}`)
+  console.log(`Beneficiary: ${resolvedBeneficiary}`)
 
   if (jsonMode) {
     console.log(JSON.stringify({ quote }, null, 2))
   }
 
   if (quoteOnly) {
-    const handoff = buildHandoffPackage({ baseUrl, rpcUrl, beneficiary, quote, profile })
-    await maybeWriteHandoffFile(handoffFile, handoff)
+    const handoffPackage = buildHandoffPackage({
+      baseUrl: resolvedBaseUrl,
+      rpcUrl: resolvedRpcUrl,
+      beneficiary: resolvedBeneficiary,
+      quote,
+      profile,
+    })
+    await maybeWriteHandoffFile(handoffFile, handoffPackage)
+    console.log('Handoff package:')
+    console.log(JSON.stringify(handoffPackage, null, 2))
     return
   }
 
   if (!payerPrivateKey) {
-    const handoff = buildHandoffPackage({ baseUrl, rpcUrl, beneficiary, quote, profile })
-    await maybeWriteHandoffFile(handoffFile, handoff)
+    const handoffPackage = buildHandoffPackage({
+      baseUrl: resolvedBaseUrl,
+      rpcUrl: resolvedRpcUrl,
+      beneficiary: resolvedBeneficiary,
+      quote,
+      profile,
+    })
+    await maybeWriteHandoffFile(handoffFile, handoffPackage)
     console.log('Payment capability not available in this environment.')
     console.log('Handoff package:')
-    console.log(JSON.stringify(handoff, null, 2))
+    console.log(JSON.stringify(handoffPackage, null, 2))
     return
   }
 
   const account = privateKeyToAccount(payerPrivateKey)
   console.log(`Payer: ${account.address}`)
-  console.log(`Calling paid launch endpoint at ${baseUrl}`)
+  console.log(`Calling paid launch endpoint at ${resolvedBaseUrl}`)
 
   const result = await launchQuote({
-    baseUrl,
+    baseUrl: resolvedBaseUrl,
     quoteId: quote.quote_id,
-    beneficiary,
+    beneficiary: resolvedBeneficiary,
     account,
-    rpcUrl,
+    rpcUrl: resolvedRpcUrl,
   })
 
   if (result.settlement) {
