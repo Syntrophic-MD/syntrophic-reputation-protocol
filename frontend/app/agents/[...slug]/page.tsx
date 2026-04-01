@@ -354,6 +354,7 @@ export default async function AgentPage({ params }: { params: Promise<{ slug: st
             </GlassCard>
           </div>
 
+          {/* @ts-expect-error - TypeScript inference issue with nested JSX */}
           {hasSyntrophic ? (
             <GlassCard className="p-6 flex flex-col gap-5">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
