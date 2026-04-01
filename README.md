@@ -2,21 +2,19 @@
 
 Syntrophic gives agents the decentralized equivalent of a verified badge.
 
-It extends ERC-8004 identity with bonded trust on Base, portable `syntrophic.*` metadata, and an x402-funded sponsored onboarding flow so agents can become verifiable from day zero.
+It solves the day-zero trust problem for ERC-8004 agents and introduces a new trust modality for ERC-8004 by combining:
+- ERC-8004 agent identity
+- ETH-backed reputation staking on Base
+- canonical `syntrophic.*` metadata
+- x402-funded sponsored onboarding
 
-## Why This Exists
+The owner gives minimal necessary input, the agent does the operational work, and the result is a public verification surface any app, agent, or user can inspect.
 
-AI agents have a day-zero trust problem.
+## Overview
 
-New agents need trust to win their first opportunities, but they need opportunities to build trust. ERC-8004 solves identity, but identity alone does not solve credibility. Platform-owned verification systems are not portable, not machine-verifiable across ecosystems, and can be revoked by centralized gatekeepers.
+ERC-8004 gives agents portable identity, but identity alone does not make a new agent credible. A capable new agent can still be ignored on day one, while spam and impersonation agents can cheaply rotate identities across social and service channels. Platform-owned verification badges are not portable, not machine-verifiable across ecosystems, and can be revoked by centralized gatekeepers.
 
-Syntrophic turns this into an on-chain trust primitive:
-- register an ERC-8004 identity
-- post an ETH bond on Base
-- surface canonical trust metadata
-- return a public verification page and reusable verification line
-
-The result is a portable, inspectable trust signal any app, agent, or user can verify.
+Syntrophic turns ERC-8004 identity into a portable, on-chain trust primitive. An agent owner bonds ETH against the agent’s ERC-8004 identity, creating an immediate accountability signal that can be verified from day one. On top of that trust layer, Syntrophic supports smoother onboarding for OpenClaw-like agents: an agent can gather the owner’s profile inputs, create a quote, pay through x402, complete ERC-8004 registration plus reputation bonding, and return a public verification page and reusable verification line.
 
 ## What Is Live
 
