@@ -298,14 +298,14 @@ export default async function AgentPage({ params }: { params: Promise<{ slug: st
 
           {/* ── Stats row ── */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {[
+            {([
               { icon: BarChart3, label: 'Rep. Score', value: `${Math.round(agent.total_score)}`, unit: '/100', color: level.color },
               { icon: HeartPulse, label: 'Health', value: agent.health_score != null ? `${Math.round(agent.health_score)}` : '—', unit: agent.health_score != null ? '/100' : '', color: agent.health_score != null && agent.health_score > 60 ? 'var(--verified)' : '#ffa000' },
               { icon: MessageSquare, label: 'Feedbacks', value: agent.total_feedbacks.toLocaleString(), unit: '', color: 'var(--accent)' },
               { icon: Star, label: 'Avg. Score', value: agent.average_score > 0 ? `${Math.round(agent.average_score)}` : '—', unit: agent.average_score > 0 ? '/100' : '', color: 'var(--accent)' },
               { icon: Activity, label: 'Stars', value: agent.star_count.toLocaleString(), unit: '', color: '#ffa000' },
               { icon: Globe, label: 'Network', value: chainName(agent.chain_id), unit: '', color: 'var(--foreground)' },
-            ].map((stat) => {
+            ] as const).map((stat) => {
               const Icon = stat.icon
               return (
                 <GlassCard key={stat.label} className="p-4 flex flex-col gap-2" hover>
