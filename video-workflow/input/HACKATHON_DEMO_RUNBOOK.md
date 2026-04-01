@@ -2,12 +2,15 @@
 
 ## Goal
 
-Demo one complete flow in under two minutes:
+Demo one complete flow in about four minutes:
 
-1. create an onboarding quote,
-2. show the live verification result,
-3. show the proof summary,
-4. verify the bonded agent state on the site.
+1. explain the ERC-8004 onboarding problem,
+2. explain reputation staking,
+3. explain the x402 payment step,
+4. show the live onboarding surfaces,
+5. show the explorer and verification result,
+6. point judges to the ERC draft,
+7. mention the multi-chain future extension.
 
 ## Demo Path
 
@@ -18,17 +21,30 @@ Open the live website:
 - `https://syntrophic.md`
 
 Show:
+
 - `Onboard Agent`
 - `Explore Agents`
 - the prompt copy dialog
 
 ### Step 2
 
-Open the x402 demo page:
+Open the public skill:
+
+- `https://syntrophic.md/skill.md`
+
+Explain:
+
+- the agent asks for only the minimum necessary owner input
+- the agent can perform the workflow on the owner’s behalf
+
+### Step 3
+
+Open the onboarding page:
 
 - `https://syntrophic.md/onboard`
 
 Fill:
+
 - beneficiary wallet
 - agent name
 - description
@@ -37,45 +53,48 @@ Fill:
 
 Create the quote.
 
-### Step 3
+Explain:
 
-Open the live verification page for the demo agent.
+- this is the site that helps onboard new OpenClaw-like agents on-chain
+- x402 is the single payment step for the sponsored launch
 
 ### Step 4
 
-Show the proof summary:
+Open the explorer:
 
-- `agent_id`
-- `tx_hash`
-- `bonded = true`
-- `verification_url`
-- the onboarding prompt
+- `https://syntrophic.md/explore?filter=syntrophic`
+
+Explain:
+
+- this is where newly onboarded agents become discoverable and filterable
 
 ### Step 5
 
-Verify one or more of these live:
+Open the verification page and proof summary.
 
-- Syntrophic verification page
-- ERC-8004 metadata read
+Explain:
+
+- reputation staking is now visible
+- the result is publicly verifiable
+
+### Step 6
+
+Open the ERC draft:
+
+- `https://syntrophic.md/erc-draft`
+
+Explain:
+
+- this is where the staking model and metadata surface are described in more depth
+
+### Step 7
+
+Close with the future extension:
+
+- one payment flow
+- multiple chains
+- same minimal owner input
 
 ## Judge Script
 
-“Here is the profile and quote. Here is the live verification result. The agent is registered, bonded, and publicly verifiable on Base.”
-
-## Before / After
-
-Before:
-- no bonded ERC-8004 identity
-
-After:
-- Base ERC-8004 agent exists
-- SRP bond exists
-- `syntrophic.status = BONDED`
-- public verification page exists
-
-## Future Scope To Mention Briefly
-
-- single-payment multi-chain launch bundles
-- sponsored bonding for already-registered ERC-8004 agents
-
-Do not spend more than one sentence on future scope during the live demo.
+“This is ERC-8004 onboarding made simpler. The owner gives minimal input. The agent does the work. One x402 payment step funds the launch. Reputation staking makes trust visible and portable from day zero.”

@@ -169,7 +169,7 @@ Additional autonomous media-production evidence:
   - `video-workflow/GENERATE-3MIN.md`
   - `video-workflow/input/`
   - `video-workflow/scripts/`
-  - `video-workflow/output/syntrophic-3min-presentation.mp4`
+  - `video-workflow/output/syntrophic-4min-presentation.mp4`
   - `video-workflow/output/syntrophic-final-with-voice.mp4`
 
 Why that matters:

@@ -12,7 +12,7 @@ const outputDir = path.join(workflowDir, 'output');
 const assetsDir = path.join(workflowDir, 'assets');
 const inputDir = path.join(workflowDir, 'input');
 
-const OUTPUT_VIDEO = path.join(outputDir, 'syntrophic-3min-presentation.mp4');
+const OUTPUT_VIDEO = path.join(outputDir, 'syntrophic-4min-presentation.mp4');
 const BASE_URL = 'https://www.syntrophic.md';
 const PROMPT_TEXT = 'Use https://syntrophic.md/skill.md to get a Syntrophic verified badge.';
 const DEFAULT_VOICE_ID = process.env.VIDEO_VOICE_ID || 'lKf2tqVafNW1nVb7CgwC';
@@ -20,113 +20,202 @@ const DEFAULT_VOICE_NAME = process.env.VIDEO_VOICE_NAME || 'Frank';
 const MUSIC_FILE = path.join(assetsDir, 'background-music.mp3');
 
 const demoProfile = {
-  beneficiary: '0xab079c3B737888c46B186B72347E95aEB6b82e8A',
-  name: 'John Smith',
-  description: 'An OpenClaw agent onboarding through Syntrophic for ERC-8004 identity and day-zero bonded trust.',
-  serviceUrl: 'https://github.com/Syntrophic-MD/syntrophic-reputation-protocol',
-  imageUrl: 'https://www.syntrophic.md/images/background.png',
+  beneficiary: '0x5b6D6DbA14194098c7e30Ba505Dadd0874A2458A',
+  name: 'Syntrophic Agent #223 — Atlas',
+  description: 'Atlas indexes ERC-8004 agents, metadata quality, and relationship graphs to improve discoverability across the Syntrophic ecosystem.',
+  serviceUrl: 'https://syntrophic.md/agents/syntrophic-agent-223-atlas',
+  imageUrl: 'https://gateway.pinata.cloud/ipfs/QmPVMuq5E4R8MMQf1u23C5cfhnDEbqXitEj4pqHp7GsG7k',
 };
 
 const proofDemo = {
-  agentId: 38344,
-  txHash: '0xf4bbf79355c8ad312bc35bc152d83fcf683e1517db8b8c5bc03c5671821c20c8',
-  verificationUrl: 'https://www.syntrophic.md/agents/base/38344',
+  agentId: 36105,
+  txHash: '0xee477b292fdfed88d04b0cc7decc7b993076efcbb768a14491ac5afc67b5a834',
+  verificationUrl: 'https://www.syntrophic.md/agents/base/36105',
 };
 
 const scenes = [
   {
     id: 'title',
     kind: 'slide',
-    title: 'Syntrophic',
-    subtitle: 'The decentralized verified badge for agents.',
+    title: '🧬 Syntrophic',
+    subtitle: 'Onboard AI agents to ERC-8004 with one payment step and day-zero trust.',
     bullets: [
-      'Day-zero trust for ERC-8004 agents',
-      'Bonded reputation on Base',
-      'Portable verification any app can inspect',
+      'Identity plus economic trust',
+      'Agent-led onboarding for the owner',
+      'Portable proof across apps',
     ],
     narration:
-      'Agents have a trust problem on day zero. ERC eight thousand four gives agents portable identity, but identity alone does not make a new agent credible. Syntrophic gives agents the decentralized equivalent of a verified badge.',
-    minDuration: 11,
+      'Syntrophic is a trust-first onboarding layer for AI agents. It helps an owner get an agent onto E R C eight thousand four, fund the launch with one payment step, and make trust visible from day one.',
+    minDuration: 14,
     theme: 'blue',
   },
   {
     id: 'problem',
     kind: 'slide',
-    title: 'The Day-Zero Trust Problem',
-    subtitle: 'New agents need trust before they can build reputation.',
+    title: 'The Problem',
+    subtitle: 'ERC-8004 identity exists, but trusted onboarding is still too hard.',
     bullets: [
-      'No portable credibility',
-      'No economic commitment',
-      'Too much onboarding friction',
+      'A new agent can register and still have no credibility',
+      'Owners still face too many setup, wallet, and payment steps',
+      'The result is rarely portable or easy for other apps to trust',
     ],
     narration:
-      'New agents have no portable credibility, no economic commitment, and too much onboarding friction. Syntrophic solves that gap by turning onboarding into a trust event.',
-    minDuration: 10,
+      'The problem is not identity alone. The problem is onboarding that identity into trust. Today, an owner still has to bridge too many steps to go from profile to on-chain registration to a trust signal another app can actually use.',
+    minDuration: 16,
     theme: 'rose',
   },
   {
-    id: 'product',
+    id: 'solution',
     kind: 'slide',
-    title: 'One Onboarding Flow',
-    subtitle: 'Prompt, profile, quote, proof.',
+    title: 'The Solution',
+    subtitle: 'Syntrophic turns registration, payment, and trust into one agent-led flow.',
     bullets: [
-      'Public prompt on the homepage',
-      'Public skill at syntrophic.md/skill.md',
-      'Quote and proof on the live site',
+      'The owner gives minimal necessary input',
+      'The agent gathers, confirms, and executes the workflow',
+      'The result is a public verification surface and portable trust metadata',
     ],
     narration:
-      'Syntrophic gives agents one onboarding flow. The homepage gives the prompt, the public skill explains the job, the demo page prepares the quote, and the live site shows the verification result.',
-    minDuration: 11,
+      'Syntrophic solves the gap by turning onboarding into one guided flow. The owner gives minimal necessary input, the agent does the operational work, and the output is not just registration. It is a public and portable trust result.',
+    minDuration: 16,
+    theme: 'emerald',
+  },
+  {
+    id: 'owner-input',
+    kind: 'slide',
+    title: 'What The Owner Actually Gives',
+    subtitle: 'Only the inputs the agent should not safely invent.',
+    bullets: [
+      'Beneficiary wallet',
+      'Name, description, service URL, optional image',
+      'The agent collects, confirms, and does the rest',
+    ],
+    narration:
+      'That means the owner only gives the few details the agent should not safely invent: beneficiary wallet, name, description, service U R L, and optionally an image. After that, the agent can continue the workflow on the owner’s behalf.',
+    minDuration: 15,
+    theme: 'emerald',
+  },
+  {
+    id: 'staking',
+    kind: 'slide',
+    title: 'What Reputation Staking Means',
+    subtitle: 'Trust becomes economically meaningful, not just descriptive.',
+    bullets: [
+      'The bond is tied to the ERC-8004 agent ID',
+      'Bad behavior can affect score and trigger slashing',
+      'Portable syntrophic metadata shows the result',
+    ],
+    narration:
+      'Reputation staking means the owner bonds value against the E R C eight thousand four agent I D. That makes trust economically meaningful. If the agent behaves badly, the system can update score and enforce slashing rules. The bond state is then written back into portable syntrophic metadata for other apps to read.',
+    minDuration: 18,
+    theme: 'violet',
+  },
+  {
+    id: 'x402',
+    kind: 'slide',
+    title: 'Why x402 Matters',
+    subtitle: 'One payment step can cover the full launch.',
+    bullets: [
+      'One x402 payment step',
+      'Registration, reputation staking, gas, storage, and service fee',
+      'Sponsored execution removes manual chain-by-chain friction',
+    ],
+    narration:
+      'X four zero two is what makes the onboarding usable. Instead of asking the owner to manually execute several different chain actions, Syntrophic can take one payment step that covers E R C eight thousand four registration, reputation staking, gas, storage, and the service fee, then run the sponsored launch.',
+    minDuration: 17,
+    theme: 'blue',
+  },
+  {
+    id: 'cocreation',
+    kind: 'slide',
+    title: 'Built As A Human-Agent Co-Creation',
+    subtitle: 'The Syntrophic agent and its owner built this project together.',
+    bullets: [
+      'The owner defined goals, constraints, and direction',
+      'The Syntrophic agent wrote, tested, documented, and presented',
+      'The product itself is designed for that same owner-agent workflow',
+    ],
+    narration:
+      'This project was itself a co creation between the Syntrophic agent and its owner. The owner defined goals, constraints, and product direction. The agent wrote, tested, documented, and presented the system. That matters because the product is designed for the same human agent collaboration pattern it demonstrates.',
+    minDuration: 16,
     theme: 'emerald',
   },
   {
     id: 'homepage',
     kind: 'web',
     narration:
-      'The homepage gives agents a public onboarding prompt. The invitation is simple and agent-first: use syntrophic dot m d slash skill dot m d to get a verified badge.',
-    minDuration: 11,
+      'The homepage gives the public entry point. The user sends one clear instruction to their agent. That matters because this product is agent-first. The owner does not need to understand the protocol stack before getting started.',
+    minDuration: 14,
   },
   {
     id: 'skill',
     kind: 'web',
     narration:
-      'The public skill explains how to gather the profile, create the quote, and either self-pay or hand off to a payment-capable helper. Syntrophic does not invent the profile. The owner, or the owner’s agent, provides it.',
-    minDuration: 12,
+      'The public skill explains the mission, what minimum information to request, and how to move from profile draft to quote to verification without inventing profile data. This is where an OpenClaw-like agent learns how to do the job on behalf of the owner.',
+    minDuration: 16,
   },
   {
     id: 'onboard',
     kind: 'web',
     narration:
-      'On the x four zero two demo page, we prepare the profile and create the onboarding quote. The page then shows the next step and the helper path needed to complete the paid launch.',
-    minDuration: 13,
+      'This onboarding site is the operator-friendly surface for the same flow. Here the profile is prepared, the quote is created, and the next step for the x four zero two funded sponsored launch is shown. This is how new OpenClaw-like agents get on-chain with less friction.',
+    minDuration: 18,
+  },
+  {
+    id: 'explorer',
+    kind: 'web',
+    narration:
+      'The explorer is where the result becomes useful. Newly onboarded agents can be discovered, filtered, and inspected in one public interface. This is what turns the protocol into a usable social and coordination layer for agents.',
+    minDuration: 15,
   },
   {
     id: 'verification',
     kind: 'web',
     narration:
-      'After launch, the agent gets a public verification page and a reusable verification line. This agent is no longer just a profile. It now has portable ERC eight thousand four identity and bonded trust state.',
-    minDuration: 12,
+      'Each onboarded agent gets a public verification page. Here we show Syntrophic Agent number two twenty three, Atlas, because the page has a stronger profile image and clearer trust context. This page shows the E R C eight thousand four identity, Syntrophic status, and a reusable verification line.',
+    minDuration: 16,
   },
   {
     id: 'proof',
     kind: 'proof',
     narration:
-      'The flow ends back on the site with a proof summary: agent identifier, transaction hash, bonded status, and verification URL. That makes the trust signal portable and machine-verifiable without needing a terminal recording.',
-    minDuration: 10,
+      'Behind that page is an on-chain proof chain: agent identifier, transaction hash, bonded status, and verification U R L. The trust signal is not just visual. It is machine-verifiable and portable across apps, marketplaces, and future agent ecosystems.',
+    minDuration: 15,
+  },
+  {
+    id: 'draft',
+    kind: 'web',
+    narration:
+      'If you want the deeper protocol model, the E R C draft is linked directly on the site. This is where judges and builders can learn more about the reputation staking system, the metadata surface, and the sponsored onboarding flow in more technical detail.',
+    minDuration: 16,
+  },
+  {
+    id: 'future',
+    kind: 'slide',
+    title: 'What Comes Next',
+    subtitle: 'One payment, multiple chains, the same agent-first experience.',
+    bullets: [
+      'One onboarding quote can expand beyond one chain',
+      'Register the same agent across multiple chains in one guided flow',
+      'Keep the owner input minimal while the agent handles the workflow',
+    ],
+    narration:
+      'The next extension is to let an agent pay once and complete onboarding across multiple chains in one guided flow. The goal is not just one verified badge on one network, but portable multi-chain onboarding with the same agent-first experience.',
+    minDuration: 15,
+    theme: 'rose',
   },
   {
     id: 'closing',
     kind: 'slide',
     title: 'Onboarding Becomes The Trust Moment',
-    subtitle: 'Syntrophic turns identity into portable bonded verification.',
+    subtitle: 'Minimal owner input. Agent-led execution. Portable trust from day one.',
     bullets: [
-      'Homepage prompt',
-      'Public skill',
-      'Quote and proof on the live site',
+      'ERC-8004 onboarding made simpler',
+      'One x402 payment step for the launch',
+      'Explorer, verification page, and draft on the live site',
     ],
     narration:
-      'Syntrophic turns onboarding into the trust moment. That is how agents get a decentralized verified badge from day zero.',
-    minDuration: 9,
+      'Syntrophic makes E R C eight thousand four onboarding understandable, agent-led, and economically meaningful. The owner gives minimal input. The agent does the work. One payment step handles the launch. Reputation staking makes trust visible from day zero.',
+    minDuration: 14,
     theme: 'violet',
   },
 ];
@@ -175,6 +264,7 @@ function tryRead(file) {
 function readInputContext() {
   const files = [
     'HACKATHON_3MIN_VOICEOVER_SCRIPT.md',
+    'HACKATHON_3MIN_SPEAKER_SCRIPT.md',
     'HACKATHON_JUDGE_SLIDES.md',
     'HACKATHON_3MIN_DEMO_RUNBOOK.md',
     'X402_DEMO_VIDEO_SEQUENCE.md',
@@ -561,6 +651,14 @@ async function captureSceneVisuals(browser) {
       continue;
     }
 
+    if (scene.id === 'explorer') {
+      await page.goto(`${BASE_URL}/explore?filter=syntrophic`, { waitUntil: 'networkidle', timeout: 30000 });
+      await page.waitForTimeout(1800);
+      await page.screenshot({ path: outputPath, fullPage: false });
+      captured[scene.id] = outputPath;
+      continue;
+    }
+
     if (scene.id === 'verification') {
       await page.goto(proofDemo.verificationUrl, { waitUntil: 'networkidle', timeout: 30000 });
       await page.waitForTimeout(1500);
@@ -571,16 +669,25 @@ async function captureSceneVisuals(browser) {
 
     if (scene.id === 'proof') {
       const proofScene = {
-        title: 'On-Chain Proof',
+        title: 'On-Chain Proof Summary',
         lines: [
           `Prompt: ${PROMPT_TEXT}`,
           `Agent ID: ${proofDemo.agentId}`,
           `Tx Hash: ${proofDemo.txHash}`,
-          'Bonded: true',
+          'Reputation staking: BONDED',
           `Verification URL: ${proofDemo.verificationUrl}`,
+          `Learn more: ${BASE_URL}/erc-draft`,
         ],
       };
       await captureHtmlToPng(browser, makeTerminalHtml(proofScene), outputPath);
+      captured[scene.id] = outputPath;
+      continue;
+    }
+
+    if (scene.id === 'draft') {
+      await page.goto(`${BASE_URL}/erc-draft`, { waitUntil: 'networkidle', timeout: 30000 });
+      await page.waitForTimeout(1200);
+      await page.screenshot({ path: outputPath, fullPage: false });
       captured[scene.id] = outputPath;
       continue;
     }
@@ -622,7 +729,7 @@ async function main() {
   ensureDir(outputDir);
 
   console.log('╔════════════════════════════════════════════════════════════╗');
-  console.log('║       Syntrophic Quick Site Demo Generator                 ║');
+  console.log('║      Syntrophic 4-Minute Site Presentation Generator      ║');
   console.log('╚════════════════════════════════════════════════════════════╝');
   console.log(`Voice: ${DEFAULT_VOICE_NAME} (${DEFAULT_VOICE_ID})`);
   console.log(`Output: ${OUTPUT_VIDEO}`);
@@ -706,7 +813,7 @@ async function main() {
     }
 
     const finalDuration = getAudioDuration(OUTPUT_VIDEO);
-    console.log('\n✅ Quick site demo ready');
+    console.log('\n✅ 4-minute site presentation ready');
     console.log(`   File: ${OUTPUT_VIDEO}`);
     console.log(`   Duration: ${finalDuration.toFixed(2)}s`);
   } finally {

@@ -1,102 +1,39 @@
-# Syntrophic Verified Badge Demo Video Sequence
+# Syntrophic 4-Minute Demo Video Sequence
 
-Use this exact scene order for the recorded hackathon video.
+Use this exact scene order for the recorded presentation video.
 
 ## Required Flow
 
-1. opening HTML slides
-2. live website homepage
-3. public skill page
-4. x402 Demo page
-5. live verification page
-6. proof summary card
-7. closing HTML slides
+1. title slide
+2. ERC-8004 onboarding problem slide
+3. minimal owner input slide
+4. reputation staking slide
+5. x402 slide
+6. homepage prompt
+7. public skill
+8. onboarding page
+9. explorer
+10. verification page
+11. proof summary
+12. ERC draft
+13. multi-chain future slide
+14. closing slide
 
-Do not skip that order.
+## Required Messages
 
-## Scene 1: Opening HTML Slides
+- The onboarding problem is about ERC-8004 onboarding.
+- Reputation staking must be explained plainly.
+- x402 must be explained as the single payment step for the sponsored launch.
+- The website must be shown as the place that helps onboard new OpenClaw-like agents.
+- The explorer must be shown.
+- The ERC draft must be shown as the place to learn more.
+- The future extension must mention multi-chain registration with one guided flow.
 
-Goal:
-- establish the big vision first
-- frame Syntrophic as the decentralized verified badge for agents
+## Closing Message
 
-Show slides that communicate:
-- agents have a day-zero trust problem
-- ERC-8004 gives identity but not instant credibility
-- Syntrophic makes onboarding the trust moment
+Syntrophic makes ERC-8004 onboarding:
 
-## Scene 2: Homepage
-
-Open:
-- `https://syntrophic.md`
-
-Show:
-- hero section
-- `Onboard Agent`
-- the prompt copy dialog
-
-What to emphasize:
-- the website gives agents a public onboarding prompt
-- the invitation is simple and agent-first
-
-## Scene 3: Public Skill
-
-Open:
-- `https://syntrophic.md/skill.md`
-
-What to emphasize:
-- the skill tells the agent how to get verified
-- it gathers a real profile, creates a quote, and either self-pays or hands off
-
-## Scene 4: x402 Demo Page
-
-Open:
-- `https://syntrophic.md/onboard`
-
-Fill the form and create a quote.
-
-What to emphasize:
-- this is the operator-friendly demo surface
-- the browser prepares the quote and next step
-- the flow remains site-first for the recorded demo
-
-## Scene 5: Verification Page
-
-Open the verification page for a live bonded agent.
-
-What to capture:
-- agent ID
-- verification URL
-- bonded status
-- trust metadata on the page
-
-What to emphasize:
-- the agent now has a public verification page
-- this is the portable verified badge moment
-
-## Scene 6: Proof Summary Card
-
-Show a proof summary card that includes:
-
-- prompt text
-- agent ID
-- tx hash
-- bonded state
-- verification URL
-
-What to emphasize:
-- the proof chain is still anchored on Base
-- the tx hash can be inspected independently later
-- the recorded demo stays fast and site-first
-
-## Scene 7: Closing Slides
-
-Return to slides for the close.
-
-Closing messages:
-- Syntrophic solves day-zero trust for agents
-- it turns ERC-8004 identity into bonded trust
-- onboarding becomes the trust moment
-
-Suggested last line:
-- "Syntrophic gives agents the decentralized equivalent of a verified badge."
+- clearer
+- agent-led
+- economically meaningful
+- and ready to expand across multiple chains

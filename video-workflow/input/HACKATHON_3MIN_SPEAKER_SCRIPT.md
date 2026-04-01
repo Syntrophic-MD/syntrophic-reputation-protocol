@@ -1,45 +1,95 @@
-# Hackathon 3-Minute Speaker Script
+# Hackathon 4-Minute Speaker Script
 
-## 0:00 - 0:25
+## 0:00 - 0:20
 
-Agents have a trust problem on day zero.
+This presentation is about a specific problem: ERC-8004 onboarding.
 
-ERC-8004 gives agents portable identity, but identity alone does not make a new agent credible.
+A new agent may be able to register an identity, but that does not automatically make it trusted, discoverable, or easy to launch on-chain.
 
-Syntrophic solves that gap by giving agents the decentralized equivalent of a verified badge from the moment they onboard.
+Syntrophic turns that into one guided flow.
 
-## 0:25 - 0:50
+## 0:20 - 0:45
 
-The important part is that Syntrophic does not fabricate the profile.
+The gap is that identity alone is not the same as trusted onboarding.
 
-The owner, or the owner’s agent, prepares the name, description, service URL, image, and beneficiary wallet first. Syntrophic then verifies and bonds that supplied identity.
+A new agent can register and still have no credibility.
 
-So we are not inventing trust. We are turning a user-supplied identity into a verifiable trust commitment.
+The owner still faces too many manual setup and payment steps.
 
-## 0:50 - 1:10
+And trust does not travel cleanly across apps.
 
-The public entrypoint is `syntrophic.md/skill.md`.
+## 0:45 - 1:05
 
-An agent can read that skill, gather the profile, create the quote, and then either self-pay or hand off to a payment-capable helper for the x402 step.
+Syntrophic is designed so the owner gives only the minimum necessary input:
 
-## 1:10 - 1:35
+beneficiary wallet, name, description, service URL, and optionally an image.
 
-On `syntrophic.md/onboard`, we prepare the profile and create the quote.
+The agent can gather that, confirm it, and do the rest on the owner’s behalf.
 
-That page is the operator-friendly demo surface. It shows the quote and the next-step guidance for the paid launch.
+## 1:05 - 1:30
 
-## 1:35 - 2:00
+Reputation staking is the core trust primitive.
 
-For the quick video, we stay on the site and move directly to the proof.
+The owner bonds value against the ERC-8004 agent ID, so trust becomes economically meaningful.
 
-## 2:00 - 2:30
+If the agent behaves badly, the system can update score and enforce slashing rules, and the result is written back into portable metadata.
 
-We open the verification page and the proof summary.
+## 1:30 - 1:55
 
-This agent is no longer just a profile. It now has a portable ERC-8004 identity, a bonded trust state, and a reusable verification line it can place on websites, social profiles, or email signatures.
+x402 is what makes the launch usable.
 
-## 2:30 - 3:00
+Instead of asking the owner to do several chain actions manually, Syntrophic can take one x402 payment step that covers ERC-8004 registration, reputation staking, gas, storage, and the service fee, then complete the sponsored launch.
 
-Syntrophic turns onboarding into the trust moment.
+## 1:55 - 2:10
 
-That is how agents get a decentralized verified badge from day zero.
+This project was also a co-creation between the Syntrophic agent and its owner.
+
+The owner set the goals and constraints.
+
+The Syntrophic agent helped build, test, document, and present the system.
+
+## 2:10 - 2:30
+
+Now we move to the live site.
+
+The homepage gives the public prompt.
+
+The skill explains what the agent should ask for and how it should move from profile draft to verification.
+
+## 2:30 - 2:55
+
+On the onboarding page, we prepare the profile and create the quote.
+
+This is the website surface that easily onboards new OpenClaw-like agents on-chain with ERC-8004 and x402 payments.
+
+## 2:55 - 3:15
+
+Then we open the explorer.
+
+This is where the result becomes useful.
+
+Newly onboarded agents can be discovered, filtered, and inspected publicly.
+
+## 3:15 - 3:35
+
+Next we open the verification page.
+
+This gives the agent a public trust surface and a reusable verification line.
+
+Then we show the proof summary with the agent ID, transaction hash, bonded status, and verification URL.
+
+## 3:35 - 3:50
+
+If you want the technical model, the ERC draft is linked directly on the site.
+
+That is where we explain the reputation staking system in more detail.
+
+## 3:50 - 4:10
+
+Finally, the next extension is multi-chain onboarding with one payment flow.
+
+The owner still gives minimal input.
+
+The agent does the work.
+
+Syntrophic makes ERC-8004 onboarding understandable, agent-led, and economically meaningful.

@@ -2,117 +2,131 @@
 
 ## Slide 1 - Title
 
-**Syntrophic**
+**🧬 Syntrophic**
 
-The decentralized verified badge for agents.
+Onboard an ERC-8004 agent and make trust visible from day one.
 
 Speaker note:
-Lead with the product outcome, not the contract names.
+Start with the problem and outcome, not contract names.
 
 ## Slide 2 - The Problem
 
-New agents have no trust on day zero.
+**The ERC-8004 onboarding gap**
 
-- no portable credibility
-- no economic commitment
-- too much onboarding friction
-
-Speaker note:
-Make the trust problem feel immediate and practical.
-
-## Slide 3 - The Insight
-
-ERC-8004 gives identity.
-Syntrophic turns onboarding into a trust event.
-
-- prepare profile
-- fund onboarding
-- return proof
+- a new agent can register and still have no credibility
+- the owner still faces too many manual steps
+- trust does not travel cleanly across apps
 
 Speaker note:
-Say clearly that identity is necessary but not sufficient.
+Be explicit that this is about ERC-8004 onboarding.
 
-## Slide 4 - The Product
+## Slide 3 - Minimal Owner Input
 
-**One onboarding flow**
-
-Syntrophic:
-- gives the public prompt
-- gives the public skill
-- prepares the quote
-- completes the verification flow
-- returns a public proof page
+- beneficiary wallet
+- name, description, service URL, optional image
+- the agent does the rest
 
 Speaker note:
-Keep this slide simple and user-centered.
+This is where you explain the owner/agent division of labor.
 
-## Slide 5 - Architecture
+## Slide 4 - Reputation Staking
 
-Three rails:
-
-- Identity rail: ERC-8004
-- Payment rail: x402
-- Trust rail: Syntrophic bond + metadata
+- bond is tied to the ERC-8004 agent ID
+- trust becomes economically meaningful
+- score and slashing update the trust state
 
 Speaker note:
-This is where you briefly anchor the technical stack.
+Explain the primitive, not just the feature name.
 
-## Slide 6 - Live Flow
+## Slide 5 - Why x402 Matters
+
+- one payment step
+- covers registration, staking, gas, storage, service fee
+- sponsored launch removes extra friction
+
+Speaker note:
+Say this as a usability improvement, not just a tech integration.
+
+## Slide 6 - Homepage + Skill
 
 Show:
 
 1. Homepage prompt
 2. Public skill
-3. x402 Demo page
-4. Verification page
-5. Proof summary
 
 Speaker note:
-The flow should feel like one continuous proof chain, not separate disconnected scenes.
+This is the agent-first entry point.
 
-## Slide 7 - Before / After
+## Slide 7 - Onboarding Page
 
-Before:
-- no agent ID
-- no bond
-- no public trust proof
+Show:
 
-After:
-- ERC-8004 identity on Base
-- bonded in Syntrophic
-- public verification page
+1. profile fields
+2. quote creation
+3. next-step guidance
 
 Speaker note:
-This helps judges understand the delta fast.
+Frame this as the site that helps onboard OpenClaw-like agents on-chain.
 
-## Slide 8 - Why It Matters
+## Slide 8 - Explorer
 
-This agent can now be discovered, filtered, and trusted differently.
+Show:
 
-- better admission for credible new agents
-- stronger machine-readable trust signal
-- reusable across apps
-
-Speaker note:
-Tie the feature to changed behavior, not just architecture.
-
-## Slide 9 - Why Now
-
-- ERC-8004 makes portable agent identity real
-- x402 makes agent-native payments practical
-- Syntrophic makes trust onboarding usable
+1. explorer landing
+2. discoverable agent list
 
 Speaker note:
-This is the ecosystem timing slide.
+Show why the onboarding output is useful socially and operationally.
 
-## Slide 10 - The Invitation
+## Slide 9 - Verification
 
-Is your OpenClaw on 8004 yet?
+Show:
 
-Send it to Syntrophic.MD and let it:
-- register
-- bond
-- become publicly verifiable
+1. verification page
+2. bonded state
+3. verification line
 
 Speaker note:
-End on the invitation, not the roadmap.
+This is the verified badge moment.
+
+## Slide 10 - Proof
+
+Show:
+
+1. agent ID
+2. tx hash
+3. bonded status
+4. verification URL
+
+Speaker note:
+Make clear that this is machine-verifiable, not just a UI badge.
+
+## Slide 11 - ERC Draft
+
+Show:
+
+1. ERC draft page
+2. note that this is where judges can learn more about the staking model
+
+Speaker note:
+Tie the implementation back to the written protocol surface.
+
+## Slide 12 - Future Extension
+
+- one payment
+- multiple chains
+- same minimal owner input
+
+Speaker note:
+Keep this short and concrete.
+
+## Slide 13 - Closing
+
+Syntrophic makes ERC-8004 onboarding:
+
+- clearer
+- agent-led
+- economically meaningful
+
+Speaker note:
+End on the product thesis, not the roadmap.

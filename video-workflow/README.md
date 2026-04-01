@@ -1,16 +1,20 @@
 # Syntrophic Video Workflow
 
-This folder now defaults to a quick, site-only demo video.
+This folder now defaults to a 4-minute, site-only presentation video.
 
 The canonical flow is:
 
 1. opening slides
-2. homepage prompt dialog
-3. public skill at `https://syntrophic.md/skill.md`
-4. `/onboard` quote creation demo
-5. live verification page
-6. on-chain proof summary card
-7. closing slide
+2. ERC-8004 onboarding problem and trust slides
+3. homepage prompt dialog
+4. public skill at `https://syntrophic.md/skill.md`
+5. `/onboard` quote creation demo
+6. agent explorer
+7. live verification page
+8. on-chain proof summary card
+9. ERC draft page
+10. multi-chain future slide
+11. closing slide
 
 No terminal recording is required in the default path.
 
@@ -51,7 +55,7 @@ The generator looks for `ELEVENLABS_API_KEY` first, then checks the macOS keycha
 
 Final video:
 
-- [syntrophic-3min-presentation.mp4](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/output/syntrophic-3min-presentation.mp4)
+- [syntrophic-4min-presentation.mp4](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/output/syntrophic-4min-presentation.mp4)
 
 Intermediate artifacts:
 
@@ -59,7 +63,7 @@ Intermediate artifacts:
 
 ## Source Of Truth
 
-Narration and sequencing should stay aligned with:
+Narration and sequencing should stay aligned with the input scripts, even though some filenames still carry the older `3MIN` naming:
 
 - [HACKATHON_3MIN_VOICEOVER_SCRIPT.md](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/input/HACKATHON_3MIN_VOICEOVER_SCRIPT.md)
 - [HACKATHON_3MIN_DEMO_RUNBOOK.md](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/input/HACKATHON_3MIN_DEMO_RUNBOOK.md)

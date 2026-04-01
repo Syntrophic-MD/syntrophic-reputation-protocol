@@ -1,68 +1,64 @@
 # Syntrophic Live Speaking Script
 
-This is the tighter version for a live 3-minute presentation.
+This is the tighter version for a live 4-minute presentation.
 
-## Version A - Full 3 Minutes
+## Version A - Full 4 Minutes
 
-AI agents have a day-zero trust problem.
+This demo is about a specific problem: ERC-8004 onboarding.
 
-A new agent might be capable, but it still starts with no portable credibility, no economic commitment, and too much onboarding friction.
-
-ERC-8004 solves identity, but identity alone does not tell the world, “this agent has made a commitment, and that commitment is verifiable on-chain.”
+A new agent may be able to register an identity, but identity alone does not make it trusted, easy to discover, or easy to launch on-chain.
 
 That is the gap Syntrophic fills.
 
-Syntrophic gives any agent the decentralized equivalent of a verified badge.
+Syntrophic asks the owner for only the minimum necessary input: beneficiary wallet, name, description, service URL, and optionally an image.
 
-The owner or the owner’s agent prepares the profile. Syntrophic creates the quote, funds onboarding through x402, registers the ERC-8004 identity, posts the ETH bond on Base, and returns a proof bundle with the verification page and transaction hash.
+Then the agent can do the rest on the owner’s behalf.
 
-So instead of “register now, maybe build trust later,” onboarding itself becomes the trust moment.
+The trust primitive is reputation staking.
 
-Here is the proof flow.
+The owner bonds value against the ERC-8004 agent ID, which makes trust economically meaningful, not just descriptive.
 
-First, we open Syntrophic.MD and show the `Onboard Agent` prompt.
+x402 is what makes the launch practical.
 
-Second, we open the public skill and the x402 Demo page.
+From the owner’s perspective, one payment step can cover registration, reputation staking, gas, storage, and service fees for the sponsored launch.
 
-Third, we create the quote and show the prepared next step.
+This project was also a co-creation between the Syntrophic agent and its owner.
 
-Fourth, we open the verification page and the proof summary.
+The owner set the goals and constraints, and the Syntrophic agent helped build, test, document, and present the system.
 
-What you see at the end is not a mockup. It is a live ERC-8004 profile on Base with bonded trust and portable verification.
+Now we show the live product.
 
-This matters because a newly launched agent can now be discovered, filtered, and trusted differently.
+First, the homepage gives the public onboarding prompt.
 
-That makes credible new agents easier to admit and low-commitment spam easier to ignore.
+Second, the public skill explains what the agent should ask for and how it should execute the flow.
 
-This is not just a dashboard.
+Third, the onboarding page prepares the profile and creates the quote for OpenClaw-like agents.
 
-It is a live on-chain protocol, a public agent onboarding skill, an x402-funded launch flow, and a portable trust signal built around one idea:
+Fourth, the explorer shows why the result matters: onboarded agents can now be discovered and filtered publicly.
 
-turn onboarding into the trust moment.
+Fifth, the verification page and proof summary show the public trust result.
 
-The invitation is simple:
+Sixth, the ERC draft shows the underlying protocol model for judges who want the deeper design.
 
-Is your OpenClaw on 8004 yet?
+And finally, the future extension is multi-chain onboarding with one payment flow.
 
-Send it to Syntrophic.MD and let it get a Syntrophic verified badge.
+The owner gives minimal input.
+
+The agent does the work.
+
+Syntrophic makes ERC-8004 onboarding understandable, agent-led, and economically meaningful.
 
 ## Version B - Compressed 90 Seconds
 
-New agents have a trust problem on day zero.
+The problem is ERC-8004 onboarding.
 
-ERC-8004 gives them identity, but not an easy way to become trusted immediately.
+Identity alone does not make a new agent trusted or easy to launch.
 
-Syntrophic fixes that by turning onboarding into a trust event.
+Syntrophic fixes that by combining minimal owner input, agent-led execution, x402-funded sponsored launch, and reputation staking.
 
-The owner or the owner’s agent prepares a profile. Syntrophic creates the quote, funds onboarding through x402, registers the ERC-8004 identity, posts the bond on Base, and returns a public verification page.
+In the demo, we show the homepage, the public skill, the onboarding page, the explorer, the verification page, the proof summary, and the ERC draft.
 
-In the demo, we show the homepage prompt, the public skill, the x402 Demo page, the live verification page, and the final proof summary.
-
-That means a newly launched agent can now be discovered, filtered, and trusted differently.
-
-The message is simple:
-
-Syntrophic gives agents the decentralized equivalent of a verified badge.
+The result is a new agent that is on-chain, bonded, discoverable, and publicly verifiable.
 
 ## Stage Cues
 
@@ -70,28 +66,28 @@ Syntrophic gives agents the decentralized equivalent of a verified badge.
 
 Use:
 
-“AI agents have a day-zero trust problem.”
+“This demo is about a specific problem: ERC-8004 onboarding.”
 
 ### Product line
 
 Use:
 
-“Syntrophic gives any agent the decentralized equivalent of a verified badge.”
+“Syntrophic makes ERC-8004 onboarding understandable, agent-led, and economically meaningful.”
 
 ### Demo transition
 
 Use:
 
-“Let me show you the proof flow.”
+“Now let me show you the live product flow.”
 
-### After proof appears
+### After verification appears
 
 Use:
 
-“This agent is no longer just registered. It is bonded and publicly verifiable.”
+“This agent is no longer just registered. It is bonded, discoverable, and publicly verifiable.”
 
 ### Closing line
 
 Use:
 
-“Is your OpenClaw on 8004 yet? Send it to Syntrophic.MD and let it get a Syntrophic verified badge.”
+“The owner gives minimal input. The agent does the work. Trust becomes visible from day zero.”
