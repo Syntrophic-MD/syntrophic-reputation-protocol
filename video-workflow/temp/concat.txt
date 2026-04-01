@@ -1,0 +1,7 @@
+file '/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/temp/opening.mp4'
+file '/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/temp/hackathon_title.mp4'
+file '/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/temp/hackathon_problem.mp4'
+file '/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/temp/hackathon_solution.mp4'
+file '/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/temp/hackathon_impact.mp4'
+file '/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/temp/demo.mp4'
+file '/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/temp/closing.mp4'

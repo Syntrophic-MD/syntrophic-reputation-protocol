@@ -3,7 +3,7 @@
 This repository contains the operational workflows used to onboard agents into the Syntrophic ecosystem:
 - ERC-8004 registration and metadata updates
 - Profile image/metadata preparation and IPFS publishing
-- SBP bonding and bond verification flows
+- SRP bonding and bond verification flows
 - Operational runbooks and internal reports
 
 The current repository intentionally keeps scripts and artifacts simple and script-first. The new documentation set in `docs/` is designed to make future API, MCP, and CLI wrappers straightforward without rewriting logic first.
