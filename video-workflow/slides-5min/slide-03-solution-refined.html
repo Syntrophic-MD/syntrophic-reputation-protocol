@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syntrophic Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 1500px;
+            padding: 2.5rem;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .header {
+            margin-bottom: 2.5rem;
+        }
+        
+        .logo {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 30px rgba(255,215,0,0.6));
+            animation: pulse 3s infinite;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ffffff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .tagline {
+            font-size: 1.6rem;
+            opacity: 0.95;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .key-insight {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+        }
+        
+        .solution-flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .flow-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            animation: slideInUp 1.2s ease-out;
+            text-align: center;
+            position: relative;
+        }
+        
+        .flow-card:nth-child(1) { animation-delay: 0.2s; }
+        .flow-card:nth-child(2) { animation-delay: 0.4s; }
+        .flow-card:nth-child(3) { animation-delay: 0.6s; }
+        
+        .flow-step {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 1rem;
+            background: rgba(255,215,0,0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .flow-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .flow-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #ffffff;
+        }
+        
+        .flow-desc {
+            font-size: 1rem;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+        
+        .tech-section {
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(25px);
+            padding: 2.5rem;
+            border-radius: 25px;
+            border: 3px solid rgba(255,215,0,0.4);
+            margin: 2rem auto;
+            max-width: 1300px;
+            animation: slideInUp 1.2s ease-out 0.8s both;
+        }
+        
+        .tech-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            text-align: left;
+        }
+        
+        .tech-item {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
+        
+        .tech-label {
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .emphasis {
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🧬</div>
+            <h1>Syntrophic</h1>
+            <p class="tagline">Decentralized Trust Layer for ERC-8004 Agents</p>
+            <p class="key-insight">Day-Zero Trust Through Economic Pre-Commitment</p>
+        </div>
+        
+        <div class="solution-flow">
+            <div class="flow-card">
+                <div class="flow-step">STEP 1</div>
+                <div class="flow-icon">💎</div>
+                <div class="flow-title">Bond ETH</div>
+                <div class="flow-desc">Agent owner bonds ETH against their ERC-8004 agentId, creating <span class="emphasis">immediately verifiable accountability</span> on-chain</div>
+            </div>
+            
+            <div class="flow-card">
+                <div class="flow-step">STEP 2</div>
+                <div class="flow-icon">🔍</div>
+                <div class="flow-title">Trust Validation</div>
+                <div class="flow-desc">Trust updates validated through <span class="emphasis">EIP-712 signed attestations</span> from ROFL validation signer (Oasis ROFL-backed flow)</div>
+            </div>
+            
+            <div class="flow-card">
+                <div class="flow-step">STEP 3</div>
+                <div class="flow-icon">🌍</div>
+                <div class="flow-title">Portable Trust</div>
+                <div class="flow-desc"><span class="emphasis">ERC8004RegistryAdapter writes canonical metadata</span> - any app can read the same source of truth</div>
+            </div>
+        </div>
+        
+        <div class="tech-section">
+            <div class="tech-title">🔧 Live on Base Mainnet</div>
+            <div class="tech-grid">
+                <div>
+                    <div class="tech-item">
+                        <span class="tech-label">SBPVault:</span> Manages trust lifecycle (bond → score → unstake/slash)
+                    </div>
+                    <div class="tech-item">
+                        <span class="tech-label">Smart Contract Slashing:</span> Enforced directly in contracts, not centralized
+                    </div>
+                </div>
+                <div>
+                    <div class="tech-item">
+                        <span class="tech-label">Frontend Explorer:</span> Human and agent consumption interface
+                    </div>
+                    <div class="tech-item">
+                        <span class="tech-label">Verifiable Receipts:</span> Deployed contracts with transaction history
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

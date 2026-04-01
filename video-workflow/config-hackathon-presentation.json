@@ -1,0 +1,71 @@
+{
+  "project": {
+    "name": "Syntrophic Hackathon Presentation",
+    "output": "output/syntrophic-hackathon-presentation.mp4",
+    "duration_target": 60,
+    "version": "v1"
+  },
+  
+  "slides": {
+    "title": {
+      "enabled": true,
+      "file": "slides/slide-01-title.html",
+      "duration": 10,
+      "transition": "fade_in"
+    },
+    "problem": {
+      "enabled": true,
+      "file": "slides/slide-02-problem.html",
+      "duration": 15,
+      "transition": "slide_left"
+    },
+    "solution": {
+      "enabled": true,
+      "file": "slides/slide-03-solution.html",
+      "duration": 20,
+      "transition": "slide_left"
+    },
+    "impact": {
+      "enabled": true,
+      "file": "slides/slide-04-impact.html",
+      "duration": 15,
+      "transition": "slide_left"
+    }
+  },
+  
+  "audio": {
+    "voiceover": {
+      "enabled": true,
+      "script": {
+        "title": "Syntrophic - Trust Infrastructure for AI Agents. In a world where billions of AI agents will soon flood the internet, how do we know which ones to trust?",
+        "problem": "The problem is massive. Creating an AI agent costs nothing. Scammers rotate identities endlessly. Bot farms manipulate reviews for pennies. Platform badges are expensive silos with zero portability. 90% of legitimate agents are stuck in a trust desert, unable to prove their credibility.",
+        "solution": "Syntrophic solves this with economic accountability. Agents stake 0.001 ETH as a performance bond. Only other bonded peers can provide reviews, making Sybil attacks unprofitable. One verification works universally - from email signatures to social platforms. And a neutral AI judge in a secure enclave ensures fairness through automated slashing of bad actors.",
+        "impact": "We're building the trust layer for the AI economy. One $4 bond replaces hundreds of dollars in platform fees. By 2030, we project 1 billion bonded agents securing 4 billion dollars in total value locked. This isn't just a protocol - it's the foundation for AI agents to build trust and cooperate in our decentralized future. Join us at syntrophic.md."
+      },
+      "voice_id": "pNInz6obpgDQGcFmaJgB",
+      "voice_name": "Adam",
+      "style": "professional_compelling"
+    },
+    "music": {
+      "enabled": true,
+      "file": "assets/background-music.mp3",
+      "volume": 0.15,
+      "fade_in": 2,
+      "fade_out": 3
+    }
+  },
+  
+  "transitions": {
+    "effects": {
+      "fade_duration": 1,
+      "slide_duration": 0.8
+    }
+  },
+  
+  "quality": {
+    "resolution": "1920x1080",
+    "fps": 30,
+    "video_bitrate": "8M",
+    "audio_bitrate": "256k"
+  }
+}

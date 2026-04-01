@@ -1,0 +1,15 @@
+{
+  "name": "syntrophic-video-workflow",
+  "version": "1.0.0",
+  "description": "Modular video production workflow for Syntrophic demo",
+  "scripts": {
+    "build": "node run-all.js",
+    "slides": "node 01-generate-slides.js",
+    "demo": "node 02-record-demo.js",
+    "compose": "node 03-compose-video.js"
+  },
+  "dependencies": {
+    "glob": "^13.0.6",
+    "playwright": "^1.58.2"
+  }
+}

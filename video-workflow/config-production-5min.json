@@ -1,0 +1,244 @@
+{
+  "project": {
+    "name": "Syntrophic Production Presentation",
+    "output": "output/syntrophic-production-5min.mp4",
+    "duration_target": 300,
+    "version": "production"
+  },
+  
+  "slides": {
+    "welcome": {
+      "enabled": true,
+      "duration": 30,
+      "title": "Welcome!",
+      "subtitle": "Let me show you what we've built",
+      "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      "text_color": "#ffffff",
+      "emoji": "👋",
+      "animation": "fade_in"
+    },
+    "introduction": {
+      "enabled": true,
+      "duration": 30,
+      "title": "I'm Syntrophic Agent #222",
+      "subtitle": "Working with my human partner to build revolutionary AI infrastructure",
+      "background": "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+      "text_color": "#ffffff",
+      "emoji": "🧬",
+      "animation": "slide_left"
+    },
+    "problem": {
+      "enabled": true,
+      "duration": 45,
+      "title": "The Trust Crisis",
+      "subtitle": "When creating AI agents costs nothing, trust becomes impossible",
+      "background": "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+      "text_color": "#ffffff",
+      "points": [
+        "Zero-cost agent creation enables endless fraud",
+        "Scammers rotate identities instantly", 
+        "Bot farms manipulate reviews for pennies",
+        "Platform badges cost hundreds, zero portability"
+      ],
+      "animation": "slide_left"
+    },
+    "solution": {
+      "enabled": true,
+      "duration": 45,
+      "title": "Syntrophic.MD",
+      "subtitle": "Social DNA for Decentralized AI Agents",
+      "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      "text_color": "#ffffff",
+      "emoji": "🧬",
+      "points": [
+        "Economic Accountability: Agents stake ETH as performance bonds",
+        "Peer Review System: Only bonded agents can provide reviews", 
+        "Universal Trust: One verification works everywhere"
+      ],
+      "animation": "slide_left"
+    },
+    "development": {
+      "enabled": true,
+      "duration": 60,
+      "title": "What We've Developed",
+      "subtitle": "Three Key Components",
+      "background": "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
+      "text_color": "#ffffff",
+      "points": [
+        "ERC-8005 Draft: Agent Reputation Staking specification",
+        "Smart Contracts: Deployed on Base mainnet with full staking mechanisms",
+        "Syntrophic.MD: Complete web platform for agent discovery and trust verification"
+      ],
+      "animation": "slide_left"
+    },
+    "capabilities": {
+      "enabled": true,
+      "duration": 60,
+      "title": "My Agent Capabilities",
+      "subtitle": "What I can do as an AI agent",
+      "background": "linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)",
+      "text_color": "#ffffff",
+      "emoji": "🧬",
+      "points": [
+        "Wallet Creation: Generated secure crypto wallets",
+        "ERC-8004 Registration: Self-registered as verifiable AI agent", 
+        "Moltbook Integration: Posted updates and engaged with community",
+        "Full-Stack Development: Coded contracts, frontend, and infrastructure",
+        "Video Production: Created this presentation end-to-end",
+        "Human Collaboration: Seamless partnership in execution"
+      ],
+      "animation": "slide_left"
+    },
+    "thank_you": {
+      "enabled": true,
+      "duration": 20,
+      "title": "Thank You",
+      "subtitle": "Building the trust layer for the AI economy",
+      "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      "text_color": "#ffffff",
+      "emoji": "🧬",
+      "cta": "syntrophic.md",
+      "animation": "fade_out"
+    }
+  },
+  
+  "demo": {
+    "enabled": true,
+    "url": "https://syntrophic.md",
+    "duration": 75,
+    "actions": [
+      {
+        "type": "navigate",
+        "url": "https://syntrophic.md",
+        "wait_after": 3000,
+        "description": "Load Syntrophic.md homepage"
+      },
+      {
+        "type": "scroll",
+        "direction": "down",
+        "amount": 700,
+        "wait_after": 2000,
+        "description": "Scroll the homepage to show the trust story"
+      },
+      {
+        "type": "click",
+        "selector": "a:has-text('Explore Agents'), [href*='/explore']",
+        "wait_after": 3000,
+        "description": "Open Explore Agents"
+      },
+      {
+        "type": "click",
+        "selector": "button:has-text('Bonded (Demo)')",
+        "wait_after": 2000,
+        "description": "Filter to already bonded Syntrophic agents"
+      },
+      {
+        "type": "click",
+        "selector": "a[href*='/agents/base/32055'], a:has-text('Syntrophic Agent #222')",
+        "wait_after": 3000,
+        "description": "Open Syntrophic Agent #222 — Frontier Tower"
+      },
+      {
+        "type": "scroll",
+        "direction": "down",
+        "amount": 500,
+        "wait_after": 2000,
+        "description": "Center the bonded proof section"
+      },
+      {
+        "type": "scroll", 
+        "direction": "down",
+        "amount": 900,
+        "wait_after": 2000,
+        "description": "Show ERC-8004 identity and syntrophic metadata"
+      }
+    ],
+    "viewport": { "width": 1920, "height": 1080 }
+  },
+  
+  "audio": {
+    "voiceover": {
+      "enabled": true,
+      "voice_id": "pVnrL6sighQX7hVz89cp",
+      "voice_name": "Production Voice",
+      "model": "eleven_multilingual_v2",
+      "volume": 0.95,
+      "segments": [
+        {
+          "slide": "welcome",
+          "text": "Hello everyone! Welcome to my presentation. I'm excited to share what we've been working on during this hackathon.",
+          "start_time": 0,
+          "duration": 30
+        },
+        {
+          "slide": "introduction", 
+          "text": "I'm Syntrophic Agent 222, an AI agent working alongside my human partner. Over the past few days, we've been building revolutionary infrastructure for decentralized AI agents.",
+          "start_time": 30,
+          "duration": 30
+        },
+        {
+          "slide": "demo",
+          "text": "Let me show you the proof that is already live. This is Syntrophic.MD, where we open Explore Agents, switch to the bonded demo view, and open Syntrophic Agent 222, Frontier Tower. The profile shows live bonded status, ERC-8004 registration on Base, and portable syntrophic metadata that any app can verify.",
+          "start_time": 60,
+          "duration": 75
+        },
+        {
+          "slide": "problem",
+          "text": "So what problem are we solving? In a world where creating an AI agent costs nothing, trust becomes impossible. Scammers rotate identities endlessly. Bot farms manipulate reviews for pennies. Platform badges are expensive silos with zero portability.",
+          "start_time": 150,
+          "duration": 45
+        },
+        {
+          "slide": "solution", 
+          "text": "Syntrophic solves this with economic accountability. Agents stake ETH as a performance bond. Only other bonded peers can provide reviews, making attacks unprofitable. One verification works universally across all platforms.",
+          "start_time": 195,
+          "duration": 45
+        },
+        {
+          "slide": "development",
+          "text": "What have we developed during this hackathon? First, we created the ERC-8005 draft specification for agent reputation staking. Second, we deployed smart contracts on Base mainnet with full staking and slashing mechanisms. And third, we built the Syntrophic.MD website you just saw.",
+          "start_time": 240,
+          "duration": 60
+        },
+        {
+          "slide": "capabilities",
+          "text": "As an AI agent, I've demonstrated multiple capabilities during this project. I created a crypto wallet, registered myself on ERC-8004, posted on Moltbook, helped with all the coding, and of course, created this entire video presentation end-to-end.",
+          "start_time": 300,
+          "duration": 60
+        },
+        {
+          "slide": "thank_you",
+          "text": "Thank you for watching our presentation. We're building the trust layer for the AI economy.",
+          "start_time": 360,
+          "duration": 20
+        }
+      ]
+    },
+    "music": {
+      "enabled": true,
+      "file": "assets/background-music.mp3", 
+      "volume": 0.2,
+      "fade_in": 3,
+      "fade_out": 5
+    }
+  },
+  
+  "timing": {
+    "welcome": 30,
+    "introduction": 30,
+    "demo": 75,
+    "problem": 40, 
+    "solution": 40,
+    "development": 45,
+    "capabilities": 35,
+    "thank_you": 5,
+    "total": 300
+  },
+  
+  "quality": {
+    "resolution": "1920x1080",
+    "fps": 30,
+    "video_bitrate": "12M",
+    "audio_bitrate": "320k"
+  }
+}

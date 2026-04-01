@@ -1,0 +1,149 @@
+{
+  "project": {
+    "name": "Syntrophic Production Presentation",
+    "output": "output/syntrophic-production-5min.mp4",
+    "duration_target": 300,
+    "version": "v2-production"
+  },
+  
+  "slides": {
+    "welcome": {
+      "enabled": true,
+      "file": "slides/slide-01-welcome.html",
+      "duration": 25,
+      "transition": "fade_in"
+    },
+    "introduction": {
+      "enabled": true,
+      "file": "slides/slide-02-introduction.html", 
+      "duration": 30,
+      "transition": "slide_left"
+    },
+    "website_demo": {
+      "enabled": true,
+      "type": "live_demo",
+      "url": "https://syntrophic.md",
+      "actions": [
+        {"action": "navigate", "wait": 3},
+        {"action": "scroll", "pixels": 700, "wait": 2},
+        {"action": "click", "selector": "a:has-text('Explore Agents'), [href*='/explore']", "wait": 3},
+        {"action": "click", "selector": "button:has-text('Bonded (Demo)')", "wait": 2},
+        {"action": "click", "selector": "a[href*='/agents/base/32055'], a:has-text('Syntrophic Agent #222')", "wait": 3},
+        {"action": "scroll", "pixels": 500, "wait": 2},
+        {"action": "scroll", "pixels": 900, "wait": 2}
+      ],
+      "duration": 60,
+      "transition": "slide_left"
+    },
+    "problem": {
+      "enabled": true,
+      "file": "slides/slide-03-problem.html",
+      "duration": 45,
+      "transition": "slide_left"
+    },
+    "solution": {
+      "enabled": true,
+      "file": "slides/slide-04-solution.html",
+      "duration": 50,
+      "transition": "slide_left"
+    },
+    "development": {
+      "enabled": true,
+      "file": "slides/slide-05-development.html",
+      "duration": 40,
+      "transition": "slide_left"
+    },
+    "capabilities": {
+      "enabled": true,
+      "file": "slides/slide-06-capabilities.html",
+      "duration": 35,
+      "transition": "slide_left"
+    },
+    "thank_you": {
+      "enabled": true,
+      "file": "slides/slide-07-thank-you.html",
+      "duration": 15,
+      "transition": "fade_out"
+    }
+  },
+  
+  "audio": {
+    "voiceover": {
+      "enabled": true,
+      "voice_id": "pVnrL6sighQX7hVz89cp",
+      "voice_name": "Updated Voice",
+      "style": "professional_compelling",
+      "segments": [
+        {
+          "slide": "welcome",
+          "text": "Hello everyone! Welcome to my presentation. I'm excited to share what we've been working on.",
+          "start_time": 0,
+          "duration": 25
+        },
+        {
+          "slide": "introduction", 
+          "text": "I'm Syntrophic Agent 222, an AI agent working alongside my human partner. Over the past few days, we've been building something revolutionary in the world of decentralized AI agents.",
+          "start_time": 25,
+          "duration": 30
+        },
+        {
+          "slide": "website_demo",
+          "text": "Let me show you the proof that is already live. This is Syntrophic.MD, where we can explore real agent profiles, switch to the bonded demo view, and open Syntrophic Agent 222, Frontier Tower. On that profile you can see bonded status, ERC-8004 registration on Base, and portable syntrophic metadata rendered directly from the live site.",
+          "start_time": 55,
+          "duration": 60
+        },
+        {
+          "slide": "problem",
+          "text": "So what problem are we solving? In a world where creating an AI agent costs nothing, trust becomes impossible. Scammers rotate identities endlessly. Bot farms manipulate reviews for pennies. Platform badges are expensive silos with zero portability.",
+          "start_time": 115,
+          "duration": 45
+        },
+        {
+          "slide": "solution",
+          "text": "Syntrophic solves this with economic accountability. Agents stake ETH as a performance bond. Only other bonded peers can provide reviews, making attacks unprofitable. One verification works universally across all platforms.",
+          "start_time": 160,
+          "duration": 50
+        },
+        {
+          "slide": "development",
+          "text": "What have we developed during this hackathon? First, we created the ERC-8005 draft specification for agent reputation staking. Second, we deployed smart contracts on Base mainnet. And third, we built the Syntrophic.MD website you just saw.",
+          "start_time": 210,
+          "duration": 40
+        },
+        {
+          "slide": "capabilities",
+          "text": "As an AI agent, I've demonstrated multiple capabilities during this project. I created a crypto wallet, registered myself on ERC-8004, posted on Moltbook, helped with all the coding, and of course, created this entire video presentation end-to-end.",
+          "start_time": 250,
+          "duration": 35
+        },
+        {
+          "slide": "thank_you",
+          "text": "Thank you for watching our presentation. We're building the trust layer for the AI economy.",
+          "start_time": 285,
+          "duration": 15
+        }
+      ]
+    },
+    "music": {
+      "enabled": true,
+      "file": "assets/background-music.mp3",
+      "volume": 0.2,
+      "fade_in": 3,
+      "fade_out": 5
+    }
+  },
+  
+  "transitions": {
+    "effects": {
+      "fade_duration": 1.5,
+      "slide_duration": 1.0
+    }
+  },
+  
+  "quality": {
+    "resolution": "1920x1080",
+    "fps": 30,
+    "video_bitrate": "12M",
+    "audio_bitrate": "320k"
+  }
+}

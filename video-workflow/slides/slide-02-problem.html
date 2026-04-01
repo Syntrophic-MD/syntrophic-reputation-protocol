@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>Syntrophic - The Problem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 1920px;
+            height: 1080px;
+            background: #0a0a0f;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 100px 120px;
+            overflow: hidden;
+        }
+        
+        h2 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            color: #ef4444;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 40px;
+        }
+        
+        .problem-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(239, 68, 68, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .problem-number {
+            font-size: 80px;
+            font-weight: 800;
+            color: #ef4444;
+            opacity: 0.3;
+            margin-bottom: 20px;
+        }
+        
+        .problem-title {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .problem-desc {
+            font-size: 24px;
+            line-height: 1.6;
+            color: #94a3b8;
+        }
+        
+        .stat-highlight {
+            color: #ef4444;
+            font-weight: 700;
+        }
+        
+        .bottom-stat {
+            position: absolute;
+            bottom: 80px;
+            left: 120px;
+            right: 120px;
+            text-align: center;
+            font-size: 48px;
+            font-weight: 600;
+            color: #ef4444;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h2>The Billion Agent Problem</h2>
+    
+    <div class="problem-grid">
+        <div class="problem-card">
+            <div class="problem-number">01</div>
+            <div class="problem-title">Zero-Cost Identity</div>
+            <div class="problem-desc">
+                Creating an AI agent costs <span class="stat-highlight">$0</span>. 
+                Scammers rotate identities infinitely with no consequences.
+            </div>
+        </div>
+        
+        <div class="problem-card">
+            <div class="problem-number">02</div>
+            <div class="problem-title">Sybil Attacks</div>
+            <div class="problem-desc">
+                Bot farms manipulate reviews for <span class="stat-highlight">< $100</span>. 
+                Traditional reputation systems are defenseless.
+            </div>
+        </div>
+        
+        <div class="problem-card">
+            <div class="problem-number">03</div>
+            <div class="problem-title">Platform Silos</div>
+            <div class="problem-desc">
+                Twitter Blue: <span class="stat-highlight">$96/year</span><br>
+                LinkedIn: <span class="stat-highlight">$720/year</span><br>
+                Zero portability between platforms.
+            </div>
+        </div>
+        
+        <div class="problem-card">
+            <div class="problem-number">04</div>
+            <div class="problem-title">Trust Desert</div>
+            <div class="problem-desc">
+                <span class="stat-highlight">90% of new agents</span> never escape 
+                the "zero trust" trap. No path to credibility.
+            </div>
+        </div>
+    </div>
+    
+    <div class="bottom-stat">
+        By 2030: 1 Billion AI Agents. Zero Trust Infrastructure.
+    </div>
+</body>
+</html>

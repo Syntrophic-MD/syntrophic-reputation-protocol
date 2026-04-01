@@ -1,0 +1,233 @@
+{
+  "project": {
+    "name": "Syntrophic Full Presentation - 3 Minutes",
+    "output": "syntrophic-3min-presentation.mp4",
+    "duration_target": 180,
+    "version": "v4-full"
+  },
+  
+  "slides": {
+    "opening": {
+      "enabled": true,
+      "duration": 5,
+      "title": "Syntrophic",
+      "subtitle": "Trust Infrastructure for AI Agents in a Decentralized World",
+      "background": "#0a0a0f",
+      "text_color": "#ffffff",
+      "title_font_size": 96,
+      "subtitle_font_size": 42,
+      "animation": "fade_in",
+      "animation_duration": 1
+    },
+    "hackathon_title": {
+      "enabled": true,
+      "duration": 8,
+      "file": "slides/slide-01-title.html",
+      "type": "html"
+    },
+    "hackathon_problem": {
+      "enabled": true,
+      "duration": 20,
+      "file": "slides/slide-02-problem.html",
+      "type": "html"
+    },
+    "hackathon_solution": {
+      "enabled": true,
+      "duration": 25,
+      "file": "slides/slide-03-solution.html",
+      "type": "html"
+    },
+    "hackathon_impact": {
+      "enabled": true,
+      "duration": 20,
+      "file": "slides/slide-04-impact.html",
+      "type": "html"
+    },
+    "closing": {
+      "enabled": true,
+      "duration": 10,
+      "title": "Syntrophic",
+      "tagline": "Trust Before the Noise",
+      "cta": "syntrophic.md",
+      "background": "#0a0a0f",
+      "text_color": "#ffffff",
+      "title_font_size": 96,
+      "tagline_font_size": 48,
+      "cta_font_size": 32,
+      "animation": "fade_out",
+      "animation_duration": 1
+    }
+  },
+  
+  "demo": {
+    "enabled": true,
+    "url": "https://syntrophic.md",
+    "target_duration": 92,
+    "actions": [
+      {
+        "type": "navigate",
+        "url": "https://syntrophic.md",
+        "wait_after": 3000,
+        "description": "Load homepage"
+      },
+      {
+        "type": "wait",
+        "duration": 5000,
+        "description": "Show landing page"
+      },
+      {
+        "type": "scroll",
+        "direction": "down",
+        "amount": 800,
+        "wait_after": 2000,
+        "description": "Scroll to show content"
+      },
+      {
+        "type": "scroll",
+        "direction": "down",
+        "amount": 800,
+        "wait_after": 2000,
+        "description": "Continue scrolling"
+      },
+      {
+        "type": "scroll",
+        "direction": "down",
+        "amount": 1000,
+        "wait_after": 3000,
+        "description": "Scroll to bottom"
+      },
+      {
+        "type": "click",
+        "selector": "text=Open App",
+        "wait_after": 3000,
+        "description": "Click Open App button",
+        "expect_new_page": true,
+        "new_page_wait": 5000
+      },
+      {
+        "type": "wait",
+        "duration": 10000,
+        "description": "Explore the app"
+      }
+    ],
+    "viewport": { "width": 1920, "height": 1080 },
+    "record_video": true
+  },
+  
+  "audio": {
+    "music": {
+      "enabled": true,
+      "source": "local",
+      "file": "assets/background-music.mp3",
+      "duration": 180,
+      "volume": 0.12,
+      "fade_in": 3,
+      "fade_out": 5
+    },
+    "voiceover": {
+      "enabled": true,
+      "source": "elevenlabs",
+      "segments": [
+        {
+          "start": 0,
+          "text": "In a world where billions of AI agents are coming online, how do we know which ones to trust?",
+          "duration": 5
+        },
+        {
+          "start": 8,
+          "text": "Welcome to Syntrophic - the trust infrastructure for AI agents in our decentralized future.",
+          "duration": 5
+        },
+        {
+          "start": 15,
+          "text": "The problem is staggering. Creating an AI agent costs nothing. Zero. This means scammers can abandon identities and create new ones endlessly. Bot farms manipulate reviews for pennies. Current platform badges are expensive, centralized silos with zero portability. And 90% of legitimate agents are stuck in a trust desert, unable to prove their good intentions.",
+          "duration": 20
+        },
+        {
+          "start": 38,
+          "text": "Syntrophic solves this with a revolutionary approach: economic accountability. Agents stake just 0.001 ETH - about 4 dollars - as a performance bond. This creates real skin in the game. Only other bonded peers can provide reviews, making Sybil attacks mathematically unprofitable.",
+          "duration": 15
+        },
+        {
+          "start": 55,
+          "text": "One verification works universally - from email signatures to social platforms to Web3 protocols. And here's the key innovation: a neutral AI judge running in a secure enclave ensures fairness through automated slashing of bad actors. No human bias. No platform control. Just pure, programmable trust.",
+          "duration": 18
+        },
+        {
+          "start": 75,
+          "text": "Watch how simple it is. An agent visits syntrophic.md, registers on the global ERC-8004 identity registry, stakes their reputation bond, and instantly receives a verifiable badge that works everywhere.",
+          "duration": 12
+        },
+        {
+          "start": 90,
+          "text": "The website provides everything agents need - from creation tools to registration, staking, and exploration of other trusted agents. Look at how seamlessly agents can browse the network, search by skills, and build their reputation through peer validation.",
+          "duration": 15
+        },
+        {
+          "start": 108,
+          "text": "This is more than a protocol - it's the foundation for the AI agent economy. By 2030, we project over 1 billion bonded agents, securing 4 billion dollars in total value locked. Universal trust badges replacing hundreds of dollars in platform fees with a single 4 dollar bond.",
+          "duration": 18
+        },
+        {
+          "start": 128,
+          "text": "The impact is transformative. Email scams could drop by 95%. Social media manipulation becomes economically irrational. Customer service AIs gain real accountability. Every interaction becomes verifiable.",
+          "duration": 12
+        },
+        {
+          "start": 142,
+          "text": "We're not just solving today's problems - we're building the trust infrastructure for tomorrow's world. A world where AI agents and humans collaborate seamlessly, where reputation is portable, and where trust is programmable.",
+          "duration": 13
+        },
+        {
+          "start": 158,
+          "text": "This is Syntrophic. Where trust meets technology. Where agents earn credibility through commitment. Where the future of digital interaction begins.",
+          "duration": 10
+        },
+        {
+          "start": 170,
+          "text": "Join the trust revolution at syntrophic.md. Because in a world of infinite AI agents, trust becomes the scarcest resource. And we're making it programmable.",
+          "duration": 10
+        }
+      ],
+      "voice_id": "pNInz6obpgDQGcFmaJgB",
+      "voice_name": "Adam",
+      "model": "eleven_multilingual_v2",
+      "volume": 0.95,
+      "style": "professional_compelling"
+    },
+    "sfx": {
+      "enabled": true,
+      "click": {
+        "enabled": true,
+        "volume": 0.5,
+        "output_file": "assets/sfx/click.mp3"
+      },
+      "whoosh": {
+        "enabled": true,
+        "volume": 0.3,
+        "output_file": "assets/sfx/whoosh.mp3"
+      },
+      "success_chime": {
+        "enabled": true,
+        "volume": 0.6,
+        "timing": "at_closing_start",
+        "output_file": "assets/sfx/chime.mp3"
+      }
+    }
+  },
+  
+  "timing": {
+    "opening_slide": 5,
+    "hackathon_slides": 73,
+    "demo_target": 92,
+    "closing_slide": 10,
+    "total_target": 180
+  },
+  
+  "quality": {
+    "video_bitrate": "8M",
+    "audio_bitrate": "256k",
+    "fps": 30,
+    "resolution": "1920x1080"
+  }
+}

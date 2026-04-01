@@ -1,0 +1,175 @@
+{
+  "project": {
+    "name": "Syntrophic Demo Video v3",
+    "output": "output/v3/syntrophic-demo-v3.mp4",
+    "duration_target": 30,
+    "version": "v3"
+  },
+  
+  "slides": {
+    "opening": {
+      "enabled": true,
+      "duration": 3,
+      "title": "Syntrophic",
+      "subtitle": "Social DNA for Decentralized AI Agents",
+      "background": "#0a0a0f",
+      "text_color": "#ffffff",
+      "title_font_size": 96,
+      "subtitle_font_size": 42,
+      "animation": "fade_in",
+      "animation_duration": 1
+    },
+    "closing": {
+      "enabled": true,
+      "duration": 8,
+      "title": "Syntrophic",
+      "tagline": "Trust Before the Noise",
+      "cta": "syntrophic.md",
+      "background": "#0a0a0f",
+      "text_color": "#ffffff",
+      "title_font_size": 96,
+      "tagline_font_size": 48,
+      "cta_font_size": 32,
+      "animation": "fade_out",
+      "animation_duration": 1
+    }
+  },
+  
+  "demo": {
+    "enabled": true,
+    "url": "https://syntrophic.md",
+    "target_duration": 22,
+    "actions": [
+      {
+        "type": "navigate",
+        "url": "https://syntrophic.md",
+        "wait_after": 2000,
+        "description": "Load homepage and show landing"
+      },
+      {
+        "type": "scroll",
+        "direction": "down",
+        "amount": 800,
+        "wait_after": 1000,
+        "description": "Scroll down to show content"
+      },
+      {
+        "type": "scroll",
+        "direction": "down",
+        "amount": 800,
+        "wait_after": 1000,
+        "description": "Continue scrolling to bottom"
+      },
+      {
+        "type": "scroll",
+        "direction": "down",
+        "amount": 1000,
+        "wait_after": 1500,
+        "description": "Scroll to end of page"
+      },
+      {
+        "type": "click",
+        "selector": "text=Open App",
+        "wait_after": 2000,
+        "description": "Click Open App button with bubble animation",
+        "expect_new_page": true,
+        "new_page_wait": 3000
+      }
+    ],
+    "viewport": { "width": 1920, "height": 1080 },
+    "record_video": true
+  },
+  
+  "audio": {
+    "music": {
+      "enabled": true,
+      "source": "local",
+      "style": "professional_cinematic",
+      "style_description": "Professional, rich, cinematic corporate - deep orchestral with modern production",
+      "file": "assets/background-music.mp3",
+      "duration": 177,
+      "volume": 0.25,
+      "fade_in": 2,
+      "fade_out": 3
+    },
+    "voiceover": {
+      "enabled": true,
+      "source": "elevenlabs",
+      "text": "Syntrophic. Social DNA for decentralized AI agents. Where trust meets innovation. The future of agent coordination starts here.",
+      "voice_id": "lKf2tqVafNW1nVb7CgwC",
+      "voice_name": "Frank",
+      "model": "eleven_multilingual_v2",
+      "start_time": 0,
+      "duration_target": 8,
+      "volume": 0.95,
+      "style": "upbeat_inspired_professional",
+      "style_exaggeration": 0.45,
+      "output_file": "assets/voiceover.mp3"
+    },
+    "sfx": {
+      "enabled": true,
+      "click": {
+        "enabled": true,
+        "source": "generate",
+        "style": "modern_ui_click",
+        "volume": 0.6,
+        "output_file": "assets/sfx/click.mp3"
+      },
+      "whoosh": {
+        "enabled": true,
+        "source": "generate",
+        "style": "soft_transition_whoosh",
+        "volume": 0.4,
+        "output_file": "assets/sfx/whoosh.mp3"
+      },
+      "transition": {
+        "enabled": true,
+        "source": "generate",
+        "style": "cinematic_swoosh",
+        "volume": 0.3,
+        "output_file": "assets/sfx/transition.mp3"
+      },
+      "chime": {
+        "enabled": true,
+        "source": "generate",
+        "style": "upbeat_success_fanfare",
+        "volume": 0.7,
+        "output_file": "assets/sfx/chime.mp3"
+      }
+    },
+    "singing": {
+      "enabled": false,
+      "text": "",
+      "voice_id": "pNInz6obpgDQGcFmaJgB",
+      "voice_name": "Adam",
+      "volume": 0.9,
+      "output_file": "assets/singing.mp3"
+    }
+  },
+  
+  "timing": {
+    "opening_slide": 3,
+    "demo_target": 19,
+    "closing_slide": 8,
+    "voiceover_start": 0,
+    "voiceover_duration": 8,
+    "total_target": 30
+  },
+  
+  "quality": {
+    "video_bitrate": "6M",
+    "audio_bitrate": "256k",
+    "fps": 30,
+    "resolution": "1920x1080",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2
+  },
+  
+  "elevenlabs": {
+    "api_key_source": "keychain",
+    "api_key_service": "11 Labs API Key",
+    "api_key_account": "friendlyagent222@gmail.com",
+    "default_voice": "pNInz6obpgDQGcFmaJgB",
+    "default_model": "eleven_multilingual_v2"
+  }
+}

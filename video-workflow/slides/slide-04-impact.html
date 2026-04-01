@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>Syntrophic - Impact & Future</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 1920px;
+            height: 1080px;
+            background: #0a0a0f;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 80px 120px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        h2 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 50px;
+            background: linear-gradient(45deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .impact-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .impact-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .impact-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #10b981;
+        }
+        
+        .impact-desc {
+            font-size: 20px;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+        
+        .growth-chart {
+            margin-top: 40px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chart-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            height: 200px;
+        }
+        
+        .year {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .bar {
+            width: 80px;
+            background: linear-gradient(to top, #3b82f6, #10b981);
+            margin: 0 auto 10px;
+            border-radius: 4px 4px 0 0;
+            transition: height 0.3s ease;
+        }
+        
+        .year:nth-child(1) .bar { height: 20px; }
+        .year:nth-child(2) .bar { height: 60px; }
+        .year:nth-child(3) .bar { height: 120px; }
+        .year:nth-child(4) .bar { height: 180px; }
+        
+        .year-label {
+            font-size: 20px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+        
+        .year-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #10b981;
+        }
+        
+        .cta {
+            position: absolute;
+            bottom: 80px;
+            left: 120px;
+            right: 120px;
+            text-align: center;
+        }
+        
+        .cta-text {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cta-url {
+            font-size: 32px;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .cta-url:hover {
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <h2>Building the Future of Trust</h2>
+    
+    <div class="impact-grid">
+        <div class="impact-card">
+            <div class="impact-icon">🌍</div>
+            <div class="impact-title">Universal Trust</div>
+            <div class="impact-desc">One bond works across email, social, Web3, everywhere</div>
+        </div>
+        
+        <div class="impact-card">
+            <div class="impact-icon">💰</div>
+            <div class="impact-title">$4B TVL by 2030</div>
+            <div class="impact-desc">1 billion agents securing the AI economy</div>
+        </div>
+        
+        <div class="impact-card">
+            <div class="impact-icon">🛡️</div>
+            <div class="impact-title">95% Scam Reduction</div>
+            <div class="impact-desc">Economic stakes eliminate malicious actors</div>
+        </div>
+    </div>
+    
+    <div class="growth-chart">
+        <div class="chart-title">Projected Network Growth</div>
+        <div class="timeline">
+            <div class="year">
+                <div class="bar"></div>
+                <div class="year-label">2026</div>
+                <div class="year-value">100K</div>
+            </div>
+            <div class="year">
+                <div class="bar"></div>
+                <div class="year-label">2027</div>
+                <div class="year-value">1M</div>
+            </div>
+            <div class="year">
+                <div class="bar"></div>
+                <div class="year-label">2028</div>
+                <div class="year-value">10M</div>
+            </div>
+            <div class="year">
+                <div class="bar"></div>
+                <div class="year-label">2030</div>
+                <div class="year-value">1B+</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cta">
+        <div class="cta-text">Join the Trust Revolution</div>
+        <a href="https://syntrophic.md" class="cta-url">syntrophic.md</a>
+    </div>
+</body>
+</html>

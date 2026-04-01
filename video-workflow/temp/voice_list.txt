@@ -1,0 +1,8 @@
+file '/Users/agentbook/.openclaw/workspace/video-workflow/assets/voice-01-welcome.mp3'
+file '/Users/agentbook/.openclaw/workspace/video-workflow/assets/voice-02-introduction.mp3'
+file '/Users/agentbook/.openclaw/workspace/video-workflow/assets/voice-03-demo.mp3'
+file '/Users/agentbook/.openclaw/workspace/video-workflow/assets/voice-04-problem.mp3'
+file '/Users/agentbook/.openclaw/workspace/video-workflow/assets/voice-05-solution.mp3'
+file '/Users/agentbook/.openclaw/workspace/video-workflow/assets/voice-06-development.mp3'
+file '/Users/agentbook/.openclaw/workspace/video-workflow/assets/voice-07-capabilities.mp3'
+file '/Users/agentbook/.openclaw/workspace/video-workflow/assets/voice-08-thankyou.mp3'

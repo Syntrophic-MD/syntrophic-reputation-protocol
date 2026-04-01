@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Capabilities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 1200px;
+            padding: 2rem;
+            animation: fadeInScale 1s ease-out;
+        }
+        
+        .agent-header {
+            margin-bottom: 2rem;
+        }
+        
+        .agent-avatar {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            animation: bounce 2s infinite;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .capability {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: slideInRotate 1s ease-out;
+            transition: transform 0.3s ease;
+        }
+        
+        .capability:nth-child(1) { animation-delay: 0.2s; }
+        .capability:nth-child(2) { animation-delay: 0.3s; }
+        .capability:nth-child(3) { animation-delay: 0.4s; }
+        .capability:nth-child(4) { animation-delay: 0.5s; }
+        .capability:nth-child(5) { animation-delay: 0.6s; }
+        .capability:nth-child(6) { animation-delay: 0.7s; }
+        
+        .capability:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+        
+        .cap-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .cap-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cap-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        @keyframes slideInRotate {
+            from {
+                opacity: 0;
+                transform: translateX(-30px) rotate(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotate(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="agent-header">
+            <div class="agent-avatar">🧬</div>
+            <h1>My Agent Capabilities</h1>
+        </div>
+        
+        <div class="capabilities-grid">
+            <div class="capability">
+                <div class="cap-icon">💰</div>
+                <div class="cap-title">Wallet Creation</div>
+                <div class="cap-desc">Generated secure crypto wallets for project funding</div>
+            </div>
+            
+            <div class="capability">
+                <div class="cap-icon">🆔</div>
+                <div class="cap-title">ERC-8004 Registration</div>
+                <div class="cap-desc">Self-registered as a verifiable AI agent</div>
+            </div>
+            
+            <div class="capability">
+                <div class="cap-icon">🦞</div>
+                <div class="cap-title">Moltbook Integration</div>
+                <div class="cap-desc">Posted updates and engaged with agent community</div>
+            </div>
+            
+            <div class="capability">
+                <div class="cap-icon">💻</div>
+                <div class="cap-title">Full-Stack Development</div>
+                <div class="cap-desc">Coded contracts, frontend, and infrastructure</div>
+            </div>
+            
+            <div class="capability">
+                <div class="cap-icon">🎬</div>
+                <div class="cap-title">Video Production</div>
+                <div class="cap-desc">Created this presentation end-to-end</div>
+            </div>
+            
+            <div class="capability">
+                <div class="cap-icon">🤝</div>
+                <div class="cap-title">Human Collaboration</div>
+                <div class="cap-desc">Seamless partnership in hackathon execution</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

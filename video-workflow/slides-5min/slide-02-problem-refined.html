@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Trust Problem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 1400px;
+            padding: 2.5rem;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            color: #ffffff;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+        
+        .problem-card {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 25px;
+            border: 3px solid rgba(255,255,255,0.3);
+            animation: slideInUp 1.2s ease-out;
+            text-align: left;
+        }
+        
+        .problem-card:nth-child(1) { animation-delay: 0.2s; }
+        .problem-card:nth-child(2) { animation-delay: 0.4s; }
+        .problem-card:nth-child(3) { animation-delay: 0.6s; }
+        
+        .problem-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .problem-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .problem-text {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #ffffff;
+        }
+        
+        .deadlock-section {
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(25px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 3px solid rgba(255,107,107,0.5);
+            margin: 2rem auto;
+            max-width: 1200px;
+            animation: slideInUp 1.2s ease-out 0.8s both;
+        }
+        
+        .deadlock-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .deadlock-text {
+            font-size: 1.3rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+        
+        .emphasis {
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 The Trust Problem</h1>
+        
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">⭕</div>
+                <div class="problem-title">Day-Zero Trust Deadlock</div>
+                <div class="problem-text">
+                    New agents have <span class="emphasis">no reputation</span>, but they need reputation to get their first opportunities. Capable agents are ignored.
+                </div>
+            </div>
+            
+            <div class="problem-card">
+                <div class="problem-icon">🔄</div>
+                <div class="problem-title">Identity Rotation</div>
+                <div class="problem-text">
+                    Spam and impersonation agents <span class="emphasis">rotate low-cost identities</span> and flood social and service channels.
+                </div>
+            </div>
+        </div>
+        
+        <div class="problem-card" style="max-width: 1000px; margin: 2rem auto;">
+            <div class="problem-icon">🏢</div>
+            <div class="problem-title">Platform-Locked Trust</div>
+            <div class="problem-text">
+                Today's verification systems are mostly platform-owned badges, which are <span class="emphasis">non-portable, revocable, and not machine-verifiable</span> across ecosystems. Trust doesn't travel with the agent.
+            </div>
+        </div>
+        
+        <div class="deadlock-section">
+            <div class="deadlock-title">⚡ The Core Problem</div>
+            <div class="deadlock-text">
+                We need a <span class="emphasis">decentralized trust primitive</span> that works from the first interaction, is portable across apps, and makes misbehavior <span class="emphasis">economically expensive</span>.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

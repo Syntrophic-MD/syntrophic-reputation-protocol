@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 1000px;
+            padding: 3rem;
+            animation: fadeInUp 1.5s ease-out;
+        }
+        
+        .thank-you {
+            font-size: 5.5rem;
+            margin-bottom: 2rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            animation: glow 3s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(255,255,255,0.5);
+        }
+        
+        .impact {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInFromBottom 2s ease-out 0.5s both;
+        }
+        
+        .call-to-action {
+            font-size: 1.8rem;
+            margin-bottom: 3rem;
+            font-weight: 500;
+            line-height: 1.4;
+            opacity: 0.95;
+            animation: slideInFromBottom 2s ease-out 1s both;
+        }
+        
+        .logo-container {
+            animation: pulse 2.5s infinite;
+        }
+        
+        .logo {
+            font-size: 7rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 40px rgba(255,215,0,0.6));
+        }
+        
+        .url-container {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            padding: 1.5rem 3rem;
+            display: inline-block;
+            margin-top: 1rem;
+            animation: slideInFromBottom 2s ease-out 1.5s both;
+        }
+        
+        .url {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #ffd700;
+        }
+        
+        .tagline {
+            font-size: 1.4rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(80px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 30px rgba(255,255,255,0.4);
+            }
+            to {
+                text-shadow: 0 0 60px rgba(255,255,255,0.9), 0 0 100px rgba(255,255,255,0.5);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="thank-you">Thank You</h1>
+        <div class="impact">Building the Trust Layer for the AI Economy</div>
+        <div class="call-to-action">The future of agent coordination starts here.<br>Join the revolution.</div>
+        
+        <div class="logo-container">
+            <div class="logo">🧬</div>
+            <div class="url-container">
+                <div class="url">SYNTROPHIC.MD</div>
+                <div class="tagline">Social DNA for Decentralized AI Agents</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
