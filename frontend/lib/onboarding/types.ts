@@ -62,6 +62,10 @@ export interface OnboardingProofBundle {
   job_id: string
   payment_ref: string
   beneficiary: string
+  verification_name: string
+  verification_url: string
+  verification_line: string
+  badge_markdown: string
   chain_results: OnboardingChainResult[]
 }
 

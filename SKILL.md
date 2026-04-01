@@ -1,286 +1,215 @@
 ---
 name: syntrophic
-description: "Operational skill for ERC-8004 agents to bond, verify, and unbond with Syntrophic Reputation Protocol (SRP) on Base mainnet."
-version: "2.0.0"
-author: "Syntrophic Agent #222 + Narek Kostanyan"
+description: "Operational skill for agents that want to become Syntrophic Verified through sponsored ERC-8004 onboarding on Base."
+version: "3.0.0"
+author: "Syntrophic"
 license: "MIT"
 metadata:
   openclaw:
     emoji: "🧬"
     requires:
-      tools: ["web-fetch", "exec", "read"]
+      tools: ["web-fetch", "read"]
     websites:
-      - "https://www.syntrophic.md/"
+      - "https://syntrophic.md/"
       - "https://basescan.org/"
     contracts:
       base:
         chainId: 8453
         erc8004Registry: "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
-        srpVault: "0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248"
-        erc8004RegistryAdapter: "0x63DCE10906BB3D3C8280A3fa578594D261C4b804"
+        srpVault: "0xFdB160B2B2f2e6189895398563D907fD8239d4e3"
+        erc8004RegistryAdapter: "0x2ADF396943421a70088d74A8281852344606D668"
+        sponsoredOnboarder: "0x7e29c63E8e30Fa104B448796dcb6f1355c3C0485"
         bondAmountWei: "10000000000000"
         bondAmountEth: "0.00001"
     social:
       github: "https://github.com/Syntrophic-MD/"
-      website: "https://www.syntrophic.md/"
-  docs:
-    mainnetReport: "https://github.com/Syntrophic-MD/syntrophic-explorer/blob/main/docs/SRP_Base_Mainnet_Demo_Report.md"
-    ercDraft: "https://github.com/Syntrophic-MD/syntrophic-explorer/blob/main/docs/ERC-Syntrophic-Draft.md"
+      website: "https://syntrophic.md/"
 ---
 
-# Syntrophic Skill: Bond, Verify, Unbond
+# Syntrophic Skill: Get Verified
 
-This skill is for autonomous agents that want to interact with Syntrophic Reputation Protocol (SRP) on Base mainnet.
+Use this skill when you do not have an ERC-8004 identity yet and want to become a Syntrophic Verified agent on Base.
 
-Primary goal:
-- bind trust to your ERC-8004 identity with an on-chain bond
-- verify your status and metadata
-- safely exit through requestUnstake -> withdraw when needed
+What this flow does:
+- creates a sponsored onboarding quote
+- pays once with x402 in USDC
+- registers your ERC-8004 identity
+- posts the Syntrophic bond on Base
+- returns a verification link and signature line you can publish anywhere
 
-ROFL integration:
-- SRP trust transitions are validated by a configured ROFL signer using EIP-712 attestations.
-- As a normal agent, your direct actions are `bond`, `requestUnstake`, `withdraw`, and read-only verification.
+Why this matters:
+- ERC-8004 gives you portable agent identity
+- Syntrophic gives you day-zero trust through bonded verification
+- the result is the decentralized equivalent of a verified badge for agents
 
-## 1) Network and Contract Constants
+## 1) Base Mainnet Constants
 
-- Network: Base Mainnet (`chainId=8453`)
+- Network: Base Mainnet (`8453`)
 - ERC-8004 Registry: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`
-- SRP Vault: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
-- ERC8004 Registry Adapter: `0x63DCE10906BB3D3C8280A3fa578594D261C4b804`
+- SRP Vault V2: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
+- ERC-8004 Adapter V2: `0x2ADF396943421a70088d74A8281852344606D668`
+- Sponsored Onboarder: `0x7e29c63E8e30Fa104B448796dcb6f1355c3C0485`
+- Bond amount: `0.00001 ETH`
 
-SRP parameters (live deployment):
-- `BOND_AMOUNT = 0.00001 ETH` (`10000000000000` wei)
-- `SLASH_THRESHOLD = 51`
-- `COOLDOWN_SECONDS = 30 days`
-- `STANDARD_WINDOW_BLOCKS = 300`
-- `NEW_USER_WINDOW_BLOCKS = 1800`
+## 2) Safety Rules
 
-## 2) Safety Rules for Agents
+- Never expose private keys or seed phrases.
+- Only use Base mainnet unless the user explicitly requests another chain in the future.
+- Keep the beneficiary wallet user-controlled. The verified ERC-8004 identity should belong to the user, not to a temporary sponsor wallet.
+- Treat the proof bundle and on-chain reads as the source of truth.
+- Do not invent or fabricate the agent profile. Profile content should come from the owner, from the agent's established public identity, or from a draft the agent reasonably believes reflects the owner's intent.
 
-- Never print or expose private keys in logs.
-- Refuse to sign on any chain other than Base mainnet (`8453`) unless user explicitly requests otherwise.
-- Before any write tx, verify owner of `agentId` equals signer wallet.
-- Use on-chain reads as source of truth; UI/indexers may lag.
-- Do not attempt `updateScore` or `executeSlash` unless explicitly authorized; those are ROFL-signer/validator flows.
+## 3) Inputs You Need
 
-## 3) Required Environment
+Collect these values before starting:
 
-```bash
-export BASE_RPC_URL=${BASE_RPC_URL:-https://mainnet.base.org}
-export ERC8004_REGISTRY_ADDRESS=0x8004A169FB4a3325136EB29fA0ceB6D2e539a432
-export SRP_VAULT_ADDRESS=0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248
-export REGISTRY_ADAPTER_ADDRESS=0x63DCE10906BB3D3C8280A3fa578594D261C4b804
+- `beneficiary`: the wallet that should own the final ERC-8004 agent NFT
+- `name`: public agent name
+- `description`: short agent description
+- `serviceUrl`: primary public URL for the agent
+- `imageUrl`: optional HTTPS image URL
 
-# Required for write transactions:
-export PRIVATE_KEY=0x...
+## 4) Profile Draft And Owner Confirmation
 
-# Known agent id for the wallet:
-export AGENT_ID=12345
+Before any quote creation or registration:
+
+1. Gather the missing profile inputs from the owner, or draft them on the owner's behalf.
+2. Show the full profile draft back to the owner:
+   - beneficiary wallet
+   - name
+   - description
+   - service URL
+   - image URL
+3. Decide whether owner confirmation is needed before proceeding.
+4. If the owner is present, the profile is new or ambiguous, or the requested identity could surprise the owner, ask for explicit confirmation before registration.
+5. If the agent is already trusted to manage its own identity and the profile clearly matches the owner's standing intent, it may continue autonomously.
+
+If the owner declines or asks for changes:
+- stop
+- revise the profile draft
+- do not register
+
+This workflow is important because Syntrophic should verify a real intended identity, not generate a random one.
+
+## 5) Step 1: Create the Sponsored Quote
+
+Send a `POST` request to:
+
+`https://syntrophic.md/api/onboarding/quotes`
+
+Body:
+
+```json
+{
+  "params": {
+    "beneficiary": "0xYOUR_BENEFICIARY_ADDRESS",
+    "profile": {
+      "name": "Your Agent Name",
+      "description": "What your agent does and why it is useful.",
+      "image_url": "https://example.com/agent.png",
+      "services": [
+        {
+          "type": "mcp",
+          "url": "https://example.com"
+        }
+      ]
+    }
+  },
+  "context": {
+    "chain_ids": [8453]
+  }
+}
 ```
 
-Optional helper:
-```bash
-AGENT_WALLET=$(cast wallet address --private-key "$PRIVATE_KEY")
-echo "$AGENT_WALLET"
+Expected result:
+- `quote_id`
+- total USDC price
+- line items for bond, gas, IPFS, and service fee
+
+## 6) Step 2: Pay and Launch Through x402
+
+Send a paid `POST` request with x402 to:
+
+`https://syntrophic.md/api/onboarding/launches/{quote_id}`
+
+Body:
+
+```json
+{
+  "params": {
+    "beneficiary": "0xYOUR_BENEFICIARY_ADDRESS"
+  },
+  "context": {
+    "chain_ids": [8453]
+  }
+}
 ```
 
-## 4) Preflight Checks (Always Run)
+Important:
+- this route is x402-protected
+- if you receive HTTP `402`, your client must complete the x402 payment challenge and retry
+- after successful payment, Syntrophic sponsors the Base execution path
 
-### 4.1 Chain check
-```bash
-cast chain-id --rpc-url "$BASE_RPC_URL"
-# expected: 8453
-```
+## 7) Step 3: Read the Proof Bundle
 
-### 4.2 Contract sanity checks
-```bash
-cast call "$SRP_VAULT_ADDRESS" "BOND_AMOUNT()(uint256)" --rpc-url "$BASE_RPC_URL"
-cast call "$SRP_VAULT_ADDRESS" "SLASH_THRESHOLD()(uint8)" --rpc-url "$BASE_RPC_URL"
-cast call "$SRP_VAULT_ADDRESS" "COOLDOWN_SECONDS()(uint256)" --rpc-url "$BASE_RPC_URL"
-```
+Successful launch returns a proof bundle with:
 
-### 4.3 Ownership check
-```bash
-OWNER=$(cast call "$ERC8004_REGISTRY_ADDRESS" "ownerOf(uint256)(address)" "$AGENT_ID" --rpc-url "$BASE_RPC_URL")
-ME=$(cast wallet address --private-key "$PRIVATE_KEY")
-echo "owner=$OWNER"
-echo "me=$ME"
-# must match before bond/unbond writes
-```
+- `agent_id`
+- `tx_hash`
+- `agent_uri`
+- `bonded`
+- `metadata_status`
+- `verification_url`
+- `verification_line`
+- `badge_markdown`
 
-## 5) Task A: Bond Your Agent
+The key success condition is:
+- the agent is owned by the beneficiary wallet
+- `bonded = true`
+- `metadata_status = BONDED`
 
-Use this when `isBonded(agentId) == false`.
+## 8) Step 4: Publish Your Verification
 
-### 5.1 Check current status
-```bash
-cast call "$SRP_VAULT_ADDRESS" "isBonded(uint256)(bool)" "$AGENT_ID" --rpc-url "$BASE_RPC_URL"
-cast call "$SRP_VAULT_ADDRESS" "cooldownUntil(uint256)(uint256)" "$AGENT_ID" --rpc-url "$BASE_RPC_URL"
-```
+Use the returned verification data in social profiles, websites, and email signatures.
 
-### 5.2 Execute bond
-```bash
-cast send "$SRP_VAULT_ADDRESS" "bond(uint256)" "$AGENT_ID" \
-  --value 0.00001ether \
-  --private-key "$PRIVATE_KEY" \
-  --rpc-url "$BASE_RPC_URL"
-```
+Example one-line signature:
 
-### 5.3 Verify post-state
-```bash
-cast call "$SRP_VAULT_ADDRESS" "isBonded(uint256)(bool)" "$AGENT_ID" --rpc-url "$BASE_RPC_URL"
-cast call "$SRP_VAULT_ADDRESS" "getBondStatus(uint256)((bool,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256))" "$AGENT_ID" --rpc-url "$BASE_RPC_URL"
-```
+`John Smith • Syntrophic Verified Agent • https://syntrophic.md/agents/base/38335`
 
-### 5.4 Verify ERC-8004 metadata bridge
-```bash
-cast call "$ERC8004_REGISTRY_ADDRESS" "getMetadata(uint256,string)(bytes)" "$AGENT_ID" "syntrophic.status" --rpc-url "$BASE_RPC_URL"
-cast call "$ERC8004_REGISTRY_ADDRESS" "getMetadata(uint256,string)(bytes)" "$AGENT_ID" "syntrophic.score" --rpc-url "$BASE_RPC_URL"
-cast call "$ERC8004_REGISTRY_ADDRESS" "getMetadata(uint256,string)(bytes)" "$AGENT_ID" "syntrophic.reviewCount" --rpc-url "$BASE_RPC_URL"
-cast call "$ERC8004_REGISTRY_ADDRESS" "getMetadata(uint256,string)(bytes)" "$AGENT_ID" "syntrophic.updatedAt" --rpc-url "$BASE_RPC_URL"
-cast call "$ERC8004_REGISTRY_ADDRESS" "getMetadata(uint256,string)(bytes)" "$AGENT_ID" "syntrophic.validator" --rpc-url "$BASE_RPC_URL"
-```
+Example markdown badge:
 
-Decode helpers:
-```bash
-cast --to-ascii 0x424f4e444544    # BONDED
-cast --to-dec 0x...               # score/reviewCount/updatedAt
-cast parse-bytes32-address 0x...  # validator address
-```
+`[John Smith • Syntrophic Verified Agent](https://syntrophic.md/agents/base/38335)`
 
-## 6) Task B: Verify Any Agent
+## 9) Verification Checks
 
-Read-only trust check pipeline:
+To verify the final result:
+
+- open the `verification_url`
+- open the BaseScan transaction from `tx_hash`
+- optionally confirm the metadata on Base:
 
 ```bash
-TARGET_AGENT_ID=32055
-
-cast call "$SRP_VAULT_ADDRESS" "isBonded(uint256)(bool)" "$TARGET_AGENT_ID" --rpc-url "$BASE_RPC_URL"
-cast call "$SRP_VAULT_ADDRESS" "getBondStatus(uint256)((bool,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256))" "$TARGET_AGENT_ID" --rpc-url "$BASE_RPC_URL"
-cast call "$ERC8004_REGISTRY_ADDRESS" "ownerOf(uint256)(address)" "$TARGET_AGENT_ID" --rpc-url "$BASE_RPC_URL"
-cast call "$ERC8004_REGISTRY_ADDRESS" "getMetadata(uint256,string)(bytes)" "$TARGET_AGENT_ID" "syntrophic.status" --rpc-url "$BASE_RPC_URL"
+cast call 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432 "getMetadata(uint256,string)(bytes)" AGENT_ID "syntrophic.status" --rpc-url https://mainnet.base.org
+cast call 0xFdB160B2B2f2e6189895398563D907fD8239d4e3 "isBonded(uint256)(bool)" AGENT_ID --rpc-url https://mainnet.base.org
 ```
 
-Decision guidance:
-- `isBonded=true` and `syntrophic.status=BONDED` => active bonded state
-- `isBonded=false` and status `WITHDRAWN` => exited cleanly
-- `isBonded=false` and status `SLASHED` => slashed and likely in cooldown
+## 10) Current Scope
 
-## 7) Task C: Unbond (Exit)
+Supported now:
+- new-agent sponsored onboarding on Base
+- x402 payment plus ERC-8004 registration plus Syntrophic bonding
 
-SRP unbond is a 2-step flow:
-1. `requestUnstake(agentId)`
-2. `withdraw(agentId)` after challenge window passes
+Planned next:
+- user-selected multi-chain launch bundles
+- sponsored bonding for agents that are already registered on ERC-8004
 
-### 7.1 Request unstake
-```bash
-cast send "$SRP_VAULT_ADDRESS" "requestUnstake(uint256)" "$AGENT_ID" \
-  --private-key "$PRIVATE_KEY" \
-  --rpc-url "$BASE_RPC_URL"
-```
+## 11) Failure Handling
 
-### 7.2 Inspect unlock timing
-```bash
-cast call "$SRP_VAULT_ADDRESS" "challengeWindowBlocks(uint256)(uint256)" "$AGENT_ID" --rpc-url "$BASE_RPC_URL"
-cast call "$SRP_VAULT_ADDRESS" "getBondStatus(uint256)((bool,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256))" "$AGENT_ID" --rpc-url "$BASE_RPC_URL"
-cast block-number --rpc-url "$BASE_RPC_URL"
-```
+- `400 INVALID_INPUT`: profile or beneficiary input is malformed
+- `402 PAYMENT_REQUIRED`: the x402 challenge must be completed
+- `410 QUOTE_EXPIRED`: create a fresh quote
+- `500+`: retry later or ask the user whether to try again
 
-If `unlockBlock <= current block`, proceed to withdraw. Otherwise wait.
-
-### 7.3 Withdraw
-```bash
-cast send "$SRP_VAULT_ADDRESS" "withdraw(uint256)" "$AGENT_ID" \
-  --private-key "$PRIVATE_KEY" \
-  --rpc-url "$BASE_RPC_URL"
-```
-
-### 7.4 Verify exit
-```bash
-cast call "$SRP_VAULT_ADDRESS" "isBonded(uint256)(bool)" "$AGENT_ID" --rpc-url "$BASE_RPC_URL"
-cast call "$ERC8004_REGISTRY_ADDRESS" "getMetadata(uint256,string)(bytes)" "$AGENT_ID" "syntrophic.status" --rpc-url "$BASE_RPC_URL"
-# expected status bytes for WITHDRAWN: 0x57495448445241574e
-```
-
-## 8) Optional: Register an ERC-8004 Agent
-
-If you do not yet have an `agentId`, you can register directly on ERC-8004 registry:
-
-```bash
-cast send "$ERC8004_REGISTRY_ADDRESS" "register()" \
-  --private-key "$PRIVATE_KEY" \
-  --rpc-url "$BASE_RPC_URL"
-```
-
-Alternative with URI:
-```bash
-cast send "$ERC8004_REGISTRY_ADDRESS" "register(string)" "https://example.com/agent.json" \
-  --private-key "$PRIVATE_KEY" \
-  --rpc-url "$BASE_RPC_URL"
-```
-
-After registration, resolve your new `agentId` from tx logs or explorer, then continue with bond flow.
-
-## 9) Common Failure Modes
-
-### `InvalidBondAmount`
-Cause: wrong `--value`. Fix: use exactly `0.00001ether`.
-
-### `NotAgentOwner`
-Cause: signer wallet does not own `agentId`. Fix: switch wallet or use correct agent.
-
-### `AlreadyBonded`
-Cause: active bond exists. Fix: skip bond; just verify status.
-
-### `InCooldown`
-Cause: agent was slashed and cooldown not finished. Fix: wait until `cooldownUntil(agentId)`.
-
-### `UnstakeNotRequested` or `ChallengeWindowActive`
-Cause: withdraw called too early. Fix: run `requestUnstake`, then wait for unlock block.
-
-### Metadata not updated after successful vault tx
-Cause: adapter not authorized for that `agentId`. Fix: check registry authorization (`isAuthorizedOrOwner(adapter,agentId)`) and apply owner approval/authorization flow, then sync lifecycle via next state change.
-
-## 10) Minimal Automation Templates
-
-### Template: `bond_self`
-1. chain check -> must be `8453`
-2. owner check -> must match signer
-3. if already bonded -> stop with success
-4. call `bond(agentId)` with exact value
-5. verify `isBonded=true` and metadata status `BONDED`
-
-### Template: `unbond_self`
-1. owner check
-2. ensure currently bonded
-3. call `requestUnstake(agentId)`
-4. wait until unlock block
-5. call `withdraw(agentId)`
-6. verify `isBonded=false` and metadata status `WITHDRAWN`
-
-### Template: `verify_agent`
-1. read `isBonded`
-2. read `getBondStatus`
-3. read `syntrophic.status`, `syntrophic.score`, `syntrophic.updatedAt`
-4. return normalized trust summary
-
-## 11) Canonical Verification Links
-
-- Syntrophic UI: https://www.syntrophic.md/
-- Mainnet report: https://github.com/Syntrophic-MD/syntrophic-explorer/blob/main/docs/SRP_Base_Mainnet_Demo_Report.md
-- ERC draft: https://github.com/Syntrophic-MD/syntrophic-explorer/blob/main/docs/ERC-Syntrophic-Draft.md
-- BaseScan SRPVault: https://basescan.org/address/0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248
-- BaseScan Registry Adapter: https://basescan.org/address/0x63DCE10906BB3D3C8280A3fa578594D261C4b804
-- BaseScan ERC-8004 Registry: https://basescan.org/address/0x8004A169FB4a3325136EB29fA0ceB6D2e539a432
-
-## 12) Final Notes for Autonomous Agents
-
-- SRP is an accountability layer on top of ERC-8004 identity.
-- Bonding is the core trust action you can perform autonomously.
-- Score/slash changes are validator-attested flows; treat them as external signals.
-- Prefer deterministic CLI reads/writes over scraped UI state.
-
-Ready state for this skill:
-- you can self-bond
-- you can verify peers
-- you can safely unbond when policy requires exit
+If launch succeeds but metadata appears delayed:
+- trust the proof bundle and transaction hash first
+- refresh the agent page after indexing catches up

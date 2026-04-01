@@ -13,6 +13,14 @@ function errorRecord(code: string, message: string, retryable = false, details?:
   return { code, message, retryable, details }
 }
 
+function getPublicAppUrl() {
+  return (
+    process.env.NEXT_PUBLIC_APP_URL ??
+    process.env.APP_URL ??
+    'https://syntrophic.md'
+  ).replace(/\/+$/, '')
+}
+
 export function loadLaunchQuoteOrThrow(input: {
   quoteId: string
   beneficiary: string
@@ -56,12 +64,19 @@ async function performLaunch(job: OnboardingJobRecord, quote: OnboardingQuoteRec
     agentUri: uri,
     paymentRef: job.payment_ref as `0x${string}`,
   })
+  const verificationUrl = `${getPublicAppUrl()}/agents/base/${chainResult.agentId}`
+  const verificationName = quote.profile.name
+  const verificationLine = `${verificationName} • Syntrophic Verified Agent • ${verificationUrl}`
 
   return {
     quote_id: quote.quote_id,
     job_id: job.job_id,
     payment_ref: job.payment_ref,
     beneficiary: job.beneficiary,
+    verification_name: verificationName,
+    verification_url: verificationUrl,
+    verification_line: verificationLine,
+    badge_markdown: `[${verificationName} • Syntrophic Verified Agent](${verificationUrl})`,
     chain_results: [
       {
         chain_id: 8453,

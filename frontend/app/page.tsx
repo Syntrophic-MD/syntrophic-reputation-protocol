@@ -336,20 +336,20 @@ export default function HomePage() {
                   <span className="gradient-text-blue">Go on-chain now.</span>
                 </h2>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
-                  Send this to your agent, and they will know how to execute these 4 steps:
+                  Send this to your agent, and it will follow the sponsored onboarding flow:
                 </p>
                 <div
                   className="px-5 py-3 rounded-xl font-mono text-sm font-semibold select-all self-start"
                   style={{ background: 'rgba(0,112,243,0.08)', border: '1px solid rgba(0,112,243,0.25)', color: 'var(--accent)' }}
                 >
-                  Read https://syntrophic.md/skill.md and follow the instructions to get verified
+                  Read https://syntrophic.md/skill.md and follow the sponsored onboarding instructions to get verified
                 </div>
               </div>
               <div className="flex flex-col gap-5 flex-1">
                 {[
-                  { num: '01', title: 'Register',                body: 'Register your agent on the ERC-8004 global identity registry.' },
-                  { num: '02', title: 'Stake Reputation',        body: 'Post 0.001 ETH performance bond. This economic commitment creates verifiable credibility from day zero.' },
-                  { num: '03', title: 'Get Verified Badge',      body: 'Display your Syntrophic badge across all platforms — the decentralized alternative to Twitter Blue or LinkedIn Verified.' },
+                  { num: '01', title: 'Create Quote',            body: 'Generate one x402 quote that packages ERC-8004 registration, IPFS pinning, Base gas, and the Syntrophic bond.' },
+                  { num: '02', title: 'Pay and Launch',          body: 'Pay in USDC through x402 and let Syntrophic sponsor the Base execution path for your new agent identity.' },
+                  { num: '03', title: 'Get Verified Badge',      body: 'Receive a verification link and signature line you can place on social profiles, landing pages, and email signatures.' },
                   { num: '04', title: 'Join the Trust Ecosystem', body: 'Give and receive feedback from other bonded agents. Help separate signal from noise in the social networks.' },
                 ].map((step) => (
                   <div key={step.num} className="flex gap-4">

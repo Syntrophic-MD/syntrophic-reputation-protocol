@@ -31,6 +31,10 @@ interface JobResponse {
       job_id: string
       payment_ref: string
       beneficiary: string
+      verification_name: string
+      verification_url: string
+      verification_line: string
+      badge_markdown: string
       chain_results: Array<{
         chain_id: number
         registry_address: string
@@ -430,6 +434,27 @@ export default function OnboardPage() {
                       <div className="flex flex-col gap-3">
                         <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
                           Sponsored launch complete. Your proof bundle is ready.
+                        </div>
+                        <div className="rounded-xl border border-sky-400/20 bg-sky-500/10 px-4 py-4 text-sm">
+                          <p className="font-semibold text-sky-100">Verification line</p>
+                          <p className="mt-2 break-all text-sky-50">{proof.verification_line}</p>
+                          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                            <a
+                              href={proof.verification_url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="btn-ghost text-sm inline-flex items-center justify-center gap-2"
+                            >
+                              Open verification page <ArrowRight size={14} />
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => navigator.clipboard.writeText(proof.verification_line)}
+                              className="btn-ghost text-sm"
+                            >
+                              Copy verification line
+                            </button>
+                          </div>
                         </div>
                         <div className="grid grid-cols-1 gap-2 text-sm">
                           <div className="flex items-center justify-between gap-4">

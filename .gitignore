@@ -9,6 +9,7 @@ operations/.env
 
 # Root dependencies
 node_modules/
+/.next/
 
 # Protocol build artifacts
 protocol/out/
@@ -18,3 +19,4 @@ protocol/cache/
 frontend/node_modules/
 frontend/.next/
 frontend/.runtime/
+frontend/tsconfig.tsbuildinfo

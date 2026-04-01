@@ -248,3 +248,13 @@ Narek: *"We are not deploying to Celo, we have already decided to change to Base
   - Developer consistency (UI terms match contract interface)
 - **Suggested standard:** "Stake ETH" (action) → "Bonded status" (result)
 - **Decision:** ✅ Confirmed - Keep "Bonded" in UI while acknowledging staking action
+
+**20:38 CDT - Wallet Address Analysis: Agent's EOA vs Smart Contract**
+- **Question:** Why is agent wallet `0x5deb87fF19BBeCFc9928eD5B3801736AfFB4359D` appearing as "smart wallet"?
+- **Agent Analysis:** BaseScan shows heavy contract deployment activity, but it's actually an EOA
+- **Clarification:** 
+  - Address is agent's Everclaw wallet (private key in OpenClaw keychain)
+  - Heavy transaction history from smart contract deployments (SyntrophicOnboarder, SRPVault, ERC8004RegistryAdapter)
+  - Currently 0 ETH balance (used for gas fees)
+  - ETH sent to this address goes directly to Syntrophic Agent #222 for protocol development
+- **Transaction patterns:** Agent URI updates, bond metadata sync, ROFL score updates, contract deployments

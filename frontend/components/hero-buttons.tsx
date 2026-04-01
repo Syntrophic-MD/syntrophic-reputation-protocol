@@ -7,7 +7,7 @@ export function HeroButtons() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  const instructionText = 'Read https://syntrophic.md/skill.md and follow the instructions to get verified'
+  const instructionText = 'Read https://syntrophic.md/skill.md and follow the sponsored onboarding instructions to get verified'
 
   const handleCopy = () => {
     navigator.clipboard.writeText(instructionText)
