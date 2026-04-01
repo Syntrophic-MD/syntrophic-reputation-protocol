@@ -1,0 +1,223 @@
+{
+  "project": {
+    "name": "Syntrophic 3-Minute Demo - Fixed",
+    "output": "syntrophic-3min-demo-fixed.mp4",
+    "duration_target": 180,
+    "version": "v5-fixed"
+  },
+  
+  "slides": {
+    "opening": {
+      "enabled": true,
+      "duration": 5,
+      "title": "Syntrophic",
+      "subtitle": "Trust Infrastructure for AI Agents",
+      "background": "#0a0a0f",
+      "text_color": "#ffffff",
+      "title_font_size": 96,
+      "subtitle_font_size": 42,
+      "animation": "fade_in",
+      "animation_duration": 1
+    },
+    "hackathon_title": {
+      "enabled": true,
+      "duration": 8,
+      "file": "slides/slide-01-title.html",
+      "type": "html"
+    },
+    "hackathon_problem": {
+      "enabled": true,
+      "duration": 20,
+      "file": "slides/slide-02-problem.html",
+      "type": "html"
+    },
+    "hackathon_solution": {
+      "enabled": true,
+      "duration": 25,
+      "file": "slides/slide-03-solution.html",
+      "type": "html"
+    },
+    "hackathon_impact": {
+      "enabled": true,
+      "duration": 20,
+      "file": "slides/slide-04-impact.html",
+      "type": "html"
+    },
+    "closing": {
+      "enabled": true,
+      "duration": 10,
+      "title": "Syntrophic",
+      "tagline": "Trust Before the Noise",
+      "cta": "syntrophic.md",
+      "background": "#0a0a0f",
+      "text_color": "#ffffff",
+      "title_font_size": 96,
+      "tagline_font_size": 48,
+      "cta_font_size": 32,
+      "animation": "fade_out",
+      "animation_duration": 1
+    }
+  },
+  
+  "demo": {
+    "enabled": true,
+    "url": "https://syntrophic.md",
+    "target_duration": 92,
+    "actions": [
+      {
+        "type": "navigate",
+        "url": "https://syntrophic.md",
+        "wait_after": 3000,
+        "description": "Load homepage"
+      },
+      {
+        "type": "wait",
+        "duration": 5000,
+        "description": "Show landing page"
+      },
+      {
+        "type": "scroll",
+        "direction": "down",
+        "amount": 800,
+        "wait_after": 2000,
+        "description": "Scroll to show content"
+      },
+      {
+        "type": "click",
+        "selector": "text=Onboard Agent",
+        "wait_after": 3000,
+        "description": "Click Onboard Agent button",
+        "expect_new_page": true,
+        "new_page_wait": 5000
+      },
+      {
+        "type": "wait",
+        "duration": 10000,
+        "description": "Show onboarding page"
+      }
+    ],
+    "viewport": { "width": 1920, "height": 1080 },
+    "record_video": true
+  },
+  
+  "audio": {
+    "music": {
+      "enabled": true,
+      "source": "local",
+      "file": "assets/background-music.mp3",
+      "duration": 180,
+      "volume": 0.08,
+      "fade_in": 3,
+      "fade_out": 5
+    },
+    "voiceover": {
+      "enabled": true,
+      "source": "elevenlabs",
+      "segments": [
+        {
+          "start": 5,
+          "text": "Agents have a trust problem on day zero. ERC-8004 gives agents portable identity, but identity alone does not make a new agent credible.",
+          "duration": 8
+        },
+        {
+          "start": 15,
+          "text": "Syntrophic solves that gap by giving agents the decentralized equivalent of a verified badge from the moment they onboard.",
+          "duration": 6
+        },
+        {
+          "start": 23,
+          "text": "Syntrophic does not invent the profile. The owner, or the owner's OpenClaw agent, prepares the profile first: name, description, service URL, image, and beneficiary wallet.",
+          "duration": 10
+        },
+        {
+          "start": 35,
+          "text": "Syntrophic then verifies and bonds that supplied identity.",
+          "duration": 3
+        },
+        {
+          "start": 40,
+          "text": "The public entrypoint is syntrophic.md/skill.md. An agent can read that skill, gather the profile, create the quote, and either self-pay or hand off to a payment-capable helper for the x402 step.",
+          "duration": 12
+        },
+        {
+          "start": 78,
+          "text": "On syntrophic.md/onboard, we prepare the profile and generate the quote. That page is the operator-friendly x402 demo surface.",
+          "duration": 8
+        },
+        {
+          "start": 88,
+          "text": "It shows the quote and the helper command needed to complete the paid launch.",
+          "duration": 4
+        },
+        {
+          "start": 94,
+          "text": "In the terminal, we act as the x402-capable helper runtime. The helper completes the paid launch, Syntrophic sponsors the Base execution path,",
+          "duration": 9
+        },
+        {
+          "start": 105,
+          "text": "registers the ERC-8004 identity, posts the bond, and returns a proof bundle.",
+          "duration": 5
+        },
+        {
+          "start": 112,
+          "text": "Now we can open the verification page and the Base transaction. This agent is no longer just a profile.",
+          "duration": 7
+        },
+        {
+          "start": 121,
+          "text": "It now has a portable ERC-8004 identity, a bonded trust state, and a reusable verification line that can be placed on websites, social profiles, and email signatures.",
+          "duration": 12
+        },
+        {
+          "start": 170,
+          "text": "Syntrophic turns onboarding into the trust moment. That is how agents get a decentralized verified badge from day zero.",
+          "duration": 8
+        }
+      ],
+      "voice_id": "lKf2tqVafNW1nVb7CgwC",
+      "voice_name": "Frank",
+      "model": "eleven_multilingual_v2",
+      "volume": 0.95,
+      "style": "professional_compelling"
+    },
+    "sfx": {
+      "enabled": true,
+      "click": {
+        "enabled": true,
+        "volume": 0.3,
+        "output_file": "assets/sfx/click.mp3"
+      },
+      "whoosh": {
+        "enabled": true,
+        "volume": 0.2,
+        "output_file": "assets/sfx/whoosh.mp3"
+      },
+      "success_chime": {
+        "enabled": true,
+        "volume": 0.4,
+        "timing": "at_closing_start",
+        "output_file": "assets/sfx/chime.mp3"
+      }
+    }
+  },
+  
+  "timing": {
+    "opening_slide": 5,
+    "hackathon_slides": 73,
+    "demo_target": 92,
+    "closing_slide": 10,
+    "total_target": 180,
+    "voiceover_gaps": {
+      "segment_padding": 1,
+      "ensure_no_overlap": true
+    }
+  },
+  
+  "quality": {
+    "video_bitrate": "8M",
+    "audio_bitrate": "256k",
+    "fps": 30,
+    "resolution": "1920x1080"
+  }
+}
