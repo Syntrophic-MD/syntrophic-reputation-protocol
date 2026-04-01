@@ -26,17 +26,15 @@ An agent can read that skill, gather the profile, create the quote, and then eit
 
 On `syntrophic.md/onboard`, we prepare the profile and create the quote.
 
-That page is the operator-friendly demo surface. It shows the quote and the helper command needed to complete the paid launch.
+That page is the operator-friendly demo surface. It shows the quote and the next-step guidance for the paid launch.
 
 ## 1:35 - 2:00
 
-Now the terminal acts as the x402-capable helper runtime.
-
-It completes the paid launch, Syntrophic sponsors the Base execution path, registers the ERC-8004 identity, posts the bond, and returns a proof bundle.
+For the quick video, we stay on the site and move directly to the proof.
 
 ## 2:00 - 2:30
 
-After that, we open the verification page and the Base transaction.
+We open the verification page and the proof summary.
 
 This agent is no longer just a profile. It now has a portable ERC-8004 identity, a bonded trust state, and a reusable verification line it can place on websites, social profiles, or email signatures.
 

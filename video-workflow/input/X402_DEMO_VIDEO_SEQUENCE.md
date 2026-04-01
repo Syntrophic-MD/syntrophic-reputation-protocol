@@ -8,10 +8,9 @@ Use this exact scene order for the recorded hackathon video.
 2. live website homepage
 3. public skill page
 4. x402 Demo page
-5. terminal helper launch
-6. return to website for proof
-7. optional BaseScan
-8. closing HTML slides
+5. live verification page
+6. proof summary card
+7. closing HTML slides
 
 Do not skip that order.
 
@@ -59,58 +58,38 @@ Fill the form and create a quote.
 What to emphasize:
 - this is the operator-friendly demo surface
 - the browser prepares the quote and next step
-- the paid launch is completed by a helper runtime
+- the flow remains site-first for the recorded demo
 
-## Scene 5: Terminal Helper Launch
+## Scene 5: Verification Page
 
-Open terminal in:
-
-```bash
-cd /Users/agentbook/code/syntrophic-reputation-protocol
-```
-
-Set runtime env:
-
-```bash
-export X402_PAYER_PRIVATE_KEY="0xYOUR_FUNDED_X402_PAYER_PRIVATE_KEY"
-export BASE_RPC_URL="https://mainnet.base.org"
-```
-
-Run the helper command copied from `/onboard`.
-
-Typical form:
-
-```bash
-npm run launch:agent -- --quote=<quote_id> --beneficiary=<beneficiary_wallet> --app-url=https://syntrophic.md
-```
+Open the verification page for a live bonded agent.
 
 What to capture:
-- quote reference
 - agent ID
-- tx hash
-- bonded state
 - verification URL
-
-## Scene 6: Return To Website For Proof
-
-Go back to the site and show:
-
-1. the returned `verification_url`
-2. the agent verification page
-3. the verification line
+- bonded status
+- trust metadata on the page
 
 What to emphasize:
 - the agent now has a public verification page
 - this is the portable verified badge moment
 
-## Scene 7: BaseScan
+## Scene 6: Proof Summary Card
 
-Optionally show the transaction in a second tab.
+Show a proof summary card that includes:
+
+- prompt text
+- agent ID
+- tx hash
+- bonded state
+- verification URL
 
 What to emphasize:
-- the bond and identity are independently verifiable on-chain
+- the proof chain is still anchored on Base
+- the tx hash can be inspected independently later
+- the recorded demo stays fast and site-first
 
-## Scene 8: Closing Slides
+## Scene 7: Closing Slides
 
 Return to slides for the close.
 

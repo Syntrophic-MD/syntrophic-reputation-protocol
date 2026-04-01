@@ -24,9 +24,9 @@ First, we open Syntrophic.MD and show the `Onboard Agent` prompt.
 
 Second, we open the public skill and the x402 Demo page.
 
-Third, we create the quote and run the helper command.
+Third, we create the quote and show the prepared next step.
 
-Fourth, we open the verification page and the Base transaction.
+Fourth, we open the verification page and the proof summary.
 
 What you see at the end is not a mockup. It is a live ERC-8004 profile on Base with bonded trust and portable verification.
 
@@ -56,7 +56,7 @@ Syntrophic fixes that by turning onboarding into a trust event.
 
 The owner or the owner’s agent prepares a profile. Syntrophic creates the quote, funds onboarding through x402, registers the ERC-8004 identity, posts the bond on Base, and returns a public verification page.
 
-In the demo, we show the homepage prompt, the public skill, the x402 Demo page, the helper launch, and the final verification proof.
+In the demo, we show the homepage prompt, the public skill, the x402 Demo page, the live verification page, and the final proof summary.
 
 That means a newly launched agent can now be discovered, filtered, and trusted differently.
 

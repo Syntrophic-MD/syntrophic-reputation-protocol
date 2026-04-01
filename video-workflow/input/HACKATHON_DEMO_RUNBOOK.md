@@ -5,9 +5,9 @@
 Demo one complete flow in under two minutes:
 
 1. create an onboarding quote,
-2. complete the paid launch from a helper runtime,
-3. return a proof bundle,
-4. verify the new bonded agent on Base.
+2. show the live verification result,
+3. show the proof summary,
+4. verify the bonded agent state on the site.
 
 ## Demo Path
 
@@ -39,42 +39,28 @@ Create the quote.
 
 ### Step 3
 
-Copy the helper command from the page, then run it from a payment-capable environment.
-
-Typical env:
-
-```bash
-export X402_PAYER_PRIVATE_KEY="0xYOUR_FUNDED_PAYER_KEY"
-export BASE_RPC_URL="https://mainnet.base.org"
-```
-
-Typical command:
-
-```bash
-npm run launch:agent -- --quote=<quote_id> --beneficiary=<beneficiary> --app-url=https://syntrophic.md
-```
+Open the live verification page for the demo agent.
 
 ### Step 4
 
-Show the returned proof bundle:
+Show the proof summary:
 
 - `agent_id`
 - `tx_hash`
 - `bonded = true`
 - `verification_url`
-- `verification_line`
+- the onboarding prompt
 
 ### Step 5
 
 Verify one or more of these live:
 
 - Syntrophic verification page
-- BaseScan tx
 - ERC-8004 metadata read
 
 ## Judge Script
 
-“Here is the profile and quote. Here is the x402-funded helper launch. The agent is now registered, bonded, and publicly verifiable on Base.”
+“Here is the profile and quote. Here is the live verification result. The agent is registered, bonded, and publicly verifiable on Base.”
 
 ## Before / After
 

@@ -1,152 +1,69 @@
 # Syntrophic Video Workflow
 
-Modular workflow for building the Syntrophic hackathon video.
+This folder now defaults to a quick, site-only demo video.
 
-Current best story for the final cut:
+The canonical flow is:
 
-- show the homepage briefly
-- open `Explore Agents`
-- apply `Bonded (Demo)`
-- open `Syntrophic Agent #222 — Frontier Tower`
-- show `BONDED` status plus ERC-8004 and `syntrophic.*` metadata on Base
+1. opening slides
+2. homepage prompt dialog
+3. public skill at `https://syntrophic.md/skill.md`
+4. `/onboard` quote creation demo
+5. live verification page
+6. on-chain proof summary card
+7. closing slide
 
-This is stronger than the older search-based demo because it films proof that is already live on `Syntrophic.MD`.
+No terminal recording is required in the default path.
 
-## Structure
+## Default Generator
 
-```
-video-workflow/
-├── config.json           # All customizable parameters
-├── scripts/
-│   ├── 01-generate-slides.js    # Creates opening/closing slides
-│   ├── 02-record-demo.js        # Captures website demo
-│   ├── 03-compose-video.js      # Stitches everything together
-│   └── run-all.js               # Orchestrates full workflow
-├── assets/
-│   ├── logo.png                 # Your logo
-│   ├── background-music.mp3     # Background music
-│   ├── voiceover.mp3            # Ending voice
-│   └── sfx/                      # Sound effects
-│       ├── click.mp3
-│       └── whoosh.mp3
-├── temp/                         # Intermediate files
-└── output/                       # Final video
-```
-
-## Quick Start
+From [video-workflow/scripts](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/scripts):
 
 ```bash
-# 1. Add your assets to assets/ folder
-# 2. Edit config.json to customize
-# 3. Run the full workflow
-node scripts/run-all.js
+npm run build
 ```
 
-## Individual Scripts
+This runs [generate-3min-presentation.js](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/scripts/generate-3min-presentation.js) through [run-all.js](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/scripts/run-all.js).
+
+Useful variants:
 
 ```bash
-# Generate slides only
-node scripts/01-generate-slides.js
-
-# Record demo only
-node scripts/02-record-demo.js
-
-# Compose final video only
-node scripts/03-compose-video.js
+npm run dry-run
+npm run quick
 ```
 
-## Customization
+## Voice
 
-### Change Website URL
-Edit `config.json`:
-```json
-"demo": {
-  "url": "https://your-website.com",
-  "actions": [...]
-}
-```
+The default ElevenLabs voice is:
 
-### Change Slide Text
-Edit `config.json`:
-```json
-"slides": {
-  "opening": {
-    "title": "Your Title",
-    "subtitle": "Your Subtitle"
-  }
-}
-```
+- `Frank`
+- voice id `lKf2tqVafNW1nVb7CgwC`
 
-### Adjust Timing
-Edit `config.json`:
-```json
-"slides": {
-  "opening": { "duration": 5 }
-}
-```
+You can override it with:
 
-### Add More Demo Actions
-Edit `config.json`:
-```json
-"demo": {
-  "actions": [
-    { "type": "click", "selector": "button", "wait_after": 2000 },
-    { "type": "scroll", "direction": "down", "amount": 300 },
-    { "type": "wait", "duration": 1000 }
-  ]
-}
-```
-
-## Requirements
-
-- Node.js 18+
-- Playwright (for demo recording)
-- FFmpeg (for video composition)
-
-### Install Dependencies
 ```bash
-npm install playwright
-npx playwright install chromium
-brew install ffmpeg  # macOS
+export VIDEO_VOICE_ID="your_voice_id"
+export VIDEO_VOICE_NAME="Your Voice"
 ```
 
-## Audio Assets
-
-You'll need to provide:
-
-1. **Background music** (`assets/music.mp3`)
-   - Lo-fi, ambient, or corporate background track
-   - Source: YouTube Audio Library, Pixabay, or your own
-
-2. **Voiceover** (`assets/voiceover.mp3`)
-   - Short ending narration (5-10 seconds)
-   - "Syntrophic — Trust Before the Noise"
-
-3. **Sound effects** (`assets/sfx/`)
-   - `click.mp3` — UI click sound
-   - `whoosh.mp3` — Transition whoosh
+The generator looks for `ELEVENLABS_API_KEY` first, then checks the macOS keychain. If ElevenLabs is unavailable, it falls back to macOS `say`.
 
 ## Output
 
-Final video saved to: `output/syntrophic-demo.mp4`
+Final video:
 
-## Add Audio (Optional)
+- [syntrophic-3min-presentation.mp4](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/output/syntrophic-3min-presentation.mp4)
 
-The video currently has no audio. To add:
+Intermediate artifacts:
 
-1. **Background music:** Place `background-music.mp3` in `assets/`
-2. **Voiceover:** Place `voiceover.mp3` in `assets/` (plays at25s)
-3. **Sound effects:** Place `click.mp3` in `assets/sfx/`
+- [video-workflow/temp](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/temp)
 
-Then re-run: `node scripts/run-all.js`
+## Source Of Truth
 
-### Generate Voiceover with ElevenLabs
+Narration and sequencing should stay aligned with:
 
-```bash
-# Using your ElevenLabs API key
-curl -X POST "https://api.elevenlabs.io/v1/text-to-speech/VOICE_ID" \
-  -H "xi-api-key: YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Syntrophic. Trust Before the Noise.", "voice_settings": {"stability": 0.5, "similarity_boost": 0.5}}' \
-  --output assets/voiceover.mp3
-```
+- [HACKATHON_3MIN_VOICEOVER_SCRIPT.md](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/input/HACKATHON_3MIN_VOICEOVER_SCRIPT.md)
+- [HACKATHON_3MIN_DEMO_RUNBOOK.md](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/input/HACKATHON_3MIN_DEMO_RUNBOOK.md)
+- [HACKATHON_JUDGE_SLIDES.md](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/input/HACKATHON_JUDGE_SLIDES.md)
+- [X402_DEMO_VIDEO_SEQUENCE.md](/Users/agentbook/code/syntrophic-reputation-protocol/video-workflow/input/X402_DEMO_VIDEO_SEQUENCE.md)
+
+If those docs change, update the generator scenes before recording a new cut.

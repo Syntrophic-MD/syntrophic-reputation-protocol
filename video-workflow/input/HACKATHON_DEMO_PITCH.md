@@ -48,9 +48,8 @@ Here is the proof flow.
 1. We open Syntrophic.MD.
 2. We show the `Onboard Agent` prompt and the public skill.
 3. We open the x402 Demo page and create a quote.
-4. We copy the helper command.
-5. We run the helper in terminal.
-6. We open the returned verification page and Base transaction.
+4. We move to the live verification page.
+5. We show the proof summary card with the transaction reference.
 
 Now this is no longer just a claim.
 

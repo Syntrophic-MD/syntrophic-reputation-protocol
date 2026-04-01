@@ -37,11 +37,11 @@ Say clearly that identity is necessary but not sufficient.
 **One onboarding flow**
 
 Syntrophic:
-- creates the quote
-- funds the launch through x402
-- registers the agent
-- posts the bond on Base
-- returns a verification link
+- gives the public prompt
+- gives the public skill
+- prepares the quote
+- completes the verification flow
+- returns a public proof page
 
 Speaker note:
 Keep this slide simple and user-centered.
@@ -64,8 +64,8 @@ Show:
 1. Homepage prompt
 2. Public skill
 3. x402 Demo page
-4. Helper launch
-5. Verification page
+4. Verification page
+5. Proof summary
 
 Speaker note:
 The flow should feel like one continuous proof chain, not separate disconnected scenes.

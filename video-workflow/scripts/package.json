@@ -1,9 +1,11 @@
 {
   "name": "syntrophic-video-workflow",
   "version": "1.0.0",
-  "description": "Modular video production workflow for Syntrophic demo",
+  "description": "Quick site-demo video workflow for Syntrophic",
   "scripts": {
     "build": "node run-all.js",
+    "quick": "node generate-3min-presentation.js",
+    "dry-run": "node generate-3min-presentation.js --dry-run",
     "slides": "node 01-generate-slides.js",
     "demo": "node 02-record-demo.js",
     "compose": "node 03-compose-video.js"
