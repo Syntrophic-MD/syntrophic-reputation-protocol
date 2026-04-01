@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useMemo, useState, useTransition } from 'react'
-import { ArrowRight, CheckCircle2, CircleDashed, Coins, Rocket, ShieldCheck } from 'lucide-react'
+import { ArrowRight, CheckCircle2, CircleDashed, Coins, Copy, Download, Rocket, ShieldCheck } from 'lucide-react'
 
 import { Footer } from '@/components/footer'
 import { Navbar } from '@/components/navbar'
@@ -64,12 +64,73 @@ const initialForm = {
   imageUrl: '',
 }
 
+type FormState = typeof initialForm
+type FormErrors = Partial<Record<keyof FormState, string>>
+
+function looksLikeAddress(value: string) {
+  return /^0x[a-fA-F0-9]{40}$/.test(value.trim())
+}
+
+function normalizeHttpUrl(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return ''
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`
+}
+
+function looksLikeHttpUrl(value: string) {
+  try {
+    const normalized = normalizeHttpUrl(value)
+    if (!normalized) return false
+    const parsed = new URL(normalized)
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:'
+  } catch {
+    return false
+  }
+}
+
+function validateForm(form: FormState): FormErrors {
+  const errors: FormErrors = {}
+
+  if (!looksLikeAddress(form.beneficiary)) {
+    errors.beneficiary = 'Enter a valid EVM wallet address.'
+  }
+
+  if (form.name.trim().length < 3) {
+    errors.name = 'Agent name must be at least 3 characters.'
+  }
+
+  if (form.description.trim().length < 20) {
+    errors.description = 'Description must be at least 20 characters.'
+  }
+
+  if (!looksLikeHttpUrl(form.serviceUrl)) {
+    errors.serviceUrl = 'Enter a valid http or https URL.'
+  }
+
+  if (form.imageUrl.trim() && !looksLikeHttpUrl(form.imageUrl)) {
+    errors.imageUrl = 'Image URL must be a valid http or https URL.'
+  }
+
+  return errors
+}
+
+async function readJsonSafe(response: Response) {
+  const text = await response.text()
+  try {
+    return { data: JSON.parse(text), raw: text }
+  } catch {
+    return { data: null, raw: text }
+  }
+}
+
 export default function OnboardPage() {
   const [form, setForm] = useState(initialForm)
+  const [fieldErrors, setFieldErrors] = useState<FormErrors>({})
   const [quote, setQuote] = useState<QuoteResponse | null>(null)
   const [job, setJob] = useState<JobResponse | null>(null)
   const [jobId, setJobId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [copiedItem, setCopiedItem] = useState<string | null>(null)
   const [isQuoting, startQuoteTransition] = useTransition()
   const [isLaunching, startLaunchTransition] = useTransition()
 
@@ -79,7 +140,7 @@ export default function OnboardPage() {
     let cancelled = false
     const poll = async () => {
       const response = await fetch(`/api/jobs/${jobId}`)
-      const data = await response.json()
+      const { data } = await readJsonSafe(response)
       if (cancelled) return
       if (response.ok) {
         setJob(data)
@@ -100,6 +161,24 @@ export default function OnboardPage() {
 
   const proof = job?.result?.proof_bundle ?? null
   const chainResult = proof?.chain_results?.[0] ?? null
+  const helperCommand = quote
+    ? `X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --quote=${quote.quote_id} --beneficiary=${form.beneficiary.trim()} --app-url=https://syntrophic.md`
+    : null
+  const handoffPackage = quote
+    ? {
+        mode: 'payment-handoff',
+        quote_id: quote.quote_id,
+        beneficiary: form.beneficiary.trim(),
+        app_url: 'https://syntrophic.md',
+        rpc_url: 'https://mainnet.base.org',
+        profile: {
+          name: form.name.trim(),
+          description: form.description.trim(),
+          image_url: form.imageUrl.trim() ? normalizeHttpUrl(form.imageUrl) : undefined,
+          services: [{ type: 'mcp', url: normalizeHttpUrl(form.serviceUrl) }],
+        },
+      }
+    : null
 
   const quoteLines = useMemo(() => {
     if (!quote) return []
@@ -113,9 +192,56 @@ export default function OnboardPage() {
 
   const handleChange = (field: keyof typeof initialForm, value: string) => {
     setForm((current) => ({ ...current, [field]: value }))
+    setFieldErrors((current) => {
+      if (!current[field]) return current
+      const next = { ...current }
+      delete next[field]
+      return next
+    })
+  }
+
+  const handleBlur = (field: keyof typeof initialForm) => {
+    if (field !== 'serviceUrl' && field !== 'imageUrl') return
+    const currentValue = form[field].trim()
+    if (!currentValue) return
+    handleChange(field, normalizeHttpUrl(currentValue))
+  }
+
+  const copyText = async (value: string, key: string) => {
+    await navigator.clipboard.writeText(value)
+    setCopiedItem(key)
+    setTimeout(() => setCopiedItem((current) => (current === key ? null : current)), 2000)
+  }
+
+  const downloadHandoffPackage = () => {
+    if (!handoffPackage) return
+    const blob = new Blob([JSON.stringify(handoffPackage, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = `syntrophic-handoff-${quote?.quote_id ?? 'quote'}.json`
+    anchor.click()
+    URL.revokeObjectURL(url)
   }
 
   const handleCreateQuote = () => {
+    const normalizedForm = {
+      ...form,
+      beneficiary: form.beneficiary.trim(),
+      name: form.name.trim(),
+      description: form.description.trim(),
+      serviceUrl: normalizeHttpUrl(form.serviceUrl),
+      imageUrl: form.imageUrl.trim() ? normalizeHttpUrl(form.imageUrl) : '',
+    }
+    const validationErrors = validateForm(normalizedForm)
+    setFieldErrors(validationErrors)
+    setForm(normalizedForm)
+
+    if (Object.keys(validationErrors).length > 0) {
+      setError('Please fix the highlighted fields before creating a quote.')
+      return
+    }
+
     setError(null)
     setQuote(null)
     setJob(null)
@@ -127,15 +253,15 @@ export default function OnboardPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           params: {
-            beneficiary: form.beneficiary.trim(),
+            beneficiary: normalizedForm.beneficiary,
             profile: {
-              name: form.name,
-              description: form.description,
-              image_url: form.imageUrl.trim() || undefined,
+              name: normalizedForm.name,
+              description: normalizedForm.description,
+              image_url: normalizedForm.imageUrl || undefined,
               services: [
                 {
                   type: 'mcp',
-                  url: form.serviceUrl.trim(),
+                  url: normalizedForm.serviceUrl,
                 },
               ],
             },
@@ -146,9 +272,9 @@ export default function OnboardPage() {
         }),
       })
 
-      const data = await response.json()
+      const { data, raw } = await readJsonSafe(response)
       if (!response.ok) {
-        setError(data?.error?.message ?? 'Failed to create onboarding quote.')
+        setError(data?.error?.message ?? raw ?? 'Failed to create onboarding quote.')
         return
       }
 
@@ -176,15 +302,15 @@ export default function OnboardPage() {
         }),
       })
 
-      const data = await response.json()
+      const { data, raw } = await readJsonSafe(response)
       if (response.status === 402) {
         setError(
-          'This launch endpoint is now protected by x402. Complete the paid call with an agent or the demo client script to start the sponsored launch.'
+          'This browser can create the quote, but the paid launch needs an x402-capable agent or helper. Copy the helper command below or download the handoff package to finish the demo.'
         )
         return
       }
       if (!response.ok) {
-        setError(data?.error?.message ?? 'Failed to launch sponsored onboarding.')
+        setError(data?.error?.message ?? raw ?? 'Failed to launch sponsored onboarding.')
         return
       }
 
@@ -214,18 +340,18 @@ export default function OnboardPage() {
                   <Rocket size={18} style={{ color: 'var(--accent)' }} />
                 </div>
                 <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
-                  Sponsored Launch MVP
+                  x402 Demo
                 </span>
               </div>
 
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-balance">
-                Launch a bonded ERC-8004 agent on <span className="gradient-text-blue">Base</span>
+                Demo sponsored onboarding for a <span className="gradient-text-blue">verified agent badge</span>
               </h1>
 
               <p className="text-base md:text-lg leading-relaxed max-w-2xl" style={{ color: 'var(--muted-foreground)' }}>
-                This MVP packages metadata composition, IPFS pinning, Base execution gas, and the SRP bond into one
-                sponsored launch flow. The long-term direction is single-payment multi-chain launches, but Base is the
-                only write target right now.
+                This page is the operator-friendly demo surface for Syntrophic onboarding. It prepares an ERC-8004
+                registration, prices the x402 payment, and hands the flow off to an x402-capable agent or helper that
+                finishes the sponsored Base launch.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -284,9 +410,9 @@ export default function OnboardPage() {
             <GlassCard className="p-7 md:p-8 flex flex-col gap-5">
               <div>
                 <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--accent)' }}>
-                  Launch Form
+                  Demo Intake
                 </span>
-                <h2 className="text-2xl font-semibold mt-2">Create your sponsored onboarding quote</h2>
+                <h2 className="text-2xl font-semibold mt-2">Prepare the agent profile and create a quote</h2>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -298,6 +424,9 @@ export default function OnboardPage() {
                     placeholder="0x..."
                     className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm outline-none focus:border-white/20"
                   />
+                  {fieldErrors.beneficiary ? (
+                    <span className="text-xs text-rose-300">{fieldErrors.beneficiary}</span>
+                  ) : null}
                 </label>
 
                 <label className="flex flex-col gap-2">
@@ -305,9 +434,17 @@ export default function OnboardPage() {
                   <input
                     value={form.serviceUrl}
                     onChange={(event) => handleChange('serviceUrl', event.target.value)}
+                    onBlur={() => handleBlur('serviceUrl')}
                     placeholder="https://agent.example.com/mcp"
                     className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm outline-none focus:border-white/20"
                   />
+                  {fieldErrors.serviceUrl ? (
+                    <span className="text-xs text-rose-300">{fieldErrors.serviceUrl}</span>
+                  ) : (
+                    <span className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
+                      If you paste `example.com`, we will normalize it to `https://example.com`.
+                    </span>
+                  )}
                 </label>
 
                 <label className="flex flex-col gap-2 md:col-span-2">
@@ -318,6 +455,9 @@ export default function OnboardPage() {
                     placeholder="Scout"
                     className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm outline-none focus:border-white/20"
                   />
+                  {fieldErrors.name ? (
+                    <span className="text-xs text-rose-300">{fieldErrors.name}</span>
+                  ) : null}
                 </label>
 
                 <label className="flex flex-col gap-2 md:col-span-2">
@@ -329,6 +469,13 @@ export default function OnboardPage() {
                     rows={5}
                     className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm outline-none focus:border-white/20"
                   />
+                  {fieldErrors.description ? (
+                    <span className="text-xs text-rose-300">{fieldErrors.description}</span>
+                  ) : (
+                    <span className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
+                      Keep it descriptive enough that another app could trust what this agent does.
+                    </span>
+                  )}
                 </label>
 
                 <label className="flex flex-col gap-2 md:col-span-2">
@@ -336,9 +483,13 @@ export default function OnboardPage() {
                   <input
                     value={form.imageUrl}
                     onChange={(event) => handleChange('imageUrl', event.target.value)}
+                    onBlur={() => handleBlur('imageUrl')}
                     placeholder="https://example.com/logo.png"
                     className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm outline-none focus:border-white/20"
                   />
+                  {fieldErrors.imageUrl ? (
+                    <span className="text-xs text-rose-300">{fieldErrors.imageUrl}</span>
+                  ) : null}
                 </label>
               </div>
 
@@ -362,7 +513,7 @@ export default function OnboardPage() {
               <GlassCard className="p-7 flex flex-col gap-4">
                 <div className="flex items-center gap-2">
                   <Coins size={16} style={{ color: '#00d4ff' }} />
-                  <h2 className="text-xl font-semibold">Quote</h2>
+                  <h2 className="text-xl font-semibold">Quote and next step</h2>
                 </div>
 
                 {quote ? (
@@ -387,18 +538,41 @@ export default function OnboardPage() {
                     </div>
 
                     <div className="rounded-xl border border-sky-400/20 bg-sky-500/10 px-4 py-3 text-sm text-sky-100">
-                      The launch endpoint is now x402-protected. This page is the quote builder and proof viewer; the
-                      paid call itself is best triggered by an agent client or the local demo script during the
-                      hackathon demo.
+                      Browsers usually cannot satisfy the x402 payment challenge directly. Use the helper command or
+                      download the handoff package, then finish the paid launch from an x402-capable runtime.
                     </div>
 
-                    <button onClick={handleLaunch} className="btn-primary text-sm" disabled={isLaunching}>
-                      {isLaunching ? 'Requesting paid launch...' : 'Hit the paid launch endpoint'}
-                    </button>
+                    <div className="flex flex-col gap-3">
+                      {helperCommand ? (
+                        <button
+                          type="button"
+                          onClick={() => copyText(helperCommand, 'helper')}
+                          className="btn-primary text-sm inline-flex items-center justify-center gap-2"
+                        >
+                          <Copy size={14} />
+                          {copiedItem === 'helper' ? 'Copied helper command' : 'Copy helper command'}
+                        </button>
+                      ) : null}
+
+                      {handoffPackage ? (
+                        <button
+                          type="button"
+                          onClick={downloadHandoffPackage}
+                          className="btn-ghost text-sm inline-flex items-center justify-center gap-2"
+                        >
+                          <Download size={14} />
+                          Download handoff JSON
+                        </button>
+                      ) : null}
+
+                      <button onClick={handleLaunch} className="btn-ghost text-sm" disabled={isLaunching}>
+                        {isLaunching ? 'Testing paid launch...' : 'Test the paid launch endpoint anyway'}
+                      </button>
+                    </div>
                   </>
                 ) : (
                   <p className="text-sm" style={{ color: 'var(--muted-foreground)' }}>
-                    Create a quote to see the Base launch package and start the onboarding job.
+                    Create a quote to see the Base package, helper command, and handoff artifact for the x402 demo.
                   </p>
                 )}
               </GlassCard>

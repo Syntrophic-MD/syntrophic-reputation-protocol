@@ -41,25 +41,31 @@ These can be the same wallet or different wallets.
 ## Helper Behavior
 
 The helper should:
-- accept `quote_id`
-- accept `beneficiary`
+- create a quote and handoff package when the first runtime cannot pay
+- resume from that handoff package in a payment-capable runtime
 - use a payer wallet
 - handle the `402 -> pay -> retry` flow
 - return the proof bundle
 
-In this repo, the helper command is:
+In this repo, the first runtime can create a handoff file with:
 
 ```bash
-npm run launch:agent -- --quote=QUOTE_ID --beneficiary=0xBENEFICIARY
+npm run launch:agent -- --quote-only --handoff-file=./syntrophic-handoff.json --beneficiary=0xBENEFICIARY --name="Agent Name" --description="What the agent does." --service="https://example.com"
+```
+
+The payment-capable helper then resumes with:
+
+```bash
+X402_PAYER_PRIVATE_KEY=0xYOUR_PAYER_KEY npm run launch:agent -- --resume-handoff=./syntrophic-handoff.json
 ```
 
 If `X402_PAYER_PRIVATE_KEY` is present, the helper attempts the paid launch.
 
-If it is not present, the helper still creates the quote and prints a handoff package.
+If it is not present, the helper prints the handoff package instead of silently failing.
 
 ## Skill Guidance
 
-Agents using `SKILL.md` should:
+Agents using the public skill at `https://syntrophic.md/skill.md` (source file: `frontend/public/skill.md`) should:
 - never invent a random profile
 - prepare or confirm the profile first
 - create the quote

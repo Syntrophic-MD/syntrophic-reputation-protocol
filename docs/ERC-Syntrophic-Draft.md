@@ -1,7 +1,7 @@
 ---
 eip: XXXX
 title: Syntrophic Reputation Protocol for AI Agent Trust
-description: ERC-8004-compatible reputation staking for verifiable AI agent trust
+description: ERC-8004-compatible reputation staking and sponsored onboarding for verifiable AI agent trust
 author: Syntrophic Agent #222
 discussions-to: https://ethereum-magicians.org/t/erc-xxxx-syntrophic-reputation-protocol-for-decentralized-agents/xxxxx
 status: Draft
@@ -18,7 +18,7 @@ Syntrophic Reputation Protocol lets an ERC-8004 agent owner stake reputation fro
 
 ## Abstract
 
-The Syntrophic Reputation Protocol (SRP) defines a trust-minimizing bond layer for ERC-8004 agents. It addresses the day-zero trust gap, where capable new agents cannot participate in high-trust interactions because they have no prior reputation history. An agent owner stakes a fixed ETH bond against an ERC-8004 `agentId`, receives a verifiable bonded status, and becomes slashable by signed attestations from a designated ROFL signer. SRP standardizes the vault lifecycle (bond, score update, unstake, withdraw, slash) and an ERC-8004 metadata bridge (`syntrophic.*` keys) so humans and agents can verify trust state directly on-chain and reuse it across applications.
+The Syntrophic Reputation Protocol (SRP) defines a trust-minimizing bond layer for ERC-8004 agents. It addresses the day-zero trust gap, where capable new agents cannot participate in high-trust interactions because they have no prior reputation history. An agent owner stakes a fixed ETH bond against an ERC-8004 `agentId`, receives a verifiable bonded status, and becomes slashable by signed attestations from a designated ROFL signer. SRP standardizes the vault lifecycle (bond, `bondFor`, score update, unstake, withdraw, slash), an ERC-8004 metadata bridge (`syntrophic.*` keys), and an informative sponsored-onboarding pattern for operator-assisted and x402-funded launches so humans and agents can verify trust state directly on-chain and reuse it across applications.
 
 ## Motivation
 
@@ -52,6 +52,9 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 - `staker`: The address currently funding an active bond for an `agentId`.
 - `roflSigner`: Trusted signer address whose EIP-712 signatures authorize score/slash attestations.
 - `registryAdapter`: Contract that writes SRP state into ERC-8004 metadata keys.
+- `beneficiary`: Final user-controlled owner/staker identity recorded for a sponsored onboarding flow.
+- `sponsor`: An address that pays the Base transaction and bond principal on behalf of the beneficiary.
+- `paymentRef`: Off-chain quote or payment correlation identifier carried into the sponsored onboarding event log.
 
 ### Required Vault Interface
 
@@ -116,6 +119,8 @@ interface ISRPVault {
     function COOLDOWN_SECONDS() external view returns (uint256);
 
     function bond(uint256 agentId) external payable;
+    function bondFor(uint256 agentId, address beneficiary) external payable;
+    function bondStrict(uint256 agentId) external payable;
     function updateScore(ScoreAttestation calldata attestation, bytes calldata signature) external;
     function requestUnstake(uint256 agentId) external;
     function executeSlash(SlashAttestation calldata attestation, bytes calldata signature) external;
@@ -142,6 +147,28 @@ An implementation MUST:
 4. Reject if `block.timestamp < cooldownUntil(agentId)`.
 5. Initialize active bond state with `score = MAX_SCORE()` and `reviewCount = 0`.
 6. Emit `AgentBonded`.
+
+#### `bondFor(uint256 agentId, address beneficiary)`
+
+An implementation MAY expose a sponsored bonding path that:
+
+1. Requires `msg.value == BOND_AMOUNT()`.
+2. Requires `beneficiary != address(0)`.
+3. Requires `msg.sender == IERC8004Registry.ownerOf(agentId)` at the moment of bonding.
+4. Records `beneficiary` as the effective staker while preserving the rest of the `bond(...)` lifecycle semantics.
+5. Emits `AgentBonded` with `staker = beneficiary`.
+
+This pattern is useful for factory or sponsor-owned temporary custody flows where the final trust identity must remain user-owned.
+
+#### `bondStrict(uint256 agentId)`
+
+An implementation MAY expose a strict bonding path that:
+
+1. Requires the adapter to be configured.
+2. Requires the adapter to already be authorized to write ERC-8004 metadata for `agentId`.
+3. Reverts instead of failing open if metadata cannot be written.
+
+This pattern is useful for deployments that want to reject any bond that cannot immediately surface portable `syntrophic.*` state.
 
 #### `updateScore(ScoreAttestation, signature)`
 
@@ -229,6 +256,7 @@ interface ISRPRegistryAdapter {
     function onBond(uint256 agentId, uint8 score, uint32 reviewCount, uint256 bondedAt) external;
     function onSlash(uint256 agentId, uint8 score, uint32 reviewCount, uint256 slashedAt) external;
     function onWithdraw(uint256 agentId, uint256 withdrawnAt) external;
+    function canWrite(uint256 agentId) external view returns (bool);
 }
 ```
 
@@ -251,6 +279,63 @@ IERC8004Registry.isAuthorizedOrOwner(adapter, agentId) == true
 ```
 
 Implementations SHOULD fail open on metadata sync (skip and emit a diagnostic event) rather than reverting vault state transitions.
+
+Implementations MAY additionally expose a public backfill function, such as `syncBondMetadata(agentId)`, that reconstructs canonical `BONDED` metadata from live vault state when historical metadata is missing or stale.
+
+### Sponsored Onboarding Pattern (Informative)
+
+SRP does not require one specific onboarding contract. However, the current reference implementation exposes a sponsored onboarding pattern that packages ERC-8004 registration plus SRP bonding into one on-chain transaction.
+
+Informative interface:
+
+```solidity
+interface ISRPSponsoredOnboarder {
+    event SponsoredOnboarded(
+        uint256 indexed agentId,
+        address indexed beneficiary,
+        address indexed sponsor,
+        uint256 bondAmount,
+        string agentURI,
+        bytes32 paymentRef
+    );
+
+    function onboardFor(address beneficiary, string calldata agentURI, bytes32 paymentRef)
+        external
+        payable
+        returns (uint256 agentId);
+}
+```
+
+Recommended semantics:
+
+1. Register the ERC-8004 agent.
+2. Approve the metadata adapter for the new `agentId`.
+3. Call `bondFor(agentId, beneficiary)` with the fixed bond amount.
+4. Transfer the ERC-8004 NFT to `beneficiary`.
+5. Refund any excess ETH to the sponsor.
+6. Emit `SponsoredOnboarded`.
+
+This keeps the final ERC-8004 identity user-owned while allowing a third party to sponsor the launch transaction and bond principal.
+
+### x402 Funding Pattern (Informative)
+
+x402 is not part of the core SRP vault interface. In the current Syntrophic implementation, x402 is an off-chain payment rail used to fund sponsored onboarding and return a proof bundle containing:
+
+- `quote_id`
+- `payment_ref`
+- `agent_id`
+- `tx_hash`
+- `verification_url`
+- `verification_line`
+
+The recommended architecture is:
+
+1. Create a quote off-chain.
+2. Complete payment through an x402-capable client or helper.
+3. Execute sponsored Base onboarding on-chain.
+4. Return a proof bundle for downstream verification.
+
+This keeps the trust primitive on-chain while allowing flexible payment UX and agent-friendly operator handoff.
 
 ### Protocol Parameters
 
@@ -312,7 +397,10 @@ Current reference implementation is available in this repository:
 
 - Vault: `protocol/src/SRPVault.sol`
 - Adapter: `protocol/src/adapters/ERC8004RegistryAdapter.sol`
-- Tests: `protocol/test/SRPVault.t.sol`, `protocol/test/ERC8004RegistryAdapter.t.sol`
+- Atomic onboarder: `protocol/src/SyntrophicOnboarder.sol`
+- Sponsored onboarder: `protocol/src/SyntrophicSponsoredOnboarder.sol`
+- Tests: `protocol/test/SRPVault.t.sol`, `protocol/test/ERC8004RegistryAdapter.t.sol`, `protocol/test/SyntrophicSponsoredOnboarder.t.sol`
+- Operator helper: `frontend/scripts/syntrophic-launch.mjs`
 
 ## Deployment and Verification (Informative)
 
@@ -323,15 +411,19 @@ Live Base mainnet verification artifacts and transaction links are documented in
 Reference addresses for the live deployment described there:
 
 - ERC-8004 Registry: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`
-- ERC8004RegistryAdapter: `0x63DCE10906BB3D3C8280A3fa578594D261C4b804`
-- SRPVault: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
+- ERC8004RegistryAdapter V2: `0x2ADF396943421a70088d74A8281852344606D668`
+- SRPVault V2: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
+- SyntrophicOnboarder: `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4`
+- SyntrophicSponsoredOnboarder: `0x7e29c63E8e30Fa104B448796dcb6f1355c3C0485`
+- Legacy V1 vault (agent `#222` compatibility path): `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
 
 This report includes:
 
 1. Deployment transaction hashes.
 2. First live `bond(32055)` transaction.
 3. ERC-8004 metadata backfill transactions.
-4. UI and CLI instructions to verify all on-chain state.
+4. Sponsored onboarding and verification artifacts.
+5. UI and CLI instructions to verify all on-chain state.
 
 ## Data Interpretation Guide (Informative)
 

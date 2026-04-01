@@ -16,7 +16,7 @@ The fastest safe path is:
 4. implement IPFS validation/publish path
 5. implement proof verification and status reads
 6. implement web flow
-7. implement OpenClaw/MCP wrapper
+7. implement OpenClaw/public skill wrapper
 
 ---
 

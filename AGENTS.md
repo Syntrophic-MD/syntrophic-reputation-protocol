@@ -1,74 +1,94 @@
-# AGENTS.md - Syntrophic Evaluation Guide
+# AGENTS.md - Syntrophic Agent Operations Guide
 
-This file is for autonomous evaluators and human judges reviewing this repository.
+This file is for coding agents and automation working inside this repository.
 
-## One-Line Thesis
+## Mission
 
-Syntrophic extends ERC-8004 identity with a bonded trust layer and ROFL-validated attestations so agents can signal credibility from day zero, with portable on-chain metadata any app can verify.
+Syntrophic extends ERC-8004 identity with a bonded trust layer and sponsored onboarding flow so agents can become verifiable from day zero on Base.
 
-## What Is Implemented
+## Repo Layout
 
-- Live Base mainnet deployment (V2 — Sprint 0):
-  - `ERC8004RegistryAdapter` V2: `0x2ADF396943421a70088d74A8281852344606D668`
-  - `SRPVault` V2: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
-  - `SyntrophicOnboarder`: `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4`
-  - Legacy V1 vault (agent #222): `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
-- Working contract stack in `protocol/`:
-  - `SRPVault` (bond/bondFor/bondStrict/updateScore/requestUnstake/executeSlash/withdraw)
-  - `ERC8004RegistryAdapter` (syncs `syntrophic.*` metadata keys + syncBondMetadata backfill)
-  - `SyntrophicOnboarder` (atomic register+bond in one transaction)
-- Working frontend in `frontend/`:
-  - explorer experience for Syntrophic trust context
+- `protocol/` — Foundry contracts, scripts, and tests
+- `frontend/` — Next.js explorer, onboarding demo UI, public `skill.md`
+- `docs/` — protocol draft, reports, demo scripts, threat model
+- `scripts/` — repo-level setup, validation, and verification helpers
+- `agent-logs/` — hackathon/autonomous operation evidence
 
-## Judge Fast-Path (3-5 Minutes)
+## Canonical User-Facing Docs
 
-1. Read [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md) for deployment tx hashes.
-2. Confirm metadata on Base:
+- Public product overview: `README.md`
+- Evaluator / hackathon submission: `PL_GENESIS_SUBMISSION.md`
+- Public agent skill: `frontend/public/skill.md`
+- ERC draft: `docs/ERC-Syntrophic-Draft.md`
+
+Do not recreate a second root-level `SKILL.md`. The public skill source of truth is `frontend/public/skill.md`, served at `https://syntrophic.md/skill.md`.
+
+## Current Live Base Mainnet Stack
+
+- ERC-8004 Registry: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`
+- ERC8004RegistryAdapter V2: `0x2ADF396943421a70088d74A8281852344606D668`
+- SRPVault V2: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
+- SyntrophicOnboarder: `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4`
+- SyntrophicSponsoredOnboarder: `0x7e29c63E8e30Fa104B448796dcb6f1355c3C0485`
+- Legacy V1 vault for agent `#222`: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
+
+## Current Product Surface
+
+1. Base-native bonding and metadata sync
+2. Sponsored onboarding for new ERC-8004 agents
+3. x402-gated launch route and helper flow
+4. Explorer UI for bonded trust context
+5. Public skill-based onboarding entrypoint for agents
+
+## Important Contract Semantics
+
+- `SRPVault` is the core trust primitive.
+- `bondFor(agentId, beneficiary)` is the sponsored/factory bonding path.
+- `bondStrict(agentId)` requires metadata write authorization up front.
+- `ERC8004RegistryAdapter` writes canonical `syntrophic.*` metadata and supports `syncBondMetadata`.
+- `SyntrophicSponsoredOnboarder.onboardFor(...)` is the current one-transaction sponsored register + bond flow.
+
+## Frontend / Onboarding Notes
+
+- `frontend/public/skill.md` is the public onboarding instruction file.
+- `/onboard` is the x402 demo/operator page, not the canonical fully autonomous UX.
+- Browsers can reliably create quotes, but paid launch is designed for an x402-capable helper or agent runtime.
+- `frontend/scripts/syntrophic-launch.mjs` is the main helper CLI.
+
+## Root Commands
 
 ```bash
-cast call 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432 "getMetadata(uint256,string)(bytes)" 32055 "syntrophic.status" --rpc-url https://mainnet.base.org
-cast call 0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248 "isBonded(uint256)(bool)" 32055 --rpc-url https://mainnet.base.org
-
-# Verify V2 vault is live
-cast call 0xFdB160B2B2f2e6189895398563D907fD8239d4e3 "BOND_AMOUNT()(uint256)" --rpc-url https://mainnet.base.org
+npm run setup:demo
+npm run validate
+npm test
+npm run build
+npm run verify:all
 ```
 
-3. Run protocol tests:
+Current local expectation:
+- `npm test` => `41 passed, 0 failed`
 
-```bash
-cd protocol
-forge test --offline
-```
+## Working Rules
 
-Expected local result: `32 passed, 0 failed`
+- Preserve the public skill URL contract: `https://syntrophic.md/skill.md`
+- Prefer Base-first assumptions unless explicitly doing future-scope planning
+- Keep evaluator-facing copy out of `AGENTS.md`
+- Put public narrative in `README.md`
+- Put hackathon/judge framing in `PL_GENESIS_SUBMISSION.md`
+- Keep secrets out of git
 
-4. Check agent logs in /agent-logs folder:
-These logs demonstrates autonomous agent behavior including infrastructure management, security practices, and adaptive identity management as required by Protocol Labs "Let the Agent Cook" track criteria.
+## Known Constraints
 
-## Architecture Summary
+- ROFL attestation authority is still single-signer
+- Bond amount is hackathon-tuned
+- x402 flow is implemented but still best demonstrated with a helper/runtime, not a plain browser
+- Explorer filtering still depends partly on available indexer behavior
 
-### Trust Primitive
-- **Economic stake**: owner of an ERC-8004 `agentId` posts a bond.
-- **ROFL validation path**: score/slash state transitions require EIP-712 signatures from configured `roflSigner`.
-- **Portable trust state**: adapter writes canonical `syntrophic.*` metadata into ERC-8004.
+## Best References Before Editing
 
-### Key Contract Parameters (Current)
-- `BOND_AMOUNT = 0.00001 ETH`
-- `SLASH_THRESHOLD = 51`
-- `COOLDOWN_SECONDS = 30 days`
-- `STANDARD_WINDOW_BLOCKS = 300`
-- `NEW_USER_WINDOW_BLOCKS = 1800`
-
-## Known Limits (Transparent)
-
-- ROFL attestation authority is single-signer in this version.
-- Bond size is hackathon-tuned, not production-calibrated.
-- Explorer bonded filtering currently depends on available indexer metadata behavior.
-
-## Canonical References
-
-- [README.md](README.md)
-- [docs/ERC-Syntrophic-Draft.md](docs/ERC-Syntrophic-Draft.md)
-- [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md)
-- [protocol/README.md](protocol/README.md)
-- [frontend/README.md](frontend/README.md)
+- `README.md`
+- `PL_GENESIS_SUBMISSION.md`
+- `docs/ERC-Syntrophic-Draft.md`
+- `docs/SRP_Base_Mainnet_Demo_Report.md`
+- `docs/THREAT_MODEL.md`
+- `frontend/public/skill.md`

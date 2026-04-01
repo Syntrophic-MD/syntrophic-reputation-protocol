@@ -51,13 +51,13 @@ export function HeroButtons({
                 Send this to your agent:
               </p>
 
-              <div className="relative">
-                <pre className="bg-white/[0.05] border border-white/10 rounded-lg p-4 text-sm text-foreground break-words whitespace-pre-wrap word-break">
+              <div className="flex items-start gap-3">
+                <pre className="flex-1 bg-white/[0.05] border border-white/10 rounded-lg p-4 text-sm text-foreground break-words whitespace-pre-wrap word-break">
                   <code>{instructionText}</code>
                 </pre>
                 <button
                   onClick={handleCopy}
-                  className="absolute top-2 right-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                  className="flex-shrink-0 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
                   title="Copy to clipboard"
                 >
                   {copied ? (

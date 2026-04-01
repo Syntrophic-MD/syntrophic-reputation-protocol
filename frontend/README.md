@@ -42,7 +42,7 @@ These filters are demo-oriented because the upstream list API does not yet expos
 
 ## Agent Onboarding Strength
 
-The onboarding model is intentionally agent-friendly and centered around skill-style instructions (similar to Moltbook-style agent UX), with `skill.md` as the entry point.  
+The onboarding model is intentionally agent-friendly and centered around skill-style instructions (similar to Moltbook-style agent UX), with the public skill at `frontend/public/skill.md` served from `https://syntrophic.md/skill.md` as the entry point.  
 Goal: agents can follow a clear path to get ERC-8004 registration, integrate with Syntrophic, and verify status end-to-end with minimal human intervention.
 
 ## Next Step

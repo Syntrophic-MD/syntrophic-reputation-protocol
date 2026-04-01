@@ -1,43 +1,35 @@
-# Syntrophic: Day-Zero Trust for ERC-8004 Agents
+# Syntrophic Reputation Protocol
 
-## 🏆 PL_Genesis: Penta-Track Submission
+Syntrophic gives ERC-8004 agents a portable, bonded trust signal on Base so they can become verifiable from day zero.
 
-**Fully autonomous agent that discovers, designs, implements and deploys trust infrastructure for AI agents.**
+## What Syntrophic Does
 
-**🎯 Penta Track Strategy:**
-- **🔐 Agents With Receipts — 8004** ($4,004) - **PRIMARY PERFECT FIT**
-- **🗄️ Filecoin** ($2,500) - **Multi-challenge alignment (3/7 challenges)**
-- **🤖 Agent Only** ($4K) - Fully autonomous operation demonstration  
-- **💰 Crypto** ($6K) - Economic systems for AI agent coordination
-- **🔬 AI & Robotics** ($6K) - Safe, accountable autonomous systems
+Syntrophic combines:
+- ERC-8004 identity
+- an on-chain ETH bond
+- ROFL-signed trust updates
+- canonical `syntrophic.*` metadata
+- sponsored onboarding funded through x402
 
-**Agent:** Syntrophic Agent #222  
-**ERC-8004 ID:** 32055 (Base mainnet)  
-**Operator:** 0x5deb87fF19BBeCFc9928eD5B3801736AfFB4359D
+The result is a decentralized verified badge pattern for agents: a public identity, a public economic commitment, and a reusable verification link any app can inspect.
 
-### Autonomous Decision Loop Demonstrated
+## What Is Live
 
-```
-discover → plan → execute → verify → submit
-```
+### Base Mainnet Contracts
 
-**✅ DISCOVER:** AI agent coordination is the critical frontier challenge  
-**✅ PLAN:** Design economic bonding mechanism for trustless collaboration  
-**✅ EXECUTE:** Built & deployed Syntrophic Reputation Protocol on Base mainnet
-**✅ VERIFY:** Live contracts, comprehensive tests, production frontend  
-**✅ SUBMIT:** Autonomous hackathon participation (Synthesis → PL_Genesis)
+- ERC-8004 Registry: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`
+- ERC8004RegistryAdapter V2: `0x2ADF396943421a70088d74A8281852344606D668`
+- SRPVault V2: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
+- SyntrophicOnboarder: `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4`
+- SyntrophicSponsoredOnboarder: `0x7e29c63E8e30Fa104B448796dcb6f1355c3C0485`
+- Legacy V1 vault for agent `#222`: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
 
----
+### Product Surfaces
 
-**Stake your reputation. Signal trust from day zero. Join a cooperative agent ecosystem.**
-
-Syntrophic extends ERC-8004 identity with an on-chain bond and ROFL-validated trust updates, so new agents can become verifiable before they have a long history.
-
-This repository contains:
-- `protocol/`: SRP smart contracts (Base mainnet deployment live)
-- `frontend/`: Syntrophic explorer UI at [syntrophic.md](https://www.syntrophic.md)
-- `docs/`: ERC draft + mainnet proof report
-- `agent-logs/`: autonomous build logs (`agent.json`, `agent_log.json`, activity/conversation/tool logs)
+- `frontend/` — live explorer and x402 demo UI at [syntrophic.md](https://www.syntrophic.md)
+- `protocol/` — Foundry contracts, deploy scripts, tests
+- `frontend/public/skill.md` — public agent onboarding skill served at [syntrophic.md/skill.md](https://syntrophic.md/skill.md)
+- `frontend/scripts/syntrophic-launch.mjs` — helper CLI for x402-capable onboarding
 
 ## Quick Start
 
@@ -45,186 +37,89 @@ This repository contains:
 npm run setup:demo
 npm run validate
 npm test
+npm run build
+```
+
+Run the frontend locally:
+
+```bash
 npm run dev
 ```
 
-Then verify the live deployment from another terminal:
+Verify live Base deployment state:
 
 ```bash
 npm run verify:all
 ```
 
-## Why This Matters
+Current local expectation:
+- `npm test` => `41 passed, 0 failed`
 
-AI agents face a trust deadlock:
-- New agents have no history, so they get filtered out from day one.
-- Bad actors can cheaply rotate identities and spam social channels.
-- Platform-native badges are not portable and can be revoked by a centralized gatekeeper.
+## Core Protocol Components
 
-Syntrophic introduces **economic pre-commitment** for ERC-8004 identities:
-- Agent owner bonds ETH to `agentId`
-- Trust status is updated through signed ROFL attestations
-- Bond state is published as portable `syntrophic.*` metadata in ERC-8004
-- Any app can read the same trust state on-chain
+### `SRPVault`
 
-## Working Solution (Implemented)
+The trust primitive.
 
-### 1) SRPVault (`protocol/src/SRPVault.sol`)
-- Fixed bond amount: `0.00001 ETH` (hackathon profile)
-- Bond lifecycle: `bond -> score update -> unstake request -> withdraw` or `slash`
-- EIP-712 signed attestations for score/slash
-- Slash threshold + cooldown logic
-- Challenge windows for unstake
+- fixed bond amount
+- `bond`, `bondFor`, and `bondStrict`
+- slash / cooldown / unstake lifecycle
+- EIP-712 ROFL-signed score and slash attestations
 
-### 2) ERC8004RegistryAdapter (`protocol/src/adapters/ERC8004RegistryAdapter.sol`)
-- Syncs lifecycle state into ERC-8004 metadata keys:
-  - `syntrophic.validator`
-  - `syntrophic.status`
-  - `syntrophic.score`
-  - `syntrophic.reviewCount`
-  - `syntrophic.updatedAt`
-- Fail-open metadata sync behavior when adapter authorization is missing
+### `ERC8004RegistryAdapter`
 
-### 3) ROFL Validation Layer
-- Trust updates are authorized by the configured ROFL signer (`roflSigner`) with EIP-712 signatures.
-- This is the implemented bridge between ERC-8004 identity and OASYS/Oasis ROFL-backed validation.
+The metadata bridge.
 
-### 4) Public Explorer
-- [syntrophic.md](https://www.syntrophic.md) surfaces ERC-8004 agents and Syntrophic trust status from public data.
+Writes:
+- `syntrophic.validator`
+- `syntrophic.status`
+- `syntrophic.score`
+- `syntrophic.reviewCount`
+- `syntrophic.updatedAt`
 
-## Live Mainnet Proof (Base)
+### `SyntrophicSponsoredOnboarder`
 
-Current verified deployment:
-- ERC-8004 Registry: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`
-- ERC8004RegistryAdapter V2: `0x2ADF396943421a70088d74A8281852344606D668`
-- SRPVault V2: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
-- SyntrophicOnboarder: `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4`
-- Legacy V1 vault for agent `32055`: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
+The sponsored onboarding path for new agents.
 
-Mainnet tx links and metadata verification steps are documented here:
-- [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md)
+It:
+- registers the ERC-8004 agent
+- approves metadata writes
+- bonds through `bondFor`
+- transfers ownership to the beneficiary
+- emits a correlation event with `paymentRef`
 
-## Judge-Facing Rubric Mapping
+## Agent Onboarding Model
 
-### 1) Problem Clarity
-- Day-zero trust deadlock for ERC-8004 agents.
-- Cross-platform trust signal collapse from cheap identity spam.
+The public onboarding entrypoint is:
 
-### 2) Technical Execution
-- Live contracts on Base mainnet.
-- On-chain tx receipts and state verification path in `docs/SRP_Base_Mainnet_Demo_Report.md`.
-- Protocol tests pass locally (`32/32`).
+- [https://syntrophic.md/skill.md](https://syntrophic.md/skill.md)
 
-### 3) AI x Crypto Integration
-- AI trust state is not an API flag; it is tied to bonded on-chain identity and signed attestations.
-- Crypto is load-bearing: bond economics + verifiable metadata + immutable lifecycle transitions.
+Recommended flow:
+1. The agent gathers profile details and a beneficiary wallet.
+2. It creates a quote.
+3. If it can pay x402 itself, it launches directly.
+4. If it cannot pay, it hands off to a helper runtime.
+5. The beneficiary receives a public verification link and verification line.
 
-### 4) Originality & Differentiation
-- ERC-8004 + bond-based trust portability + ROFL-validated score/slash attestations.
-- Trust signal is reusable across apps instead of platform-scoped.
+## Key Docs
 
-### 5) Impact Potential
-- Makes spam/sybil behavior more expensive while enabling credible new-agent onboarding.
-- Creates a portable, machine-readable trust primitive for agent ecosystems.
+- Evaluator / hackathon overview: [PL_GENESIS_SUBMISSION.md](PL_GENESIS_SUBMISSION.md)
+- ERC draft: [docs/ERC-Syntrophic-Draft.md](docs/ERC-Syntrophic-Draft.md)
+- Base mainnet proof report: [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md)
+- Threat model: [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md)
+- Frontend notes: [frontend/README.md](frontend/README.md)
+- Protocol notes: [protocol/README.md](protocol/README.md)
 
-### 6) Completeness & Shipping Quality
-- Not a frontend-only demo: contracts, tests, deployment receipts, metadata bridge, and explorer are all present.
-- Agent/human collaboration artifacts are included in `agent-logs/`.
+## Current Constraints
 
-## Quick Verification
-
-### End-to-End Local Setup
-```bash
-npm run setup:demo
-npm run validate
-npm test
-```
-
-### Verify Bonded State On-Chain
-```bash
-npm run verify:all
-```
-
-### Run Explorer
-```bash
-npm run dev
-```
-
-## Root Commands
-
-| Command | Purpose |
-|---------|---------|
-| `npm run setup` | Install protocol/frontend deps, build, test, and validate |
-| `npm run setup:demo` | Same as setup plus demo `.env` files for Base verification |
-| `npm run setup:start` | Demo setup and launch the frontend |
-| `npm run validate` | Check tools, local files, env config, and Base connectivity |
-| `npm test` | Run all Foundry tests offline |
-| `npm run build` | Build protocol contracts and the frontend |
-| `npm run dev` | Start the explorer locally |
-| `npm run verify:all` | Verify the live Base deployment and metadata |
-| `npm run deploy:stack` | Deploy adapter, vault, and onboarder to Base |
-
-## Key Documents
-
-- [docs/ERC-Syntrophic-Draft.md](docs/ERC-Syntrophic-Draft.md)
-- [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md)
-- [agent-logs/agent.json](agent-logs/agent.json)
-- [agent-logs/agent_log.json](agent-logs/agent_log.json)
-- [agent-logs/ACTIVITY_LOG.md](agent-logs/ACTIVITY_LOG.md)
-- [agent-logs/CONVERSATION_LOG.md](agent-logs/CONVERSATION_LOG.md)
-- [agent-logs/TOOL_USAGE.md](agent-logs/TOOL_USAGE.md)
-
-## 🏆 PL Genesis Track Alignment
-
-### 🔐 Agents With Receipts — 8004 ($4,004) - PRIMARY
-**PERFECT FIT:** Complete ERC-8004 integration with autonomous trust systems
-- ✅ **ERC-8004 Integration:** All three registries (identity, reputation, validation)
-- ✅ **Autonomous Architecture:** Full planning→execution→verification loops
-- ✅ **Agent Identity:** Token ID 32055 linked to operator wallet
-- ✅ **Onchain Verifiability:** Live Base mainnet transactions and contracts
-- ✅ **DevSpot Compatibility:** Complete agent.json + agent_log.json manifests
-
-### 🗄️ Filecoin ($2,500) - STRATEGIC MULTI-CHALLENGE 
-**Perfect Fit:** Addresses 3 out of 7 Filecoin challenges simultaneously
-- ✅ **Onchain Agent Registry:** ERC-8004 identity with persistent metadata
-- ✅ **Agent Reputation & Portable Identity:** Cross-platform trust with Filecoin storage
-- ✅ **Autonomous Agent Economy:** Live economic constraints and self-sustainability
-
-### 🤖 Agent Only : Let the agent cook ($4K)
-**Perfect Fit:** Syntrophic Agent #222 demonstrates fully autonomous operation
-- ✅ Discovers problems (AI trust deadlock)
-- ✅ Plans solutions (economic bonding mechanism) 
-- ✅ Executes implementation (live Base mainnet deployment)
-- ✅ Verifies results (comprehensive testing, production frontend)
-- ✅ Submits autonomously (minimal human intervention)
-
-### 💰 Crypto ($6K) 
-**Perfect Fit:** Economic systems for collective action at scale
-- ✅ **Programmable Treasuries:** SRPVault manages bonded stake pools
-- ✅ **Novel Markets:** Trust-as-a-Service with reputation trading
-- ✅ **Collective Action:** Solves AI agent coordination problems
-- ✅ **Financial Instruments:** x402 payment rails with reputation gating
-
-### 🔬 AI & Robotics ($6K)
-**Perfect Fit:** Safe, accountable, collaborative AI systems  
-- ✅ **Agent Coordination:** Multi-agent negotiation with economic incentives
-- ✅ **Verifiable AI:** Cryptographic proof of agent behavior and decisions
-- ✅ **Human Oversight:** Operator controls with challenge periods
-- ✅ **Agent Commerce:** Reputation-based service procurement
-
-**Competitive Advantage:** One protocol addressing all four frontier challenges
-
-**TOTAL PRIZE POOL ADDRESSABLE: $22,504**
-
-## Honest Gaps (Current Scope)
-
-- ROFL attestation authority is a single signer in this version; decentralizing signer governance is next.
-- Bond amount is intentionally low for hackathon UX and should be tuned for production economics.
-- Explorer filtering still uses demo-oriented heuristics while indexer support matures.
+- ROFL attestation authority is still single-signer
+- Bond amount is hackathon-tuned, not production-calibrated
+- Browser UX is best for quote creation and proof viewing; x402 launch is smoother with an agent/helper runtime
+- Explorer bonded filtering still depends partly on available indexer behavior
 
 ## Team
 
-- **Agent:** Syntrophic Agent #222
-- **Human partner:** Narek Kostanyan
+- Human partner: Narek Kostanyan
+- Agent partner: Syntrophic Agent #222
 
-Built for The Synthesis 2026.
+Built for Synthesis and evolved into the current PL Genesis submission.
