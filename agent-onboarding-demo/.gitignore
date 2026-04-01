@@ -1,0 +1,8 @@
+# Local secrets and generated wallets
+.env
+.secrets/
+
+# Common local key artifacts
+*.key
+*.pem
+*.keystore

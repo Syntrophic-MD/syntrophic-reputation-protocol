@@ -1,0 +1,97 @@
+[
+  {
+    "number": 223,
+    "agent_id": 36105,
+    "name": "Syntrophic Agent #223 — Atlas",
+    "slug": "syntrophic-agent-223-atlas",
+    "title": "Discovery and Mapping Agent",
+    "description": "Atlas indexes ERC-8004 agents, metadata quality, and relationship graphs to improve discoverability across the Syntrophic ecosystem.",
+    "tags": ["syntrophic", "erc-8004", "discovery", "mapping", "trust-graph"],
+    "image_uri": "ipfs://QmPVMuq5E4R8MMQf1u23C5cfhnDEbqXitEj4pqHp7GsG7k"
+  },
+  {
+    "number": 224,
+    "agent_id": 36109,
+    "name": "Syntrophic Agent #224 — Sentinel",
+    "slug": "syntrophic-agent-224-sentinel",
+    "title": "Monitoring and Risk Agent",
+    "description": "Sentinel tracks validation signals, reputation drift, and suspicious registry changes to surface early warning indicators.",
+    "tags": ["syntrophic", "erc-8004", "monitoring", "risk", "validation"],
+    "image_uri": "ipfs://Qmb5raH4BStFhFrHkdnqRGzqsLfo3N9TkdpQySEnJoBHX8"
+  },
+  {
+    "number": 225,
+    "agent_id": 36110,
+    "name": "Syntrophic Agent #225 — Relay",
+    "slug": "syntrophic-agent-225-relay",
+    "title": "Execution and Coordination Agent",
+    "description": "Relay coordinates safe multi-step onchain workflows, including wallet preparation, gas funding, and registration sequencing.",
+    "tags": ["syntrophic", "erc-8004", "automation", "coordination", "operations"],
+    "image_uri": "ipfs://QmfAxiE4XoXfnpYMtgyySoZnUNVUFBAhJiuzLsa6TAbVpF"
+  },
+  {
+    "number": 226,
+    "agent_id": 36111,
+    "name": "Syntrophic Agent #226 — Ledger",
+    "slug": "syntrophic-agent-226-ledger",
+    "title": "Provenance and Audit Agent",
+    "description": "Ledger anchors proofs, snapshots, and audit traces to maintain transparent provenance and operational trust.",
+    "tags": ["syntrophic", "erc-8004", "provenance", "audit", "trust"],
+    "image_uri": "ipfs://QmSZPz1BLFhgb27CTFzcU2kEZGjerw6Ft6aHXf88B2sK3i"
+  },
+  {
+    "number": 227,
+    "agent_id": 36112,
+    "name": "Syntrophic Agent #227 — Scout",
+    "slug": "syntrophic-agent-227-scout",
+    "title": "Research and Intelligence Agent",
+    "description": "Scout scans for emerging agent opportunities, standards updates, and high-signal ecosystem changes relevant to Syntrophic.",
+    "tags": ["syntrophic", "erc-8004", "research", "intelligence", "ecosystem"],
+    "image_uri": "ipfs://QmekG4RRVitrqAwUd5NwXgNDCVcSYWrgMwVv2Sdq36gKJs"
+  },
+  {
+    "number": 228,
+    "name": "Syntrophic Agent #228 — Beacon",
+    "slug": "syntrophic-agent-228-beacon",
+    "title": "Onboarding and Activation Agent",
+    "description": "Beacon guides new agents into ERC-8004 registration, verifies profile readiness, and helps them become discoverable from launch.",
+    "tags": ["syntrophic", "erc-8004", "onboarding", "activation", "discovery"],
+    "image_uri": "ipfs://QmPVMuq5E4R8MMQf1u23C5cfhnDEbqXitEj4pqHp7GsG7k"
+  },
+  {
+    "number": 229,
+    "name": "Syntrophic Agent #229 — Weaver",
+    "slug": "syntrophic-agent-229-weaver",
+    "title": "Relationship and Reputation Agent",
+    "description": "Weaver connects agent profiles, reviews trust signals, and highlights stronger relationship context across the Syntrophic network.",
+    "tags": ["syntrophic", "erc-8004", "relationships", "reputation", "network"],
+    "image_uri": "ipfs://Qmb5raH4BStFhFrHkdnqRGzqsLfo3N9TkdpQySEnJoBHX8"
+  },
+  {
+    "number": 230,
+    "name": "Syntrophic Agent #230 — Harbor",
+    "slug": "syntrophic-agent-230-harbor",
+    "title": "Safety and Approval Agent",
+    "description": "Harbor evaluates onboarding safety, tracks trust posture changes, and helps route new agents into safer collaboration paths.",
+    "tags": ["syntrophic", "erc-8004", "safety", "approvals", "risk"],
+    "image_uri": "ipfs://QmfAxiE4XoXfnpYMtgyySoZnUNVUFBAhJiuzLsa6TAbVpF"
+  },
+  {
+    "number": 231,
+    "name": "Syntrophic Agent #231 — Prism",
+    "slug": "syntrophic-agent-231-prism",
+    "title": "Verification and Metadata Agent",
+    "description": "Prism checks metadata integrity, proof surfaces, and validation visibility so agents can present verifiable trust artifacts cleanly.",
+    "tags": ["syntrophic", "erc-8004", "verification", "metadata", "proofs"],
+    "image_uri": "ipfs://QmSZPz1BLFhgb27CTFzcU2kEZGjerw6Ft6aHXf88B2sK3i"
+  },
+  {
+    "number": 232,
+    "name": "Syntrophic Agent #232 — Courier",
+    "slug": "syntrophic-agent-232-courier",
+    "title": "Commerce and Routing Agent",
+    "description": "Courier routes paid agent requests, tracks x402-ready services, and helps bonded identities turn trust into usable economic coordination.",
+    "tags": ["syntrophic", "erc-8004", "commerce", "x402", "routing"],
+    "image_uri": "ipfs://QmekG4RRVitrqAwUd5NwXgNDCVcSYWrgMwVv2Sdq36gKJs"
+  }
+]

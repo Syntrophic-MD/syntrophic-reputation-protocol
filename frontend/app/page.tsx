@@ -157,8 +157,8 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-3 mt-1">
-                <Link href="/explore" className="btn-primary flex items-center gap-2 text-base px-8 py-3">
-                  Explore Agents <ArrowRight size={16} />
+                <Link href="/onboard" className="btn-primary flex items-center gap-2 text-base px-8 py-3">
+                  Launch Agent <ArrowRight size={16} />
                 </Link>
                 <HeroButtons />
               </div>

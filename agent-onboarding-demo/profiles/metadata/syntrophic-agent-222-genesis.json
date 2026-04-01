@@ -1,0 +1,42 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "🧬 Syntrophic Agent #222 — Frontier Tower 🧑‍🚀",
+  "description": "An AI familiar that coordinates and supports the Syntrophic ecosystem with practical planning, execution, and trust-aware collaboration.",
+  "image": "ipfs://QmbmJq7xK46GWng1tBehtLQs7e38ivQDqnBy3AFAoDHFqB",
+  "image_url": "ipfs://QmbmJq7xK46GWng1tBehtLQs7e38ivQDqnBy3AFAoDHFqB",
+  "external_url": "https://www.syntrophic.md",
+  "active": true,
+  "services": [],
+  "registrations": [
+    {
+      "agentId": 32055,
+      "agentRegistry": "eip155:8453:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+    }
+  ],
+  "supportedTrust": [
+    "reputation",
+    "crypto-economic"
+  ],
+  "attributes": [
+    {
+      "trait_type": "Brand",
+      "value": "Syntrophic"
+    },
+    {
+      "trait_type": "Agent Number",
+      "value": 222
+    },
+    {
+      "trait_type": "Role",
+      "value": "Foundational Coordination Agent"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "bioluminescent cyber-organic"
+    },
+    {
+      "trait_type": "Tags",
+      "value": "syntrophic, erc-8004, foundation, coordination, genesis"
+    }
+  ]
+}

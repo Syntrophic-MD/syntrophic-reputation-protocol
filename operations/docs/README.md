@@ -6,6 +6,11 @@ Core foundation for future productization of onboarding workflows:
 - [Workflow Operation Catalog](Workflow_Operation_Catalog.md)
 - [API, MCP, CLI Contracts Draft](API_MCP_CLI_Contracts_Draft.md)
 - [Roadmap and Open Gaps](Roadmap_and_Open_Gaps.md)
+- [MVP Sponsored Onboarding PRD](MVP_Sponsored_Onboarding_PRD.md)
+- [MVP Sponsored Onboarding Contract Spec](MVP_Sponsored_Onboarding_Contract_Spec.md)
+- [MVP Sponsored Onboarding API and Job Spec](MVP_Sponsored_Onboarding_API_Job_Spec.md)
+- [MVP Sponsored Onboarding Agent Integration Spec](MVP_Sponsored_Onboarding_Agent_Integration_Spec.md)
+- [MVP Sponsored Onboarding Build Backlog](MVP_Sponsored_Onboarding_Build_Backlog.md)
 
 Operational docs:
 

@@ -34,13 +34,16 @@ contract SyntrophicOnboarder {
         // 1. Register — mints NFT to this contract
         agentId = registry.register(agentURI);
 
-        // 2. Bond — this contract is owner, staker is set to the actual caller
+        // 2. Approve the live adapter so it can write syntrophic.* metadata during bond.
+        registry.approve(address(vault.registryAdapter()), agentId);
+
+        // 3. Bond — this contract is owner, staker is set to the actual caller
         vault.bondFor{value: bondAmount}(agentId, msg.sender);
 
-        // 3. Transfer NFT ownership to the caller
+        // 4. Transfer NFT ownership to the caller
         registry.transferFrom(address(this), msg.sender, agentId);
 
-        // 4. Refund excess ETH
+        // 5. Refund excess ETH
         uint256 excess = msg.value - bondAmount;
         if (excess > 0) {
             (bool sent,) = payable(msg.sender).call{value: excess}("");

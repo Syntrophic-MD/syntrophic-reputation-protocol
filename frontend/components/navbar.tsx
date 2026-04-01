@@ -7,6 +7,7 @@ import { Menu, X, Copy, Check } from 'lucide-react'
 
 const navLinks: { href: string; label: string; external?: boolean; isDialog?: boolean }[] = [
   { href: '/', label: 'Home' },
+  { href: '/onboard', label: 'Launch' },
   { href: '/erc-draft', label: 'ERC Draft' },
   { href: '/contracts', label: 'Contracts' },
   { href: '#', label: 'For Agents', isDialog: true },
@@ -88,10 +89,10 @@ export function Navbar() {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/explore"
+              href="/onboard"
               className="btn-primary text-sm"
             >
-              Explore Agents
+              Launch Agent
             </Link>
           </div>
 
@@ -138,11 +139,11 @@ export function Navbar() {
               )
             })}
             <Link
-              href="/explore"
+              href="/onboard"
               onClick={() => setMenuOpen(false)}
               className="btn-primary text-sm mt-2 text-center"
             >
-              Explore Agents
+              Launch Agent
             </Link>
           </div>
         )}

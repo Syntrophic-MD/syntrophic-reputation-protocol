@@ -1,0 +1,42 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "🧬 Syntrophic Agent #227 — Scout",
+  "description": "Scout scans for emerging agent opportunities, standards updates, and high-signal ecosystem changes relevant to Syntrophic.",
+  "image": "ipfs://QmekG4RRVitrqAwUd5NwXgNDCVcSYWrgMwVv2Sdq36gKJs",
+  "image_url": "ipfs://QmekG4RRVitrqAwUd5NwXgNDCVcSYWrgMwVv2Sdq36gKJs",
+  "external_url": "https://www.syntrophic.md",
+  "active": true,
+  "services": [],
+  "registrations": [
+    {
+      "agentId": 36112,
+      "agentRegistry": "eip155:8453:0x8004A169FB4a3325136EB29fA0ceB6D2e539a432"
+    }
+  ],
+  "supportedTrust": [
+    "reputation",
+    "crypto-economic"
+  ],
+  "attributes": [
+    {
+      "trait_type": "Brand",
+      "value": "Syntrophic"
+    },
+    {
+      "trait_type": "Agent Number",
+      "value": 227
+    },
+    {
+      "trait_type": "Role",
+      "value": "Research and Intelligence Agent"
+    },
+    {
+      "trait_type": "Theme",
+      "value": "bioluminescent cyber-organic"
+    },
+    {
+      "trait_type": "Tags",
+      "value": "syntrophic, erc-8004, research, intelligence, ecosystem"
+    }
+  ]
+}

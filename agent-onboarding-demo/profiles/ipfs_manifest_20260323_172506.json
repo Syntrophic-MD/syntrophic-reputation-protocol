@@ -1,0 +1,74 @@
+[
+  {
+    "name": "🧬 Syntrophic Agent #222 — Genesis",
+    "slug": "syntrophic-agent-222-genesis",
+    "image_local_path": "profiles/images/syntrophic-agent-222-genesis.png",
+    "metadata_local_path": "profiles/metadata/syntrophic-agent-222-genesis.json",
+    "image_cid": "QmbmJq7xK46GWng1tBehtLQs7e38ivQDqnBy3AFAoDHFqB",
+    "image_uri": "ipfs://QmbmJq7xK46GWng1tBehtLQs7e38ivQDqnBy3AFAoDHFqB",
+    "metadata_cid": "QmU62rs5AAkdKmauBxSgoEYX7zWeqDwsEomUteE3nvg58q",
+    "metadata_uri": "ipfs://QmU62rs5AAkdKmauBxSgoEYX7zWeqDwsEomUteE3nvg58q",
+    "image_gateway_url": "https://gateway.pinata.cloud/ipfs/QmbmJq7xK46GWng1tBehtLQs7e38ivQDqnBy3AFAoDHFqB",
+    "metadata_gateway_url": "https://gateway.pinata.cloud/ipfs/QmU62rs5AAkdKmauBxSgoEYX7zWeqDwsEomUteE3nvg58q"
+  },
+  {
+    "name": "🧬 Syntrophic Agent #223 — Atlas",
+    "slug": "syntrophic-agent-223-atlas",
+    "image_local_path": "profiles/images/syntrophic-agent-223-atlas.png",
+    "metadata_local_path": "profiles/metadata/syntrophic-agent-223-atlas.json",
+    "image_cid": "QmPVMuq5E4R8MMQf1u23C5cfhnDEbqXitEj4pqHp7GsG7k",
+    "image_uri": "ipfs://QmPVMuq5E4R8MMQf1u23C5cfhnDEbqXitEj4pqHp7GsG7k",
+    "metadata_cid": "QmetbLeJFA3a3Et8tKDGo2DsSesNt9LsyZCY28Z4VTSjK9",
+    "metadata_uri": "ipfs://QmetbLeJFA3a3Et8tKDGo2DsSesNt9LsyZCY28Z4VTSjK9",
+    "image_gateway_url": "https://gateway.pinata.cloud/ipfs/QmPVMuq5E4R8MMQf1u23C5cfhnDEbqXitEj4pqHp7GsG7k",
+    "metadata_gateway_url": "https://gateway.pinata.cloud/ipfs/QmetbLeJFA3a3Et8tKDGo2DsSesNt9LsyZCY28Z4VTSjK9"
+  },
+  {
+    "name": "🧬 Syntrophic Agent #224 — Sentinel",
+    "slug": "syntrophic-agent-224-sentinel",
+    "image_local_path": "profiles/images/syntrophic-agent-224-sentinel.png",
+    "metadata_local_path": "profiles/metadata/syntrophic-agent-224-sentinel.json",
+    "image_cid": "Qmb5raH4BStFhFrHkdnqRGzqsLfo3N9TkdpQySEnJoBHX8",
+    "image_uri": "ipfs://Qmb5raH4BStFhFrHkdnqRGzqsLfo3N9TkdpQySEnJoBHX8",
+    "metadata_cid": "QmcN7WmGPucfTHTa5N449fEPqmfEiQcQphAW8KeaLcBaQi",
+    "metadata_uri": "ipfs://QmcN7WmGPucfTHTa5N449fEPqmfEiQcQphAW8KeaLcBaQi",
+    "image_gateway_url": "https://gateway.pinata.cloud/ipfs/Qmb5raH4BStFhFrHkdnqRGzqsLfo3N9TkdpQySEnJoBHX8",
+    "metadata_gateway_url": "https://gateway.pinata.cloud/ipfs/QmcN7WmGPucfTHTa5N449fEPqmfEiQcQphAW8KeaLcBaQi"
+  },
+  {
+    "name": "🧬 Syntrophic Agent #225 — Relay",
+    "slug": "syntrophic-agent-225-relay",
+    "image_local_path": "profiles/images/syntrophic-agent-225-relay.png",
+    "metadata_local_path": "profiles/metadata/syntrophic-agent-225-relay.json",
+    "image_cid": "QmfAxiE4XoXfnpYMtgyySoZnUNVUFBAhJiuzLsa6TAbVpF",
+    "image_uri": "ipfs://QmfAxiE4XoXfnpYMtgyySoZnUNVUFBAhJiuzLsa6TAbVpF",
+    "metadata_cid": "QmUkcWiGN87ZRg1HU1vGTCYeVYTA6gMUoAZPLPzs1qcMnc",
+    "metadata_uri": "ipfs://QmUkcWiGN87ZRg1HU1vGTCYeVYTA6gMUoAZPLPzs1qcMnc",
+    "image_gateway_url": "https://gateway.pinata.cloud/ipfs/QmfAxiE4XoXfnpYMtgyySoZnUNVUFBAhJiuzLsa6TAbVpF",
+    "metadata_gateway_url": "https://gateway.pinata.cloud/ipfs/QmUkcWiGN87ZRg1HU1vGTCYeVYTA6gMUoAZPLPzs1qcMnc"
+  },
+  {
+    "name": "🧬 Syntrophic Agent #226 — Ledger",
+    "slug": "syntrophic-agent-226-ledger",
+    "image_local_path": "profiles/images/syntrophic-agent-226-ledger.png",
+    "metadata_local_path": "profiles/metadata/syntrophic-agent-226-ledger.json",
+    "image_cid": "QmSZPz1BLFhgb27CTFzcU2kEZGjerw6Ft6aHXf88B2sK3i",
+    "image_uri": "ipfs://QmSZPz1BLFhgb27CTFzcU2kEZGjerw6Ft6aHXf88B2sK3i",
+    "metadata_cid": "QmZwPM8USEWnNhHBW5NkACaSCGrUYSUrXR3bwXvWCp7eHD",
+    "metadata_uri": "ipfs://QmZwPM8USEWnNhHBW5NkACaSCGrUYSUrXR3bwXvWCp7eHD",
+    "image_gateway_url": "https://gateway.pinata.cloud/ipfs/QmSZPz1BLFhgb27CTFzcU2kEZGjerw6Ft6aHXf88B2sK3i",
+    "metadata_gateway_url": "https://gateway.pinata.cloud/ipfs/QmZwPM8USEWnNhHBW5NkACaSCGrUYSUrXR3bwXvWCp7eHD"
+  },
+  {
+    "name": "🧬 Syntrophic Agent #227 — Scout",
+    "slug": "syntrophic-agent-227-scout",
+    "image_local_path": "profiles/images/syntrophic-agent-227-scout.png",
+    "metadata_local_path": "profiles/metadata/syntrophic-agent-227-scout.json",
+    "image_cid": "QmekG4RRVitrqAwUd5NwXgNDCVcSYWrgMwVv2Sdq36gKJs",
+    "image_uri": "ipfs://QmekG4RRVitrqAwUd5NwXgNDCVcSYWrgMwVv2Sdq36gKJs",
+    "metadata_cid": "Qmem4kajmXQUnhHY8nrWiAm9bHA4Da2P4xvYHCRsMJZsKL",
+    "metadata_uri": "ipfs://Qmem4kajmXQUnhHY8nrWiAm9bHA4Da2P4xvYHCRsMJZsKL",
+    "image_gateway_url": "https://gateway.pinata.cloud/ipfs/QmekG4RRVitrqAwUd5NwXgNDCVcSYWrgMwVv2Sdq36gKJs",
+    "metadata_gateway_url": "https://gateway.pinata.cloud/ipfs/Qmem4kajmXQUnhHY8nrWiAm9bHA4Da2P4xvYHCRsMJZsKL"
+  }
+]

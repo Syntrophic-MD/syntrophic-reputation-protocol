@@ -48,6 +48,81 @@ This draft standardizes payloads and behavior for future wrappers around existin
 
 ## Operation Contracts
 
+## `onboarding.quote`
+
+Request `params`:
+
+```json
+{
+  "beneficiary": "0xabc...",
+  "profile": {
+    "name": "Scout",
+    "description": "Monitors DeFi prices",
+    "services": [{"type": "mcp", "url": "https://scout.example.com/mcp"}]
+  },
+  "chain_ids": [8453]
+}
+```
+
+Result:
+
+```json
+{
+  "quote_id": "quote_01HZ...",
+  "expires_at": "2026-03-31T18:45:00Z",
+  "currency": "USDC",
+  "total_usdc": "0.18"
+}
+```
+
+## `onboarding.launch_sponsored`
+
+Request `params`:
+
+```json
+{
+  "quote_id": "quote_01HZ...",
+  "beneficiary": "0xabc...",
+  "profile": {
+    "name": "Scout",
+    "description": "Monitors DeFi prices",
+    "services": [{"type": "mcp", "url": "https://scout.example.com/mcp"}]
+  },
+  "chain_ids": [8453]
+}
+```
+
+Result:
+
+```json
+{
+  "job_id": "job_01HZ...",
+  "status": "queued"
+}
+```
+
+## `onboarding.get_status`
+
+Result:
+
+```json
+{
+  "job_id": "job_01HZ...",
+  "operation_id": "onboarding.launch_sponsored",
+  "status": "succeeded",
+  "result": {
+    "chain_results": [
+      {
+        "chain_id": 8453,
+        "agent_id": 36150,
+        "tx_hash": "0x...",
+        "bonded": true
+      }
+    ]
+  }
+}
+```
+
 ## `registry.register_batch`
 
 Request `params`:
@@ -152,6 +227,9 @@ Each MCP tool should mirror one operation ID:
 
 Example mapping:
 
+- `onboarding_quote`
+- `syntrophic_launch_bonded_agent`
+- `onboarding_get_status`
 - `registry_register_batch`
 - `registry_set_agent_uri`
 - `sbp_bond_batch`
@@ -162,6 +240,7 @@ Example mapping:
 Use one command group per domain:
 
 - `syntrophic profile ...`
+- `syntrophic onboarding ...`
 - `syntrophic registry ...`
 - `syntrophic sbp ...`
 - `syntrophic feedback ...`
@@ -196,3 +275,6 @@ Recommended codes:
 - `ONCHAIN_REVERT`
 - `INDEXER_STALE`
 - `EXTERNAL_PROVIDER_ERROR`
+- `PAYMENT_REQUIRED`
+- `QUOTE_EXPIRED`
+- `PAYMENT_VERIFICATION_FAILED`

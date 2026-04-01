@@ -3,7 +3,8 @@
 **Hackathon:** The Synthesis 2026  
 **Agent:** Syntrophic FT (OpenClaw / claude-sonnet-4-6)  
 **Human:** Narek Kostanyan (@NarekKosm)  
-**Build period:** March 14–22, 2026
+**Build period:** March 14–22, 2026  
+**Post-Hackathon:** Continuing with "Agents That Cook" track development
 
 ---
 
@@ -179,3 +180,71 @@ Narek: *"We are not deploying to Celo, we have already decided to change to Base
 - GitHub repo creation
 - Will claim Moltbook, provide wallet for self-custody transfer
 - Final submission approval
+
+---
+
+## March 31 — Post-Hackathon: Project Evolution & Sprint 0 Complete
+
+**Project Rename:** `syntrophic-bond-protocol` → `syntrophic-reputation-protocol`
+- **New Repo:** https://github.com/Syntrophic-MD/syntrophic-reputation-protocol
+- **Local Path:** `/Users/agentbook/code/syntrophic-reputation-protocol/`
+- **Reason:** Better captures the broader scope beyond just bonding mechanisms
+
+**Sprint 0 — FULLY COMPLETE ✅**
+- **Timeline:** March 29-31, 2026 (~2 days active development)
+- **Smart Contracts:** All code written, tested (32 passing tests), deployed to Base mainnet
+- **New Functionality:**
+  - `SyntrophicOnboarder.sol` — atomic register+bond factory
+  - `bondFor()` — factory pattern bonding (staker ≠ msg.sender)
+  - `bondStrict()` — fail-fast bonding with metadata pre-check
+  - `syncBondMetadata()` — permissionless metadata backfill
+
+**V2 Mainnet Deployment ✅**
+- **SRPVault V2:** `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
+- **ERC8004RegistryAdapter V2:** `0x2ADF396943421a70088d74A8281852344606D668`
+- **SyntrophicOnboarder:** `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4`
+- **All contracts verified on BaseScan**
+
+**Agent Migration V1 → V2 ✅**
+- Agents #223, #224, #225 migrated to V2 vault
+- Agent #222 intentionally stays on V1 for legacy compatibility
+- Agents #226, #227 created and bonded directly on V2
+
+**Profile Image Fix ✅**
+- All 6 agents (#222-#227) had tokenURIs updated on-chain
+- Fixed IPFS gateway compatibility issue with 8004scan.io
+- All images now accessible via `https://ipfs.io/ipfs/` URLs
+
+**Infrastructure Added:**
+- Root `package.json` with 30+ unified npm scripts
+- `scripts/setup.sh` — one-command setup with demo mode
+- `scripts/validate-env.sh` — environment checker
+- Complete deployment and testing automation
+
+**Security Audit Results:**
+- **SRP-01 (High): Silent metadata sync failure** — FIXED via `bondStrict()` + `syncBondMetadata()`
+- **SRP-02 (High): No metadata backfill path** — FIXED via `syncBondMetadata()`
+- Comprehensive attack vector analysis documented (10 vectors addressed)
+- Known limitations identified and prioritized for future sprints
+
+**Test Coverage:**
+- 32 tests passing, 0 failures
+- New test coverage: 15 additional tests for Sprint 0 features
+- Full contract lifecycle testing (bond → slash → cooldown → re-bond)
+
+**Continued Development:**
+- Agent logs migrated from `/code/syntrophic-explorer/agent-logs` to `/code/syntrophic-reputation-protocol/agent-logs`
+- Continuing work for "Agents That Cook" track
+- Building on hackathon foundation with evolved reputation protocol
+- Next phase: Protocol hardening and onboarding MVP development
+
+**11:42 CDT - Terminology Discussion: "Bonded" vs "Staked"**
+- **Question:** Should we rename "Bonded" to "Staked" to align with "reputation protocol" rebrand?
+- **Agent Analysis:** Recommends keeping "Bonded" for user-facing text
+- **Rationale:** 
+  - Contract immutability (deployed functions use `bond()`, `isBonded()`)
+  - Conceptual accuracy (performance bond vs yield-earning stake)
+  - Trust semantics ("bonded" = accountability, not rewards)
+  - Developer consistency (UI terms match contract interface)
+- **Suggested standard:** "Stake ETH" (action) → "Bonded status" (result)
+- **Decision:** ✅ Confirmed - Keep "Bonded" in UI while acknowledging staking action

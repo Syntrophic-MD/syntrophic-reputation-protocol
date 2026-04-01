@@ -10,6 +10,7 @@ contract MockERC8004Registry is IERC8004Registry {
     uint256 public nextAgentId = 1;
 
     mapping(uint256 => address) public owners;
+    mapping(uint256 => address) public tokenApprovals;
     mapping(uint256 => address) public wallets;
     mapping(uint256 => string) public uris;
     mapping(uint256 => bool) public writableByAdapter;
@@ -70,6 +71,14 @@ contract MockERC8004Registry is IERC8004Registry {
         return writableByAdapter[agentId];
     }
 
+    function approve(address to, uint256 tokenId) external {
+        if (owners[tokenId] != msg.sender) {
+            revert Unauthorized();
+        }
+        tokenApprovals[tokenId] = to;
+        writableByAdapter[tokenId] = true;
+    }
+
     function getMetadata(uint256 agentId, string calldata metadataKey)
         external
         view
@@ -83,6 +92,7 @@ contract MockERC8004Registry is IERC8004Registry {
             revert Unauthorized();
         }
         owners[tokenId] = to;
+        tokenApprovals[tokenId] = address(0);
     }
 
     function setMetadata(uint256 agentId, string calldata metadataKey, bytes calldata metadataValue) external {

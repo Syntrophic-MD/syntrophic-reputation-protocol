@@ -39,6 +39,21 @@ This repository contains:
 - `docs/`: ERC draft + mainnet proof report
 - `agent-logs/`: autonomous build logs (`agent.json`, `agent_log.json`, activity/conversation/tool logs)
 
+## Quick Start
+
+```bash
+npm run setup:demo
+npm run validate
+npm test
+npm run dev
+```
+
+Then verify the live deployment from another terminal:
+
+```bash
+npm run verify:all
+```
+
 ## Why This Matters
 
 AI agents face a trust deadlock:
@@ -81,9 +96,10 @@ Syntrophic introduces **economic pre-commitment** for ERC-8004 identities:
 
 Current verified deployment:
 - ERC-8004 Registry: `0x8004A169FB4a3325136EB29fA0ceB6D2e539a432`
-- ERC8004RegistryAdapter: `0x63DCE10906BB3D3C8280A3fa578594D261C4b804`
-- SRPVault: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
-- Bonded agent: `32055`
+- ERC8004RegistryAdapter V2: `0x2ADF396943421a70088d74A8281852344606D668`
+- SRPVault V2: `0xFdB160B2B2f2e6189895398563D907fD8239d4e3`
+- SyntrophicOnboarder: `0x693ABFBBfC2C5050D5Db3941DaA3F464D730A8a4`
+- Legacy V1 vault for agent `32055`: `0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248`
 
 Mainnet tx links and metadata verification steps are documented here:
 - [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md)
@@ -96,8 +112,8 @@ Mainnet tx links and metadata verification steps are documented here:
 
 ### 2) Technical Execution
 - Live contracts on Base mainnet.
-- On-chain tx receipts and state verification path in `docs/SBP_Base_Mainnet_Demo_Report.md`.
-- Protocol tests pass locally (`17/17`).
+- On-chain tx receipts and state verification path in `docs/SRP_Base_Mainnet_Demo_Report.md`.
+- Protocol tests pass locally (`32/32`).
 
 ### 3) AI x Crypto Integration
 - AI trust state is not an API flag; it is tied to bonded on-chain identity and signed attestations.
@@ -117,29 +133,41 @@ Mainnet tx links and metadata verification steps are documented here:
 
 ## Quick Verification
 
-### Protocol Tests
+### End-to-End Local Setup
 ```bash
-cd protocol
-forge test --offline
+npm run setup:demo
+npm run validate
+npm test
 ```
 
 ### Verify Bonded State On-Chain
 ```bash
-cast call 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432 "getMetadata(uint256,string)(bytes)" 32055 "syntrophic.status" --rpc-url https://mainnet.base.org
-cast call 0xb3E75c11957a23F9A8DF2A2eB59513832c8d1248 "isBonded(uint256)(bool)" 32055 --rpc-url https://mainnet.base.org
+npm run verify:all
 ```
 
 ### Run Explorer
 ```bash
-cd frontend
-npm install
 npm run dev
 ```
+
+## Root Commands
+
+| Command | Purpose |
+|---------|---------|
+| `npm run setup` | Install protocol/frontend deps, build, test, and validate |
+| `npm run setup:demo` | Same as setup plus demo `.env` files for Base verification |
+| `npm run setup:start` | Demo setup and launch the frontend |
+| `npm run validate` | Check tools, local files, env config, and Base connectivity |
+| `npm test` | Run all Foundry tests offline |
+| `npm run build` | Build protocol contracts and the frontend |
+| `npm run dev` | Start the explorer locally |
+| `npm run verify:all` | Verify the live Base deployment and metadata |
+| `npm run deploy:stack` | Deploy adapter, vault, and onboarder to Base |
 
 ## Key Documents
 
 - [docs/ERC-Syntrophic-Draft.md](docs/ERC-Syntrophic-Draft.md)
-- [docs/SBP_Base_Mainnet_Demo_Report.md](docs/SBP_Base_Mainnet_Demo_Report.md)
+- [docs/SRP_Base_Mainnet_Demo_Report.md](docs/SRP_Base_Mainnet_Demo_Report.md)
 - [agent-logs/agent.json](agent-logs/agent.json)
 - [agent-logs/agent_log.json](agent-logs/agent_log.json)
 - [agent-logs/ACTIVITY_LOG.md](agent-logs/ACTIVITY_LOG.md)
