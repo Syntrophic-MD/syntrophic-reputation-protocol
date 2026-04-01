@@ -4,48 +4,47 @@
 
 **Syntrophic**
 
-Launch a bonded ERC-8004 agent on Base with one x402 payment.
+The decentralized verified badge for agents.
 
 Speaker note:
-Lead with the wedge, not the protocol internals.
+Lead with the product outcome, not the contract names.
 
 ## Slide 2 - The Problem
 
 New agents have no trust on day zero.
 
-- No portable reputation
-- No economic commitment
-- Too much onboarding friction
+- no portable credibility
+- no economic commitment
+- too much onboarding friction
 
 Speaker note:
-The key is not just trust. It is trust plus onboarding friction.
+Make the trust problem feel immediate and practical.
 
 ## Slide 3 - The Insight
 
 ERC-8004 gives identity.
 Syntrophic turns onboarding into a trust event.
 
-- register identity
-- sponsor bond
+- prepare profile
+- fund onboarding
 - return proof
 
 Speaker note:
-Say clearly that onboarding should produce a verifiable trust state, not just a profile.
+Say clearly that identity is necessary but not sufficient.
 
 ## Slide 4 - The Product
 
-**One paid launch flow**
+**One onboarding flow**
 
-The user or agent pays once with x402.
-Syntrophic handles:
-- metadata validation,
-- IPFS pinning,
-- Base execution,
-- ETH bonding,
-- proof bundle generation.
+Syntrophic:
+- creates the quote
+- funds the launch through x402
+- registers the agent
+- posts the bond on Base
+- returns a verification link
 
 Speaker note:
-This is the core product slide. Keep it simple and visual.
+Keep this slide simple and user-centered.
 
 ## Slide 5 - Architecture
 
@@ -53,49 +52,49 @@ Three rails:
 
 - Identity rail: ERC-8004
 - Payment rail: x402
-- Trust rail: Syntrophic bond + portable metadata
+- Trust rail: Syntrophic bond + metadata
 
 Speaker note:
-If asked about Oasis ROFL, position it as the validation path for later score and slash updates, not the main onboarding message.
+This is where you briefly anchor the technical stack.
 
-## Slide 6 - Live Proof
+## Slide 6 - Live Flow
 
 Show:
 
-1. Homepage
-2. Explore Agents
-3. Bonded (Demo) filter
-4. Syntrophic Agent #222 profile
-5. BONDED status + ERC-8004 metadata
+1. Homepage prompt
+2. Public skill
+3. x402 Demo page
+4. Helper launch
+5. Verification page
 
 Speaker note:
-Keep the website proof sequence under two minutes. Do not narrate an onboarding flow we are not showing.
+The flow should feel like one continuous proof chain, not separate disconnected scenes.
 
 ## Slide 7 - Before / After
 
 Before:
 - no agent ID
 - no bond
-- no portable trust proof
+- no public trust proof
 
 After:
 - ERC-8004 identity on Base
 - bonded in Syntrophic
-- visible proof bundle
+- public verification page
 
 Speaker note:
-This slide helps judges understand the delta immediately.
+This helps judges understand the delta fast.
 
 ## Slide 8 - Why It Matters
 
 This agent can now be discovered, filtered, and trusted differently.
 
-- easier admission for credible new agents
+- better admission for credible new agents
 - stronger machine-readable trust signal
 - reusable across apps
 
 Speaker note:
-Tie the feature to behavior change, not just architecture.
+Tie the feature to changed behavior, not just architecture.
 
 ## Slide 9 - Why Now
 
@@ -110,10 +109,10 @@ This is the ecosystem timing slide.
 
 Is your OpenClaw on 8004 yet?
 
-Send it to Syntrophic.MD and it will:
-- register itself
-- stake its reputation
-- become a trusted agent ready for the coming agent economy
+Send it to Syntrophic.MD and let it:
+- register
+- bond
+- become publicly verifiable
 
 Speaker note:
-Make this the last slide and the last spoken line. Do not add roadmap after it.
+End on the invitation, not the roadmap.

@@ -4,8 +4,8 @@
 
 Demo one complete flow in under two minutes:
 
-1. quote a launch,
-2. pay the launch endpoint with x402,
+1. create an onboarding quote,
+2. complete the paid launch from a helper runtime,
 3. return a proof bundle,
 4. verify the new bonded agent on Base.
 
@@ -13,40 +13,46 @@ Demo one complete flow in under two minutes:
 
 ### Step 1
 
-Start the app locally:
+Open the live website:
 
-```bash
-npm run dev
-```
+- `https://syntrophic.md`
+
+Show:
+- `Onboard Agent`
+- `Explore Agents`
+- the prompt copy dialog
 
 ### Step 2
 
-Open the onboarding page:
+Open the x402 demo page:
 
-- `/onboard`
+- `https://syntrophic.md/onboard`
 
-Create a quote for the beneficiary wallet and profile.
+Fill:
+- beneficiary wallet
+- agent name
+- description
+- primary service URL
+- optional image URL
+
+Create the quote.
 
 ### Step 3
 
-Run the paid launch client:
+Copy the helper command from the page, then run it from a payment-capable environment.
+
+Typical env:
 
 ```bash
-npm run demo:paid-launch -- --quote=<quote_id>
+export X402_PAYER_PRIVATE_KEY="0xYOUR_FUNDED_PAYER_KEY"
+export BASE_RPC_URL="https://mainnet.base.org"
 ```
 
-Required env:
-- `DEMO_PAYER_PRIVATE_KEY`
-- `BASE_RPC_URL`
-- `SPONSORED_ONBOARDER_PRIVATE_KEY`
-- `SPONSORED_ONBOARDER_ADDRESS`
-- `PINATA_JWT`
+Typical command:
 
-Optional env:
-- `DEMO_BENEFICIARY_ADDRESS`
-- `APP_URL`
-- `X402_PAY_TO_ADDRESS`
-- `X402_FACILITATOR_URL`
+```bash
+npm run launch:agent -- --quote=<quote_id> --beneficiary=<beneficiary> --app-url=https://syntrophic.md
+```
 
 ### Step 4
 
@@ -55,21 +61,20 @@ Show the returned proof bundle:
 - `agent_id`
 - `tx_hash`
 - `bonded = true`
-- `metadata_status = BONDED`
+- `verification_url`
+- `verification_line`
 
 ### Step 5
 
-Verify one of these live:
+Verify one or more of these live:
 
-- Syntrophic UI proof view
-- BaseScan tx hash
+- Syntrophic verification page
+- BaseScan tx
 - ERC-8004 metadata read
 
 ## Judge Script
 
-Say this while demoing:
-
-“Here is the quote. Here is the paid launch call. The agent is now registered, bonded, and verifiable onchain. The onboarding itself is the trust moment.”
+“Here is the profile and quote. Here is the x402-funded helper launch. The agent is now registered, bonded, and publicly verifiable on Base.”
 
 ## Before / After
 
@@ -80,24 +85,11 @@ After:
 - Base ERC-8004 agent exists
 - SRP bond exists
 - `syntrophic.status = BONDED`
-
-## Real-Agent Proof For Judges
-
-To maximize judge confidence before the live session, prepare 3-10 real demo agents using the same paid flow.
-
-For each one, save:
-- agent name
-- beneficiary wallet
-- quote ID
-- tx hash
-- agent ID
-- proof link
-
-This should be presented as evidence that the flow works for multiple agents, not just the protocol owner path.
+- public verification page exists
 
 ## Future Scope To Mention Briefly
 
-- Single-payment multi-chain launch bundles
-- Sponsored bonding for already-registered ERC-8004 agents
+- single-payment multi-chain launch bundles
+- sponsored bonding for already-registered ERC-8004 agents
 
 Do not spend more than one sentence on future scope during the live demo.

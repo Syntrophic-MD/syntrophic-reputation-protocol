@@ -1,9 +1,5 @@
 # Syntrophic Final Slide Copy
 
-This file is the presentation-ready version of the judge narrative.
-
-Use it as the source text for the actual deck.
-
 ## Slide 1
 
 ### Title
@@ -12,11 +8,11 @@ Syntrophic
 
 ### Subtitle
 
-Launch a bonded ERC-8004 agent on Base with one x402 payment.
+The decentralized verified badge for agents.
 
 ### Footer line
 
-Portable identity. Sponsored trust. Onchain proof.
+ERC-8004 identity. Bonded trust. On-chain proof.
 
 ## Slide 2
 
@@ -28,13 +24,13 @@ The Problem
 
 New agents start with zero trust.
 
-- No portable reputation
+- No portable credibility
 - No economic commitment
 - Too much onboarding friction
 
 ### Bottom line
 
-Agents are hard to trust and too hard to onboard.
+Identity alone is not enough to make a new agent trusted.
 
 ## Slide 3
 
@@ -44,13 +40,13 @@ The Insight
 
 ### Body
 
-ERC-8004 gives agents portable identity.
+ERC-8004 gives agents identity.
 
 Syntrophic turns onboarding into a trust event.
 
-- Register identity
-- Sponsor the bond
-- Return proof
+- prepare profile
+- fund onboarding
+- return proof
 
 ### Bottom line
 
@@ -64,20 +60,18 @@ The Product
 
 ### Body
 
-One paid launch flow.
+One onboarding flow.
 
-The user or agent pays once with x402.
-Syntrophic handles:
-
-- Registration payload validation
-- IPFS pinning
-- Base execution
-- ETH bonding
-- Proof bundle generation
+Syntrophic:
+- creates the quote
+- handles x402-funded launch
+- registers the agent
+- posts the bond on Base
+- returns a verification link
 
 ### Bottom line
 
-One payment. One flow. One bonded agent.
+One flow. One proof bundle. One verified agent.
 
 ## Slide 5
 
@@ -91,31 +85,29 @@ Three rails:
 
 - Identity rail: ERC-8004
 - Payment rail: x402
-- Trust rail: Syntrophic bond + portable metadata
+- Trust rail: bonded SRP metadata
 
 ### Bottom line
 
-We combine portable identity, agent-native payment, and crypto-economic trust.
+Portable identity, agent-native payment, and crypto-economic trust in one system.
 
 ## Slide 6
 
 ### Title
 
-Live Proof
+Live Flow
 
 ### Body
 
-In one flow we will show:
-
-1. The Syntrophic.MD homepage
-2. The Explore Agents directory
-3. The Bonded (Demo) filter
-4. Syntrophic Agent #222 on Base
-5. BONDED status plus ERC-8004 metadata
+1. Homepage prompt
+2. Public skill
+3. x402 demo page
+4. Helper launch
+5. Verification page
 
 ### Bottom line
 
-The proof is already live: bonded agents are visible and verifiable onchain.
+The trust flow is visible from prompt to proof.
 
 ## Slide 7
 
@@ -137,25 +129,25 @@ After
 
 - ERC-8004 identity on Base
 - Bonded in Syntrophic
-- Visible proof bundle
+- Public verification page
 
 ### Bottom line
 
-A new agent becomes machine-verifiable from day zero.
+A new agent becomes verifiable from day zero.
 
 ## Slide 8
 
 ### Title
 
-Why This Matters
+Why It Matters
 
 ### Body
 
 This agent can now be discovered, filtered, and trusted differently.
 
-- Easier admission for credible new agents
+- Better admission for credible new agents
 - Stronger machine-readable trust signal
-- Reusable across apps and agent ecosystems
+- Reusable across apps and ecosystems
 
 ### Bottom line
 
@@ -175,7 +167,7 @@ Why Now
 
 ### Bottom line
 
-The primitives now exist. The missing piece was the launch flow.
+The primitives now exist. The missing piece was the trust launch flow.
 
 ## Slide 10
 
@@ -187,12 +179,11 @@ The Invitation
 
 Is your OpenClaw on 8004 yet?
 
-Send it to Syntrophic.MD and it will:
-
-- Register itself
-- Stake its reputation
-- Become a trusted agent ready for the coming agent economy
+Send it to Syntrophic.MD and let it:
+- register
+- bond
+- become publicly verifiable
 
 ### Bottom line
 
-Portable identity. Bonded trust. Ready to launch.
+Syntrophic turns onboarding into the trust moment.

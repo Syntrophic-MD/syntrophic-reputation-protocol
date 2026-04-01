@@ -7,7 +7,7 @@ Syntrophic turns ERC-8004 identity into a portable, bonded trust signal so agent
 ## What We Built
 
 Syntrophic is a live Base mainnet protocol and product surface that combines:
-- ERC-8004 agent identity
+- ERC-8004 agent identity registration
 - an ETH-backed reputation bond
 - ROFL-signed trust updates
 - canonical `syntrophic.*` metadata written back into ERC-8004
@@ -112,39 +112,132 @@ That is the decentralized equivalent of a verified badge for agents.
 
 ## Track Fit
 
-### Agents With Receipts / ERC-8004
+This project is strongest when judges understand it as infrastructure for trustworthy autonomous agents, not just a reputation dashboard.
 
-This is the best fit.
+Syntrophic builds a foundational trust layer for the agent internet:
+- ERC-8004 gives the agent a portable on-chain identity
+- SRP adds economic commitment and slashable accountability
+- x402 makes onboarding and agent payments smoother
+- the verification page and metadata turn trust into something humans and agents can inspect across apps
 
-- live ERC-8004 integration
-- portable on-chain metadata
-- real trust primitive, not just profile storage
-- autonomous onboarding path for agents
+### 🔐 Agents With Receipts — 8004
 
-### Agent-Only / Let The Agent Cook
+This is the clearest and strongest fit.
 
-The repo includes autonomous build and operations evidence in:
+Why it matches the challenge:
+- the system uses real ERC-8004 on-chain transactions on Base mainnet
+- it works across the identity, trust, and validation surface of the ERC-8004 ecosystem
+- it gives agents a trust framework that is portable, verifiable, and machine-readable
+- it includes a structured autonomous onboarding path through the public skill and helper flow
+
+What judges can verify:
+- live ERC-8004 registration and trust-linked contracts on Base
+- canonical `syntrophic.*` metadata written back into ERC-8004
+- public agent onboarding via `https://syntrophic.md/skill.md`
+- real proof bundles with `agent_id`, `tx_hash`, and verification links
+
+Why this is differentiated:
+- this is not just agent discovery
+- this is not just profile storage
+- this is a trust primitive that makes agents verifiable economic actors from day zero
+
+### 🤖 Agent Only : Let the agent cook
+
+This is also a top-tier fit because the repo demonstrates a real autonomous build-and-ship loop, not a scripted agent demo.
+
+How it matches the challenge requirements:
+- discover → plan → execute → verify → submit is documented across the repo artifacts
+- the agent produced code, deployments, docs, and presentation assets
+- the system includes tool orchestration, retries, safety checks, and human escalation at high-risk points
+- the project evolved from Synthesis into PL Genesis instead of stopping at a one-off demo
+
+Direct evidence in the repo:
 - `agent-logs/agent.json`
 - `agent-logs/agent_log.json`
 - `agent-logs/ACTIVITY_LOG.md`
 - `agent-logs/CONVERSATION_LOG.md`
 - `agent-logs/TOOL_USAGE.md`
 
-### Crypto
+Public agent evidence:
+- MoltBook presence: [https://www.moltbook.com/u/syntrophicagent222](https://www.moltbook.com/u/syntrophicagent222)
 
-Crypto is load-bearing here:
-- bond economics
-- slash / cooldown enforcement
-- on-chain verification
-- x402 payment integration
+Additional autonomous media-production evidence:
+- `video-workflow/` contains an agent-operated pipeline that generates the hackathon demo with HTML slides, synthesized voiceover, browser-driven web capture, and final video composition
+- key files include:
+  - `video-workflow/README.md`
+  - `video-workflow/WORKFLOW.md`
+  - `video-workflow/GENERATE-3MIN.md`
+  - `video-workflow/input/`
+  - `video-workflow/scripts/`
+  - `video-workflow/output/syntrophic-3min-presentation.mp4`
+  - `video-workflow/output/syntrophic-final-with-voice.mp4`
+
+Why that matters:
+- the agent is not only building the protocol
+- it is also preparing its own explanatory and submission artifacts using real tools
 
 ### AI & Robotics
 
-Syntrophic addresses safe, accountable agent coordination:
-- public stake
-- verifiable identity
-- transparent trust updates
-- human- and machine-readable trust state
+This is a strong fit because Syntrophic is directly about safe, accountable, collaborative autonomous systems.
+
+Why it matches the track:
+- it addresses agent-to-agent trust and coordination, not just raw model capability
+- it makes agents verifiable economic actors through ERC-8004 identity plus bonded stake
+- it uses x402 as a machine-payment rail in the onboarding and commerce path
+- it supports human-in-the-loop oversight through confirmation, helper handoff, challenge windows, and explicit guardrails
+
+What problem it solves in AI systems:
+- agents currently start with no trust history
+- platforms can show soft badges, but those are not portable or machine-verifiable
+- Syntrophic turns trust into a shared, inspectable system other agents and apps can actually consume
+
+### Crypto
+
+This is a strong fit because crypto is load-bearing in the design, not decorative.
+
+Why it matches the track:
+- the protocol creates a new coordination mechanism around agent reputation and economic commitment
+- the bond, slash, cooldown, and withdrawal lifecycle are the core enforcement mechanism
+- trust is expressed as on-chain state, not an off-chain score hidden behind an API
+- x402 extends that into agent-native payment and onboarding UX
+
+Why this matters for collective action:
+- agents that want trust must post collateral
+- bad behavior becomes economically punishable
+- trust becomes reusable across ecosystems instead of siloed inside one app
+- this is exactly the kind of new economic and governance surface crypto is good at creating
+
+### Lit Protocol: NextGen AI Apps
+
+This is the weakest of our target fits in the current codebase, and judges should understand it as a forward-looking extension rather than the primary story today.
+
+Why it is directionally aligned:
+- Syntrophic is already about agent wallet control, programmable payment paths, and trust-aware autonomous action
+- the helper-handoff flow makes the need for stronger decentralized key management very clear
+- Lit-style programmable signing and guarded agent wallets would be a natural next step for making x402-capable agents safer and more autonomous
+
+Honest current status:
+- there is no direct Vincent or Lit Protocol V1 (Naga) integration in this repository today
+- so this should not be presented as a completed primary integration bounty
+
+Best way to frame it:
+- Syntrophic is highly compatible with the Lit thesis
+- but the current shipped work is stronger in ERC-8004, Agent-Only, AI & Robotics, and Crypto
+
+### Fresh Code
+
+Fresh Code is not a sponsor technology track; it is the category that evaluates whether meaningful new code was built during PL Genesis.
+
+This project fits Fresh Code because:
+- the codebase was materially extended during this cycle
+- the current submission includes new sponsored onboarding contracts, x402 flow, helper tooling, proof-bundle logic, updated docs, and demo surfaces
+- this is not just a resubmission of a static earlier repo
+
+The strongest Fresh Code argument is:
+- we took an existing trust protocol concept
+- expanded it into a real onboarding product
+- added agent-first onboarding, x402-funded flow, sponsored registration/bonding, and live demo infrastructure
+- and shipped those additions into the current Base mainnet and website experience
 
 ## Quick Evaluator Path
 

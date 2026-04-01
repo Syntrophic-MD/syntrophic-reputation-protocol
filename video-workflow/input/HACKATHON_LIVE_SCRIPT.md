@@ -2,47 +2,49 @@
 
 This is the tighter version for a live 3-minute presentation.
 
-Aim to sound direct and calm. Do not explain every component. Land the wedge and the demo.
-
 ## Version A - Full 3 Minutes
 
 AI agents have a day-zero trust problem.
 
-A new agent might be capable, but it still starts with no portable reputation, no economic commitment, and too much onboarding friction.
+A new agent might be capable, but it still starts with no portable credibility, no economic commitment, and too much onboarding friction.
 
-ERC-8004 solves identity, but identity alone does not tell the world, “this agent has made a commitment, and that commitment is verifiable onchain.”
+ERC-8004 solves identity, but identity alone does not tell the world, “this agent has made a commitment, and that commitment is verifiable on-chain.”
 
 That is the gap Syntrophic fills.
 
-Syntrophic lets any agent launch as a bonded ERC-8004 identity on Base with one x402 payment.
+Syntrophic gives any agent the decentralized equivalent of a verified badge.
 
-The user or agent pays once. Syntrophic validates the registration payload, pins metadata to IPFS, executes the Base transaction, posts the ETH bond, transfers the ERC-8004 identity to the beneficiary wallet, and returns a proof bundle with the tx hash and bonded status.
+The owner or the owner’s agent prepares the profile. Syntrophic creates the quote, funds onboarding through x402, registers the ERC-8004 identity, posts the ETH bond on Base, and returns a proof bundle with the verification page and transaction hash.
 
-So instead of “register now, maybe bond later,” onboarding itself becomes the trust moment.
+So instead of “register now, maybe build trust later,” onboarding itself becomes the trust moment.
 
 Here is the proof flow.
 
-First, we open Syntrophic.MD and go to Explore Agents.
+First, we open Syntrophic.MD and show the `Onboard Agent` prompt.
 
-Second, we switch to the Bonded Demo view.
+Second, we open the public skill and the x402 Demo page.
 
-Third, we open Syntrophic Agent 222, Frontier Tower.
+Third, we create the quote and run the helper command.
 
-What you see there is not a mockup. It is a live ERC-8004 profile on Base showing BONDED status and portable syntrophic metadata.
+Fourth, we open the verification page and the Base transaction.
 
-This matters because the agent can now be discovered, filtered, and trusted differently.
+What you see at the end is not a mockup. It is a live ERC-8004 profile on Base with bonded trust and portable verification.
+
+This matters because a newly launched agent can now be discovered, filtered, and trusted differently.
 
 That makes credible new agents easier to admit and low-commitment spam easier to ignore.
 
-This is not just a dashboard. It is a live onchain protocol, a real onboarding workflow, and a real payment flow built around a simple wedge:
+This is not just a dashboard.
 
-one payment, one flow, one proof bundle, one bonded agent.
+It is a live on-chain protocol, a public agent onboarding skill, an x402-funded launch flow, and a portable trust signal built around one idea:
 
-The invitation starts now:
+turn onboarding into the trust moment.
+
+The invitation is simple:
 
 Is your OpenClaw on 8004 yet?
 
-Send it to Syntrophic.MD and it will register itself, stake its reputation, and become a trusted agent ready for the coming agent economy.
+Send it to Syntrophic.MD and let it get a Syntrophic verified badge.
 
 ## Version B - Compressed 90 Seconds
 
@@ -50,29 +52,17 @@ New agents have a trust problem on day zero.
 
 ERC-8004 gives them identity, but not an easy way to become trusted immediately.
 
-Syntrophic fixes that with one product:
+Syntrophic fixes that by turning onboarding into a trust event.
 
-launch a bonded ERC-8004 agent on Base with one x402 payment.
+The owner or the owner’s agent prepares a profile. Syntrophic creates the quote, funds onboarding through x402, registers the ERC-8004 identity, posts the bond on Base, and returns a public verification page.
 
-The user or agent pays once. Syntrophic handles registration, IPFS, Base execution, ETH bonding, and returns a proof bundle.
-
-So onboarding itself becomes the trust moment.
-
-In the demo, we will open the explorer, filter to already bonded agents, and show the result:
-
-a real ERC-8004 agent on Base, bonded in Syntrophic, with onchain proof already visible on the website.
+In the demo, we show the homepage prompt, the public skill, the x402 Demo page, the helper launch, and the final verification proof.
 
 That means a newly launched agent can now be discovered, filtered, and trusted differently.
 
-Our wedge is simple:
+The message is simple:
 
-one payment, one flow, one proof bundle, one bonded agent.
-
-And the invitation is even simpler:
-
-Is your OpenClaw on 8004 yet?
-
-Send it to Syntrophic.MD and it will register itself, stake its reputation, and become a trusted agent ready for the coming agent economy.
+Syntrophic gives agents the decentralized equivalent of a verified badge.
 
 ## Stage Cues
 
@@ -82,55 +72,26 @@ Use:
 
 “AI agents have a day-zero trust problem.”
 
-Do not open with protocol names or chain names.
-
 ### Product line
 
 Use:
 
-“Syntrophic lets any agent launch as a bonded ERC-8004 identity on Base with one x402 payment.”
-
-Say this slowly. It is the sentence judges need to remember.
+“Syntrophic gives any agent the decentralized equivalent of a verified badge.”
 
 ### Demo transition
 
 Use:
 
-“Let me show you the proof live.”
+“Let me show you the proof flow.”
 
-### After proof bundle appears
+### After proof appears
 
 Use:
 
-“This agent is no longer just registered. It is bonded and verifiable onchain.”
+“This agent is no longer just registered. It is bonded and publicly verifiable.”
 
 ### Closing line
 
 Use:
 
-“Is your OpenClaw on 8004 yet? Send it to Syntrophic.MD and it will register itself, stake its reputation, and become a trusted agent ready for the coming agent economy.”
-
-## What Not To Over-Explain
-
-- Do not spend time on internal contract names.
-- Do not lead with roadmap items.
-- Do not over-explain ROFL during the main pitch.
-- Do not make the story about generalized reputation theory.
-
-## If Judges Ask “Why Does This Matter?”
-
-Answer:
-
-Because a brand-new agent can now show portable identity plus economic commitment immediately, and any app can verify that without trusting our backend.
-
-## If Judges Ask “Why x402?”
-
-Answer:
-
-Because it makes the onboarding payment agent-native. The user pays once, and Syntrophic sponsors the Base execution and bond.
-
-## If Judges Ask “What’s Next?”
-
-Answer:
-
-Single-payment multi-chain launch bundles, and sponsored bonding for already-registered agents.
+“Is your OpenClaw on 8004 yet? Send it to Syntrophic.MD and let it get a Syntrophic verified badge.”

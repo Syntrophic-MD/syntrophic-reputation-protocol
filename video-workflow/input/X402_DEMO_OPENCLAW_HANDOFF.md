@@ -1,4 +1,4 @@
-# OpenClaw Handoff: Record the x402 Verification Demo
+# OpenClaw Handoff: Record the Syntrophic Verified Badge Demo
 
 Use this file as the execution brief for an OpenClaw-generated demo video.
 
@@ -7,22 +7,22 @@ Use this file as the execution brief for an OpenClaw-generated demo video.
 Record a short live demo showing that Syntrophic gives agents a decentralized verified badge from day zero.
 
 The practical flow to show is:
-- an agent reads the Syntrophic skill
-- pays once with x402 in USDC
-- gets registered on ERC-8004
-- gets bonded on Base
-- receives a public verification page and signature line
+- an agent sees the onboarding prompt on the homepage
+- it reads the public skill
+- an operator creates the quote on the x402 Demo page
+- a helper runtime completes the x402-funded launch
+- the result is a public verification page and reusable verification line
 
 ## Key Message
 
 Syntrophic is not only onboarding infrastructure.
 
-It solves the day-zero trust problem for agents.
+It solves the day-zero trust problem for agents by turning ERC-8004 identity plus bonded trust into a portable verified badge.
 
-Existing trust and validation systems are mostly post-interaction.
-Syntrophic makes onboarding itself the trust event.
-
-The output is the decentralized equivalent of a verified badge for agents.
+The output is:
+- a real agent identity
+- a real economic commitment
+- a public proof page anyone can verify
 
 ## Pages To Show
 
@@ -31,46 +31,42 @@ Required order:
 1. opening HTML slides
 2. `https://syntrophic.md`
 3. `https://syntrophic.md/skill.md`
-4. terminal running the x402 demo script
-5. returned verification page on `https://syntrophic.md/agents/base/<agentId>`
-6. optional BaseScan transaction page
-7. closing HTML slides
+4. `https://syntrophic.md/onboard`
+5. terminal running the helper launch command
+6. returned verification page on `https://syntrophic.md/agents/base/<agentId>`
+7. optional BaseScan transaction page
+8. closing HTML slides
 
 ## Terminal Command To Record
 
 Run from:
 
 ```bash
-cd /Users/agentbook/code/syntrophic-reputation-protocol/frontend
+cd /Users/agentbook/code/syntrophic-reputation-protocol
 ```
 
 Set env:
 
 ```bash
-export APP_URL="https://syntrophic.md"
+export X402_PAYER_PRIVATE_KEY="0xYOUR_FUNDED_X402_PAYER_PRIVATE_KEY"
 export BASE_RPC_URL="https://mainnet.base.org"
-export DEMO_PAYER_PRIVATE_KEY="0xYOUR_FUNDED_X402_PAYER_PRIVATE_KEY"
-export DEMO_BENEFICIARY_ADDRESS="0xTHE_FINAL_OWNER_WALLET"
 ```
 
-Then execute:
+Then execute the helper command copied from `/onboard`, or use this shape:
 
 ```bash
-node scripts/demo-paid-launch.mjs \
-  --name="John Smith" \
-  --description="An OpenClaw agent onboarding through Syntrophic for ERC-8004 identity and day-zero bonded trust." \
-  --service="https://example.com/john-smith-agent" \
-  --image="https://example.com/john-smith-agent.png"
+npm run launch:agent -- --quote=<quote_id> --beneficiary=<beneficiary_wallet> --app-url=https://syntrophic.md
 ```
 
 ## Narration Guidance
 
 Use language close to this:
 
-- "The agent reads Syntrophic's skill and follows the sponsored onboarding flow."
-- "It creates a quote, pays once with x402 in USDC, and does not need to manually acquire Base ETH."
-- "Syntrophic sponsors the onchain execution path, registers the ERC-8004 identity, and posts the bond."
-- "The result is a public verification page and a reusable verification line the agent can place anywhere."
+- "The homepage gives the agent its onboarding prompt."
+- "The public skill explains how to gather the profile, create the quote, and complete or hand off the x402 flow."
+- "The x402 Demo page prepares the quote and helper command."
+- "The helper runtime completes the paid launch, and Syntrophic sponsors the Base execution path."
+- "The result is a public verification page and a reusable verification line."
 
 ## The Final Shot Must Show
 
@@ -90,16 +86,8 @@ Use language close to this:
 2. Problem:
    agents have no trust on day zero.
 3. Flow:
-   one x402 payment launches a bonded ERC-8004 identity.
+   prompt → skill → quote → helper launch → proof.
 4. Proof:
    show tx hash, agent ID, bonded state, and verification page.
 5. Close:
    onboarding becomes the trust moment.
-
-## Required Editing Structure
-
-- Start on HTML slides, not on the website.
-- Move from slides into the live site.
-- Move from the live site into the terminal.
-- After terminal success, return to the site to show the verification result.
-- Finish on HTML slides again for the final takeaway.

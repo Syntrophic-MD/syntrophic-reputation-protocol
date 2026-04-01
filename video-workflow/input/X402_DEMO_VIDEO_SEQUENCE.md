@@ -1,14 +1,17 @@
-# x402 Demo Video Sequence
+# Syntrophic Verified Badge Demo Video Sequence
 
 Use this exact scene order for the recorded hackathon video.
 
 ## Required Flow
 
 1. opening HTML slides
-2. live website
-3. terminal demo
-4. return to website for proof
-5. closing HTML slides
+2. live website homepage
+3. public skill page
+4. x402 Demo page
+5. terminal helper launch
+6. return to website for proof
+7. optional BaseScan
+8. closing HTML slides
 
 Do not skip that order.
 
@@ -20,110 +23,101 @@ Goal:
 
 Show slides that communicate:
 - agents have a day-zero trust problem
-- ERC-8004 gives identity, but mostly not day-zero trust
+- ERC-8004 gives identity but not instant credibility
 - Syntrophic makes onboarding the trust moment
-- one x402 payment launches a bonded ERC-8004 identity
 
-Suggested narration:
-- "Syntrophic gives agents the decentralized equivalent of a verified badge."
-- "We solve the day-zero trust problem, not only post-interaction reputation."
-
-## Scene 2: Live Website
+## Scene 2: Homepage
 
 Open:
 - `https://syntrophic.md`
 
 Show:
-- homepage hero
-- the verification framing
-- the instruction prompt to read `https://syntrophic.md/skill.md`
+- hero section
+- `Onboard Agent`
+- the prompt copy dialog
 
-Then open:
+What to emphasize:
+- the website gives agents a public onboarding prompt
+- the invitation is simple and agent-first
+
+## Scene 3: Public Skill
+
+Open:
 - `https://syntrophic.md/skill.md`
 
 What to emphasize:
-- the skill tells an agent how to get verified
-- the flow is sponsored
-- the user does not need to manually acquire Base ETH
+- the skill tells the agent how to get verified
+- it gathers a real profile, creates a quote, and either self-pays or hands off
 
-Suggested narration:
-- "An agent can read this skill and follow the onboarding flow directly."
-- "The flow creates a quote, pays through x402, and returns a verification link."
+## Scene 4: x402 Demo Page
 
-## Scene 3: Terminal Demo
+Open:
+- `https://syntrophic.md/onboard`
+
+Fill the form and create a quote.
+
+What to emphasize:
+- this is the operator-friendly demo surface
+- the browser prepares the quote and next step
+- the paid launch is completed by a helper runtime
+
+## Scene 5: Terminal Helper Launch
 
 Open terminal in:
 
 ```bash
-cd /Users/agentbook/code/syntrophic-reputation-protocol/frontend
+cd /Users/agentbook/code/syntrophic-reputation-protocol
 ```
 
-Run the environment setup:
+Set runtime env:
 
 ```bash
-export APP_URL="https://syntrophic.md"
+export X402_PAYER_PRIVATE_KEY="0xYOUR_FUNDED_X402_PAYER_PRIVATE_KEY"
 export BASE_RPC_URL="https://mainnet.base.org"
-export DEMO_PAYER_PRIVATE_KEY="0xYOUR_FUNDED_X402_PAYER_PRIVATE_KEY"
-export DEMO_BENEFICIARY_ADDRESS="0xTHE_FINAL_OWNER_WALLET"
 ```
 
-Then run:
+Run the helper command copied from `/onboard`.
+
+Typical form:
 
 ```bash
-node scripts/demo-paid-launch.mjs \
-  --name="John Smith" \
-  --description="An OpenClaw agent onboarding through Syntrophic for ERC-8004 identity and day-zero bonded trust." \
-  --service="https://example.com/john-smith-agent" \
-  --image="https://example.com/john-smith-agent.png"
+npm run launch:agent -- --quote=<quote_id> --beneficiary=<beneficiary_wallet> --app-url=https://syntrophic.md
 ```
 
-What to capture on screen:
-- quote creation
-- x402 payment settlement
-- launch result
+What to capture:
+- quote reference
 - agent ID
 - tx hash
 - bonded state
+- verification URL
 
-Suggested narration:
-- "This terminal acts as the agent client."
-- "It creates the quote, pays once with x402 in USDC, and launches the sponsored onboarding flow."
-
-## Scene 4: Return To Website For Proof
+## Scene 6: Return To Website For Proof
 
 Go back to the site and show:
 
 1. the returned `verification_url`
 2. the agent verification page
 3. the verification line
-4. optionally the BaseScan transaction in a second tab
 
 What to emphasize:
 - the agent now has a public verification page
-- the agent can reuse the verification line in socials, websites, and email signatures
-- this is the decentralized verified badge moment
+- this is the portable verified badge moment
 
-Suggested narration:
-- "Now the agent has a public proof page and a reusable verification signature."
-- "This is how trust becomes portable from day zero."
+## Scene 7: BaseScan
 
-## Scene 5: Closing HTML Slides
+Optionally show the transaction in a second tab.
 
-Return to HTML slides for the close.
+What to emphasize:
+- the bond and identity are independently verifiable on-chain
+
+## Scene 8: Closing Slides
+
+Return to slides for the close.
 
 Closing messages:
 - Syntrophic solves day-zero trust for agents
-- one x402 payment launches a bonded ERC-8004 identity
-- onboarding becomes the trust event
-- future scope is multi-chain launch bundles and sponsored bonding for already-registered agents
+- it turns ERC-8004 identity into bonded trust
+- onboarding becomes the trust moment
 
 Suggested last line:
-- "Syntrophic turns onboarding into the moment an agent becomes verifiable."
-
-## Recording Notes
-
-- Keep the terminal segment short and focused.
-- Do not linger on env vars longer than necessary.
-- End on the verification page or final closing slide, not on the terminal.
-- The strongest ending visual is:
-  `John Smith • Syntrophic Verified Agent • https://syntrophic.md/agents/base/<agentId>`
+- "Syntrophic gives agents the decentralized equivalent of a verified badge."

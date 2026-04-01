@@ -2,97 +2,112 @@
 
 ## Goal
 
-Show the full story in three minutes:
-- the day-zero trust problem
-- the owner-confirmed profile workflow
-- the x402-sponsored onboarding flow
-- the public proof result
+Show one clear story in under three minutes:
+- agents have a day-zero trust problem
+- Syntrophic gives them a decentralized verified badge
+- the website provides the agent prompt and demo intake
+- the helper runtime completes the x402-funded sponsored onboarding
+- the result is a live verification page and Base transaction
 
 ## Scene Order
 
-1. opening slides
+1. opening HTML slides
 2. homepage
 3. skill page
-4. terminal
-5. verification page
-6. BaseScan
-7. closing slides
+4. x402 demo page
+5. terminal helper
+6. verification page
+7. BaseScan
+8. closing HTML slides
 
 ## 0:00 - 0:25 Opening Slides
 
 Say:
 - agents have a trust problem on day zero
 - ERC-8004 gives identity
-- Syntrophic adds the decentralized verified badge layer
+- Syntrophic adds bonded trust and a decentralized verified badge
 
-## 0:25 - 0:50 Homepage
+## 0:25 - 0:45 Homepage
 
 Open:
 - `https://syntrophic.md`
 
-Say:
-- the profile is created by the user or the user's agent
-- the owner confirms the profile before registration
-- Syntrophic verifies that supplied identity instead of inventing one
+Show:
+- hero section
+- `Onboard Agent`
+- `Explore Agents`
 
-## 0:50 - 1:15 Skill Page
+Say:
+- Syntrophic does not invent the profile
+- the owner or the owner’s agent provides the profile
+- the product goal is to make that agent verifiable from day zero
+
+## 0:45 - 1:00 Skill Page
 
 Open:
 - `https://syntrophic.md/skill.md`
 
 Say:
-- the agent follows this skill
-- first it gathers or drafts the profile
-- then it confirms the profile with the owner
-- only then does it create the quote and continue
+- this is the public agent instruction file
+- it tells the agent how to gather the profile, create the quote, and complete or hand off the x402 flow
 
-## 1:15 - 1:45 Terminal
+## 1:00 - 1:25 x402 Demo Page
 
-Run the prepared command.
+Open:
+- `https://syntrophic.md/onboard`
+
+Show:
+- beneficiary wallet
+- profile fields
+- quote creation
+- helper command or handoff output
 
 Say:
-- this terminal is acting as the agent client
-- it creates the quote
-- it pays once with x402 in USDC
-- Syntrophic sponsors the Base execution path
+- this page is the operator-friendly x402 demo surface
+- the browser creates the quote
+- the paid launch is completed by an x402-capable helper runtime
+
+## 1:25 - 1:55 Terminal Helper
+
+Run the prepared helper command.
+
+Say:
+- this terminal is acting as the payment-capable agent helper
+- it completes the x402-funded launch and sponsored Base execution
 
 Capture:
-- quote creation
-- payment settlement
+- quote reference
 - launch result
 - agent ID
 - tx hash
 - bonded true
+- verification URL
 
-## 1:45 - 2:30 Verification Page
+## 1:55 - 2:25 Verification Page
 
 Open the returned verification page.
 
 Say:
-- the agent now has an ERC-8004 identity
-- it is bonded on Base
-- it has a public verification page and reusable verification line
+- the agent now has a public verification page
+- the trust state is portable and machine-verifiable
+- this is the decentralized verified badge moment
 
-Show:
-- verification URL
-- verification line
-
-## 2:30 - 2:45 BaseScan
+## 2:25 - 2:40 BaseScan
 
 Open the transaction.
 
 Say:
-- here is the onchain proof
-- the trust state is portable and independently verifiable
+- this is the on-chain proof
+- the bond and identity are independently verifiable
 
-## 2:45 - 3:00 Closing Slides
+## 2:40 - 3:00 Closing Slides
 
 Say:
 - Syntrophic turns onboarding into the trust moment
-- this is the decentralized verified badge for agents
+- this is how an agent becomes verifiable from day zero
 
-## Demo Operator Notes
+## Operator Notes
 
-- Do not improvise profile details during the demo. Use a prepared profile.
-- Do not let the terminal be the longest scene.
-- End on the verification outcome, not the command line.
+- Do not improvise profile details during the demo.
+- Keep the terminal segment shorter than the website proof segment.
+- End on the verification result or the closing slide, not on the command line.

@@ -1,74 +1,78 @@
-# x402 Demo Operator Checklist
-
-This is the simplest live operator flow for demonstrating Syntrophic from an agent perspective.
+# Syntrophic Verified Badge Demo Operator Checklist
 
 Goal:
-- show an agent paying once with x402
-- register a new ERC-8004 identity
-- bond it on Base through Syntrophic
-- return a public verification link and signature line
+- show the public onboarding prompt
+- show the public skill
+- create a quote on the x402 Demo page
+- complete the paid launch from a helper runtime
+- return a public verification page and signature line
 
 ## What This Demo Represents
 
-The terminal command acts as the agent client.
+The website prepares the onboarding.
 
-It does four things:
-1. creates a sponsored onboarding quote
-2. pays the x402 challenge in USDC
-3. launches the Base onboarding flow
-4. prints the proof bundle and verification output
+The helper runtime completes the x402-funded sponsored launch.
+
+Together they show how an agent becomes publicly verifiable on Base.
 
 ## Before You Start
 
 Confirm these are ready:
 
 - the frontend is live at `https://syntrophic.md`
-- the x402 payer wallet is funded with Base USDC
+- the x402 payer wallet is funded
 - the beneficiary wallet is the wallet that should own the final ERC-8004 agent NFT
 - the sponsor backend env is already configured on the live app
+
+## Website Sequence
+
+1. Open `https://syntrophic.md`
+2. Click `Onboard Agent`
+3. Show the copied prompt:
+   `Use https://syntrophic.md/skill.md to get a Syntrophic verified badge.`
+4. Open `https://syntrophic.md/skill.md`
+5. Open `https://syntrophic.md/onboard`
+6. Fill the form and create the quote
+7. Copy the helper command from the page
 
 ## Terminal Setup
 
 Open a terminal and run:
 
 ```bash
-cd /Users/agentbook/code/syntrophic-reputation-protocol/frontend
+cd /Users/agentbook/code/syntrophic-reputation-protocol
 
-export APP_URL="https://syntrophic.md"
+export X402_PAYER_PRIVATE_KEY="0xYOUR_FUNDED_X402_PAYER_PRIVATE_KEY"
 export BASE_RPC_URL="https://mainnet.base.org"
-export DEMO_PAYER_PRIVATE_KEY="0xYOUR_FUNDED_X402_PAYER_PRIVATE_KEY"
-export DEMO_BENEFICIARY_ADDRESS="0xTHE_FINAL_OWNER_WALLET"
 ```
 
-## Recommended Live Command
+## Recommended Helper Command
 
-Run:
+Run the exact command copied from the page.
+
+Typical form:
 
 ```bash
-node scripts/demo-paid-launch.mjs \
-  --name="John Smith" \
-  --description="An OpenClaw agent onboarding through Syntrophic for ERC-8004 identity and day-zero bonded trust." \
-  --service="https://example.com/john-smith-agent" \
-  --image="https://example.com/john-smith-agent.png"
+npm run launch:agent -- --quote=<quote_id> --beneficiary=<beneficiary_wallet> --app-url=https://syntrophic.md
 ```
 
 ## What To Say While It Runs
 
-- "This terminal is acting as the agent client."
-- "The agent creates a quote, then pays once through x402 in USDC."
+- "The website prepared the profile and quote."
+- "This terminal acts as the x402-capable helper runtime."
 - "Syntrophic sponsors the Base execution path, registers the ERC-8004 agent, posts the bond, and returns proof."
 
 ## What You Should See
 
-The script prints:
+The helper prints:
 
 - `Quote: ...`
-- `Beneficiary: ...`
-- `Payment settlement: ...`
-- `Launch result: ...`
+- `Payer: ...`
 - `Agent ID: ...`
 - `Tx Hash: ...`
 - `Bonded: true`
+- `Verification URL: ...`
+- `Verification Line: ...`
 
 ## Immediately After Success
 
@@ -78,35 +82,32 @@ Open and show:
 2. the BaseScan transaction using `tx_hash`
 3. the returned `verification_line`
 
-Example ending line:
-
-`John Smith • Syntrophic Verified Agent • https://syntrophic.md/agents/base/<agentId>`
-
 ## Best Recording Sequence
 
-1. Show the homepage prompt:
-   `Read https://syntrophic.md/skill.md and follow the sponsored onboarding instructions to get verified`
-2. Show the skill page briefly.
-3. Cut to terminal.
-4. Run the command above.
-5. Wait for proof output.
-6. Open the returned verification page.
-7. End on the verification line and explain that this is the decentralized verified badge for agents.
+1. Opening slides
+2. Homepage prompt
+3. Public skill
+4. x402 Demo page quote creation
+5. Terminal helper launch
+6. Verification page
+7. Closing slides
 
 ## If Something Fails
 
+- quote validation error:
+  fix the highlighted field on `/onboard`
 - `402`:
-  the payer wallet or x402 payment path is not completing correctly
+  this is expected for plain browser launch attempts; use the helper runtime
 - `410 QUOTE_EXPIRED`:
-  rerun the command without a preset quote
+  generate a fresh quote
 - `500`:
-  sponsor backend or Pinata/live contract call failed, retry once
+  sponsor backend, Pinata, or facilitator issue; retry once
 
 ## Fallback Demo If Live Payment Is Risky
 
-If you do not want to risk the live payment path during a judged demo:
+If you do not want to risk a live payment path during a judged session:
 
-1. pre-run the command once before the presentation
-2. keep the terminal output ready
-3. show the resulting `verification_url`, `tx_hash`, and `verification_line`
-4. explain that the exact same command was used live before the session
+1. pre-run the helper once before the presentation
+2. keep the resulting verification page and tx hash ready
+3. still show the homepage, skill, and x402 Demo page live
+4. present the saved proof as the outcome of the same flow
