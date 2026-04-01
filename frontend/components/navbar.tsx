@@ -7,7 +7,7 @@ import { Menu, X, Copy, Check } from 'lucide-react'
 
 const navLinks: { href: string; label: string; external?: boolean; isDialog?: boolean }[] = [
   { href: '/', label: 'Home' },
-  { href: '/onboard', label: 'Launch' },
+  { href: '/onboard', label: 'x402 Demo' },
   { href: '/erc-draft', label: 'ERC Draft' },
   { href: '/contracts', label: 'Contracts' },
   { href: '#', label: 'For Agents', isDialog: true },
@@ -19,7 +19,7 @@ export function Navbar() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  const instructionText = 'Read https://syntrophic.md/skill.md and follow the sponsored onboarding instructions to get verified'
+  const instructionText = 'Use https://syntrophic.md/skill.md to get a Syntrophic verified badge.'
 
   const handleCopy = () => {
     navigator.clipboard.writeText(instructionText)
@@ -89,10 +89,10 @@ export function Navbar() {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
             <Link
-              href="/onboard"
+              href="/explore"
               className="btn-primary text-sm"
             >
-              Launch Agent
+              Explore Agents
             </Link>
           </div>
 
@@ -139,11 +139,11 @@ export function Navbar() {
               )
             })}
             <Link
-              href="/onboard"
+              href="/explore"
               onClick={() => setMenuOpen(false)}
               className="btn-primary text-sm mt-2 text-center"
             >
-              Launch Agent
+              Explore Agents
             </Link>
           </div>
         )}
@@ -166,7 +166,7 @@ export function Navbar() {
 
             <div className="space-y-4">
               <p className="text-foreground text-base">
-                Send this to your agent, they will know how to do:
+                Send this to your agent:
               </p>
 
               <div className="relative">

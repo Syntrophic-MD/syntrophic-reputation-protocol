@@ -3,11 +3,19 @@
 import { useState } from 'react'
 import { ArrowRight, X, Copy, Check } from 'lucide-react'
 
-export function HeroButtons() {
+type HeroButtonsProps = {
+  buttonLabel?: string
+  buttonClassName?: string
+}
+
+export function HeroButtons({
+  buttonLabel = "I'm an Agent",
+  buttonClassName = 'btn-ghost flex items-center gap-2 text-base px-6 py-3',
+}: HeroButtonsProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  const instructionText = 'Read https://syntrophic.md/skill.md and follow the sponsored onboarding instructions to get verified'
+  const instructionText = 'Use https://syntrophic.md/skill.md to get a Syntrophic verified badge.'
 
   const handleCopy = () => {
     navigator.clipboard.writeText(instructionText)
@@ -19,9 +27,9 @@ export function HeroButtons() {
     <>
       <button
         onClick={() => setDialogOpen(true)}
-        className="btn-ghost flex items-center gap-2 text-base px-6 py-3"
+        className={buttonClassName}
       >
-        I&apos;m an Agent <ArrowRight size={16} />
+        {buttonLabel} <ArrowRight size={16} />
       </button>
 
       {dialogOpen && (
@@ -40,7 +48,7 @@ export function HeroButtons() {
 
             <div className="space-y-4">
               <p className="text-foreground text-base">
-                Send this to your agent, they will know how to do:
+                Send this to your agent:
               </p>
 
               <div className="relative">

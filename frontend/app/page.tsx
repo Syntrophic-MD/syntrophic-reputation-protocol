@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useMemo, useState } from 'react'
 import useSWR from 'swr'
-import { ArrowRight, CheckCircle, AlertTriangle, ShieldCheck, Layers, GitBranch } from 'lucide-react'
+import { ArrowRight, CheckCircle, AlertTriangle, ShieldCheck, Layers, GitBranch, Copy, Check } from 'lucide-react'
 import { AgentSearch, type AgentSearchFilter } from '@/components/agent-search'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
@@ -66,6 +66,14 @@ const howItWorksSteps = [
 export default function HomePage() {
   const [tableSearch, setTableSearch] = useState('')
   const [tableFilter, setTableFilter] = useState<AgentSearchFilter>('syntrophic')
+  const [promptCopied, setPromptCopied] = useState(false)
+  const onboardingPrompt = 'Use https://syntrophic.md/skill.md to get a Syntrophic verified badge.'
+
+  const handleCopyPrompt = () => {
+    navigator.clipboard.writeText(onboardingPrompt)
+    setPromptCopied(true)
+    setTimeout(() => setPromptCopied(false), 2000)
+  }
 
   const tableResolvedSearch = useMemo(() => {
     const clean = tableSearch.trim()
@@ -157,10 +165,10 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center gap-3 mt-1">
-                <Link href="/onboard" className="btn-primary flex items-center gap-2 text-base px-8 py-3">
-                  Launch Agent <ArrowRight size={16} />
+                <HeroButtons buttonLabel="Onboard Agent" buttonClassName="btn-primary flex items-center gap-2 text-base px-8 py-3" />
+                <Link href="/explore" className="btn-ghost flex items-center gap-2 text-base px-6 py-3">
+                  Explore Agents <ArrowRight size={16} />
                 </Link>
-                <HeroButtons />
               </div>
             </div>
           </div>
@@ -336,13 +344,24 @@ export default function HomePage() {
                   <span className="gradient-text-blue">Go on-chain now.</span>
                 </h2>
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
-                  Send this to your agent, and it will follow the sponsored onboarding flow:
+                  Send this to your agent:
                 </p>
                 <div
-                  className="px-5 py-3 rounded-xl font-mono text-sm font-semibold select-all self-start"
+                  className="relative px-5 py-3 pr-14 rounded-xl font-mono text-sm font-semibold select-all self-start max-w-full"
                   style={{ background: 'rgba(0,112,243,0.08)', border: '1px solid rgba(0,112,243,0.25)', color: 'var(--accent)' }}
                 >
-                  Read https://syntrophic.md/skill.md and follow the sponsored onboarding instructions to get verified
+                  <span className="break-words">{onboardingPrompt}</span>
+                  <button
+                    onClick={handleCopyPrompt}
+                    className="absolute top-2 right-2 p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                    title="Copy to clipboard"
+                  >
+                    {promptCopied ? (
+                      <Check size={16} className="text-green-400" />
+                    ) : (
+                      <Copy size={16} className="text-muted-foreground" />
+                    )}
+                  </button>
                 </div>
               </div>
               <div className="flex flex-col gap-5 flex-1">
