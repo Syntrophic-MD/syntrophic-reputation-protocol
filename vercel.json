@@ -1,6 +1,4 @@
 {
-  "buildCommand": "cd frontend && pnpm install --no-frozen-lockfile && pnpm build",
-  "outputDirectory": "frontend/.next",
-  "installCommand": "echo 'Skipping root install'",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "installCommand": "pnpm install --no-frozen-lockfile"
 }
