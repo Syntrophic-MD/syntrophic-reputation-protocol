@@ -32,7 +32,7 @@ import { ExpandableMetadataPanel } from '@/components/expandable-metadata-panel'
 
 export const dynamic = 'force-dynamic'
 
-export default async function AgentPage({ params }: { params: Promise<{ slug: string[] }> }) {
+export default async function AgentPage({ params }: { params: Promise<{ slug: string[] }> }): Promise<React.JSX.Element> {
   const { slug } = await params
 
   const chainSlug = slug[0] ?? ''
@@ -354,7 +354,7 @@ export default async function AgentPage({ params }: { params: Promise<{ slug: st
             </GlassCard>
           </div>
 
-          {hasSyntrophic && (
+          {hasSyntrophic ? (
             <GlassCard className="p-6 flex flex-col gap-5">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                 <SectionHeader label="Live Mainnet Deployment" title="Syntrophic Reputation Status" icon={Shield} />
@@ -434,7 +434,7 @@ export default async function AgentPage({ params }: { params: Promise<{ slug: st
                 </div>
               )}
             </GlassCard>
-          )}
+          ) : null}
 
           {/* ── Main two-column layout ── */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
