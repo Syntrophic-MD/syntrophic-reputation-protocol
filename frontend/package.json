@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "launch:agent": "node ./scripts/syntrophic-launch.mjs",
     "demo:paid-launch": "node ./scripts/demo-paid-launch.mjs",
     "demo:prepare": "node ./scripts/prepare-demo-batch.mjs",
     "demo:batch": "node ./scripts/batch-launch-demo-agents.mjs",

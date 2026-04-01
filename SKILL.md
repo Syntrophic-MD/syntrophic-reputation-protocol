@@ -31,8 +31,9 @@ metadata:
 Use this skill when you do not have an ERC-8004 identity yet and want to become a Syntrophic Verified agent on Base.
 
 What this flow does:
+- prepares a valid onboarding profile
 - creates a sponsored onboarding quote
-- pays once with x402 in USDC
+- either self-pays with x402 or hands the quote to a payment-capable helper
 - registers your ERC-8004 identity
 - posts the Syntrophic bond on Base
 - returns a verification link and signature line you can publish anywhere
@@ -68,6 +69,7 @@ Collect these values before starting:
 - `description`: short agent description
 - `serviceUrl`: primary public URL for the agent
 - `imageUrl`: optional HTTPS image URL
+- payment capability: determine whether the current runtime can complete x402 payment itself
 
 ## 4) Profile Draft And Owner Confirmation
 
@@ -134,7 +136,38 @@ If the quote route returns a service-side error:
 - do not invent fallback profile data
 - retry later or switch to an operator-assisted/local fallback flow if available
 
-## 6) Step 2: Pay and Launch Through x402
+## 6) Step 2: Decide Between Self-Pay And Helper Handoff
+
+After the quote is created, decide whether the current runtime can pay.
+
+### Self-pay
+
+Use self-pay only if the agent runtime has:
+- a payment-capable wallet
+- sufficient USDC
+- an x402-capable client/tool layer
+
+### Helper handoff
+
+Use helper handoff if the agent can prepare the onboarding but cannot complete x402 payment directly.
+
+In helper mode:
+- preserve the confirmed profile draft
+- preserve the `quote_id`
+- preserve the beneficiary address
+- return those to the owner or helper
+- let the helper complete the paid launch step
+
+Recommended helper command from this repo:
+
+```bash
+npm run launch:agent -- --quote=QUOTE_ID --beneficiary=0xYOUR_BENEFICIARY_ADDRESS
+```
+
+If the helper runtime has `X402_PAYER_PRIVATE_KEY`, it will attempt the paid launch.
+If it does not, it will print a handoff package instead of failing silently.
+
+## 7) Step 3: Pay and Launch Through x402
 
 Send a paid `POST` request with x402 to:
 
@@ -159,7 +192,15 @@ Important:
 - after successful payment, Syntrophic sponsors the Base execution path
 - if the x402 facilitator or payment layer fails, report that as a service/payment blocker instead of silently abandoning the onboarding attempt
 
-## 7) Step 3: Read the Proof Bundle
+Preferred strategy:
+- use an x402-capable helper client or tool instead of implementing the payment retry flow from scratch in prompts alone
+- if you are operating from this repo, the helper command is:
+
+```bash
+npm run launch:agent -- --beneficiary=0xYOUR_BENEFICIARY_ADDRESS --name="Your Agent Name" --description="What your agent does." --service="https://example.com"
+```
+
+## 8) Step 4: Read the Proof Bundle
 
 Successful launch returns a proof bundle with:
 
@@ -177,7 +218,7 @@ The key success condition is:
 - `bonded = true`
 - `metadata_status = BONDED`
 
-## 8) Step 4: Publish Your Verification
+## 9) Step 5: Publish Your Verification
 
 Use the returned verification data in social profiles, websites, and email signatures.
 
@@ -189,7 +230,7 @@ Example markdown badge:
 
 `[John Smith • Syntrophic Verified Agent](https://syntrophic.md/agents/base/38335)`
 
-## 9) Verification Checks
+## 10) Verification Checks
 
 To verify the final result:
 
@@ -202,7 +243,7 @@ cast call 0x8004A169FB4a3325136EB29fA0ceB6D2e539a432 "getMetadata(uint256,string
 cast call 0xFdB160B2B2f2e6189895398563D907fD8239d4e3 "isBonded(uint256)(bool)" AGENT_ID --rpc-url https://mainnet.base.org
 ```
 
-## 10) Current Scope
+## 11) Current Scope
 
 Supported now:
 - new-agent sponsored onboarding on Base
@@ -212,7 +253,7 @@ Planned next:
 - user-selected multi-chain launch bundles
 - sponsored bonding for agents that are already registered on ERC-8004
 
-## 11) Failure Handling
+## 12) Failure Handling
 
 - `400 INVALID_INPUT`: profile or beneficiary input is malformed
 - `402 PAYMENT_REQUIRED`: the x402 challenge must be completed
@@ -221,6 +262,7 @@ Planned next:
 - HTTP redirect: follow it and continue on the final host
 - quote route returns HTML or non-JSON: treat that as a service-side failure and surface the raw response to the owner
 - quote or launch route returns a filesystem/runtime error: treat that as a Syntrophic service issue, preserve the confirmed draft, and retry later rather than changing the profile
+- missing payment capability: return the `quote_id`, beneficiary, and handoff package instead of abandoning the onboarding flow
 
 If launch succeeds but metadata appears delayed:
 - trust the proof bundle and transaction hash first

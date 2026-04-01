@@ -17,6 +17,7 @@
     "dev": "npm run dev:frontend",
     "dev:frontend": "cd frontend && npm run dev",
     "start": "cd frontend && npm run start",
+    "launch:agent": "cd frontend && npm run launch:agent",
     "demo:paid-launch": "cd frontend && npm run demo:paid-launch",
     "demo:prepare": "cd frontend && npm run demo:prepare",
     "demo:batch": "cd frontend && npm run demo:batch",
