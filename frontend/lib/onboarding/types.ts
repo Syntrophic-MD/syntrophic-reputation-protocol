@@ -17,6 +17,8 @@ export interface NormalizedOnboardingProfile {
   description: string
   image: string | null
   services: Array<{
+    name: string
+    endpoint: string
     type: string
     url: string
   }>

@@ -6,7 +6,7 @@ import type {
   OnboardingServiceInput,
   SupportedChainId,
 } from './types'
-import { BASE_CHAIN_ID } from './constants'
+import { BASE_CHAIN_ID, ERC8004_REGISTRY_ADDRESS } from './constants'
 
 function isAddress(value: string): value is `0x${string}` {
   return /^0x[a-fA-F0-9]{40}$/.test(value)
@@ -25,9 +25,18 @@ function normalizeUrl(url: string) {
 }
 
 function normalizeService(service: OnboardingServiceInput) {
+  const nameByType: Record<OnboardingServiceInput['type'], string> = {
+    web: 'web',
+    mcp: 'MCP',
+    a2a: 'A2A',
+    oasf: 'OASF',
+  }
+  const endpoint = normalizeUrl(service.url)
   return {
+    name: nameByType[service.type],
+    endpoint,
     type: service.type,
-    url: normalizeUrl(service.url),
+    url: endpoint,
   }
 }
 
@@ -84,6 +93,7 @@ export function buildRegistrationFile(profile: NormalizedOnboardingProfile, bene
   const now = new Date().toISOString()
 
   return {
+    type: 'https://eips.ethereum.org/EIPS/eip-8004#registration-v1',
     name: profile.name,
     description: profile.description,
     image: profile.image,
@@ -93,6 +103,12 @@ export function buildRegistrationFile(profile: NormalizedOnboardingProfile, bene
     x402support: profile.x402support,
     supportedTrust: profile.supportedTrust,
     services: profile.services,
+    registrations: [
+      {
+        agentId: null,
+        agentRegistry: `eip155:${BASE_CHAIN_ID}:${ERC8004_REGISTRY_ADDRESS}`,
+      },
+    ],
     metadata: {
       'syntrophic.onboarding': 'sponsored-x402-mvp',
       'syntrophic.launchMode': 'base-sponsored',

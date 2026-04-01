@@ -4,7 +4,19 @@ import path from 'node:path'
 
 import type { OnboardingJobRecord, OnboardingQuoteRecord } from './types'
 
-const ROOT_DIR = path.join(process.cwd(), '.runtime', 'onboarding')
+function getRuntimeRootDir() {
+  if (process.env.ONBOARDING_RUNTIME_DIR) {
+    return process.env.ONBOARDING_RUNTIME_DIR
+  }
+
+  if (process.env.VERCEL || process.env.AWS_REGION || process.env.LAMBDA_TASK_ROOT) {
+    return path.join('/tmp', 'syntrophic-onboarding')
+  }
+
+  return path.join(process.cwd(), '.runtime', 'onboarding')
+}
+
+const ROOT_DIR = getRuntimeRootDir()
 const QUOTES_DIR = path.join(ROOT_DIR, 'quotes')
 const JOBS_DIR = path.join(ROOT_DIR, 'jobs')
 

@@ -97,6 +97,8 @@ Send a `POST` request to:
 
 `https://syntrophic.md/api/onboarding/quotes`
 
+If the site redirects, follow the final redirected host automatically instead of treating the redirect as a failure.
+
 Body:
 
 ```json
@@ -126,6 +128,12 @@ Expected result:
 - total USDC price
 - line items for bond, gas, IPFS, and service fee
 
+If the quote route returns a service-side error:
+- preserve the confirmed profile draft
+- report the exact error body to the owner
+- do not invent fallback profile data
+- retry later or switch to an operator-assisted/local fallback flow if available
+
 ## 6) Step 2: Pay and Launch Through x402
 
 Send a paid `POST` request with x402 to:
@@ -149,6 +157,7 @@ Important:
 - this route is x402-protected
 - if you receive HTTP `402`, your client must complete the x402 payment challenge and retry
 - after successful payment, Syntrophic sponsors the Base execution path
+- if the x402 facilitator or payment layer fails, report that as a service/payment blocker instead of silently abandoning the onboarding attempt
 
 ## 7) Step 3: Read the Proof Bundle
 
@@ -209,6 +218,9 @@ Planned next:
 - `402 PAYMENT_REQUIRED`: the x402 challenge must be completed
 - `410 QUOTE_EXPIRED`: create a fresh quote
 - `500+`: retry later or ask the user whether to try again
+- HTTP redirect: follow it and continue on the final host
+- quote route returns HTML or non-JSON: treat that as a service-side failure and surface the raw response to the owner
+- quote or launch route returns a filesystem/runtime error: treat that as a Syntrophic service issue, preserve the confirmed draft, and retry later rather than changing the profile
 
 If launch succeeds but metadata appears delayed:
 - trust the proof bundle and transaction hash first

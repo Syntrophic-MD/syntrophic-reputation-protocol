@@ -217,6 +217,7 @@ function createPaymentRef(seed) {
 function buildRegistrationFile(profile, beneficiary, gatewayBase, serviceBaseUrl) {
   const serviceUrl = `${serviceBaseUrl.replace(/\/+$/, '')}/agents/${profile.slug}`
   return {
+    type: 'https://eips.ethereum.org/EIPS/eip-8004#registration-v1',
     name: profile.name,
     description: profile.description,
     image: ipfsToHttps(profile.image_uri, gatewayBase),
@@ -227,8 +228,16 @@ function buildRegistrationFile(profile, beneficiary, gatewayBase, serviceBaseUrl
     supportedTrust: ['reputation', 'crypto-economic'],
     services: [
       {
+        name: 'web',
+        endpoint: serviceUrl,
         type: 'web',
         url: serviceUrl,
+      },
+    ],
+    registrations: [
+      {
+        agentId: null,
+        agentRegistry: `eip155:8453:${DEFAULT_REGISTRY_ADDRESS}`,
       },
     ],
     metadata: {
